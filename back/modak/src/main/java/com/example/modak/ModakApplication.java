@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ModakApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(ModakApplication.class, args);
+
 	}
 
 }
