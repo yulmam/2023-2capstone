@@ -1,6 +1,5 @@
 package com.example.modak.dto;
 
-
 import lombok.*;
 
 @Data
@@ -8,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @Builder
-public class RegisterRequestDto {
+public class SignUpRequestDto {
     private String id;
 
     private String password;

@@ -1,11 +1,12 @@
 package com.example.modak.service.impl;
 
+import com.example.modak.common.CommonResponse;
 import com.example.modak.config.security.JwtTokenProvider;
 import com.example.modak.domain.User;
 import com.example.modak.dto.LogInResultDto;
-import com.example.modak.dto.RegisterResultDto;
+import com.example.modak.dto.SignUpResultDto;
 import com.example.modak.respository.UserRepository;
-import com.example.modak.service.LoginService;
+import com.example.modak.service.LogInService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,21 +14,21 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 
 @Service
-public class LoginServiceImpl implements LoginService {
+public class LogInServiceImpl implements LogInService {
     public UserRepository userRepository;
     public JwtTokenProvider jwtTokenProvider;
     public PasswordEncoder passwordEncoder;
 
     @Autowired
-    public LoginServiceImpl(UserRepository userRepository, JwtTokenProvider jwtTokenProvider,
-             PasswordEncoder passwordEncoder) {
+    public LogInServiceImpl(UserRepository userRepository, JwtTokenProvider jwtTokenProvider,
+                            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.jwtTokenProvider = jwtTokenProvider;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public RegisterResultDto signUp(String id, String password, String name, String role) {
+    public SignUpResultDto signUp(String id, String password, String name, String role) {
 
         User user;
         if (role.equalsIgnoreCase("admin")) {
@@ -47,12 +48,12 @@ public class LoginServiceImpl implements LoginService {
         }
 
         User savedUser = userRepository.save(user);
-        RegisterResultDto signUpResultDto = new LogInResultDto();
+        SignUpResultDto signUpResultDto = new SignUpResultDto();
 
         if (!savedUser.getName().isEmpty()) {
-            setSuccessResult(RegisterResultDto);
+            setSuccessResult(signUpResultDto);
         } else {
-            setFailResult(RegisterResultDto);
+            setFailResult(signUpResultDto);
         }
         return signUpResultDto;
     }
@@ -75,14 +76,14 @@ public class LoginServiceImpl implements LoginService {
     }
 
     // 결과 모델에 api 요청 성공 데이터를 세팅해주는 메소드
-    private void setSuccessResult(RegisterResultDto result) {
+    private void setSuccessResult(SignUpResultDto result) {
         result.setSuccess(true);
         result.setCode(CommonResponse.SUCCESS.getCode());
         result.setMsg(CommonResponse.SUCCESS.getMsg());
     }
 
     // 결과 모델에 api 요청 실패 데이터를 세팅해주는 메소드
-    private void setFailResult(RegisterResultDto result) {
+    private void setFailResult(SignUpResultDto result) {
         result.setSuccess(false);
         result.setCode(CommonResponse.FAIL.getCode());
         result.setMsg(CommonResponse.FAIL.getMsg());

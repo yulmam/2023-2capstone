@@ -38,8 +38,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests() // 리퀘스트에 대한 사용권한 체크
-                .antMatchers("/sign-api/sign-in", "/sign-api/sign-up",
-                        "/sign-api/exception").permitAll() // 가입 및 로그인 주소는 허용
+                .antMatchers("/user/login", "/user/signup",
+                        "/user/exception").permitAll() // 가입 및 로그인 주소는 허용
                 .antMatchers(HttpMethod.GET, "/product/**").permitAll() // product로 시작하는 Get 요청은 허용
 
                 .antMatchers("**exception**").permitAll()
@@ -64,6 +64,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity webSecurity) {
         webSecurity.ignoring().antMatchers("/v2/api-docs", "/swagger-resources/**",
-                "/swagger-ui.html", "/webjars/**", "/swagger/**", "/sign-api/exception");
+                "/swagger-ui.html", "/webjars/**", "/swagger/**", "/user/exception");
     }
 }

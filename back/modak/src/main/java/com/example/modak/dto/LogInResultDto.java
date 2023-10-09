@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class LogInResultDto extends RegisterResultDto{
+public class LogInResultDto extends SignUpResultDto{
 
     private String token;
 
