@@ -37,10 +37,10 @@ public class JwtTokenProvider {
 
     public String createToken(String userUid, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(userUid);
+
         claims.put("roles", roles);
 
         Date now = new Date();
-
         String token = Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)

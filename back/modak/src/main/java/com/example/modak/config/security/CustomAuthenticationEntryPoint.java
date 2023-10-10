@@ -17,7 +17,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
         EntryPointErrorResponse entryPointErrorResponse = new EntryPointErrorResponse();
 
-        entryPointErrorResponse.setMsg("인증이 실패하였습니다.");
+        entryPointErrorResponse.setMsg("인증이 안됨");
 
         response.setStatus(401);
         response.setContentType("application/json");

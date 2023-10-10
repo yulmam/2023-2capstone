@@ -28,13 +28,14 @@ public class LogInServiceImpl implements LogInService {
     }
 
     @Override
-    public SignUpResultDto signUp(String id, String password, String name, String role) {
+    public SignUpResultDto signUp(String id, String password, String name, String email, String role) {
 
         User user;
         if (role.equalsIgnoreCase("admin")) {
             user = User.builder()
                     .uid(id)
                     .name(name)
+                    .email(email)
                     .password(passwordEncoder.encode(password))
                     .roles(Collections.singletonList("ROLE_ADMIN"))
                     .build();
@@ -42,6 +43,7 @@ public class LogInServiceImpl implements LogInService {
             user = User.builder()
                     .uid(id)
                     .name(name)
+                    .email(email)
                     .password(passwordEncoder.encode(password))
                     .roles(Collections.singletonList("ROLE_USER"))
                     .build();
@@ -69,9 +71,7 @@ public class LogInServiceImpl implements LogInService {
                 .token(jwtTokenProvider.createToken(String.valueOf(user.getUid()),
                         user.getRoles()))
                 .build();
-
         setSuccessResult(logInResultDto);
-
         return logInResultDto;
     }
 

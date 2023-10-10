@@ -4,7 +4,7 @@ import com.example.modak.dto.LogInResultDto;
 import com.example.modak.dto.SignUpResultDto;
 
 public interface LogInService {
-    SignUpResultDto signUp(String id, String password, String name, String role);
+    SignUpResultDto signUp(String id, String password, String name, String email, String role);
 
     LogInResultDto logIn(String id, String password) throws RuntimeException;
 

@@ -29,7 +29,7 @@ public class User implements UserDetails {
     private long id;
 
     @Column(nullable = false, unique = true)
-    private String uid; // 회원 ID (JWT 토큰 내 정보)
+    private String uid;
 
     @JsonProperty(access = Access.WRITE_ONLY) // Json 결과로 출력하지 않을 데이터에 대해 해당 어노테이션 설정 값 추가
     @Column(nullable = false)
@@ -37,6 +37,9 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private String email;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default

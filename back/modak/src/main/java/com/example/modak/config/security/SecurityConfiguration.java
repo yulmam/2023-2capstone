@@ -14,6 +14,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 //@EnableWebSecurity // Spring Security에 대한 디버깅 모드를 사용하기 위한 어노테이션 (default : false)
@@ -28,10 +33,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+
         httpSecurity.httpBasic().disable() // REST API는 UI를 사용하지 않으므로 기본설정을 비활성화
-
                 .csrf().disable() // REST API는 csrf 보안이 필요 없으므로 비활성화
-
+                .cors().configurationSource(corsConfigurationSource())
+                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(
                         SessionCreationPolicy.STATELESS) // JWT Token 인증방식으로 세션은 필요 없으므로 비활성화
@@ -40,7 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests() // 리퀘스트에 대한 사용권한 체크
                 .antMatchers("/user/login", "/user/signup",
                         "/user/exception").permitAll() // 가입 및 로그인 주소는 허용
-                .antMatchers(HttpMethod.GET, "/product/**").permitAll() // product로 시작하는 Get 요청은 허용
+                .antMatchers(HttpMethod.GET, "/post/**").permitAll() // product로 시작하는 Get 요청은 허용
 
                 .antMatchers("**exception**").permitAll()
 
@@ -65,5 +71,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity webSecurity) {
         webSecurity.ignoring().antMatchers("/v2/api-docs", "/swagger-resources/**",
                 "/swagger-ui.html", "/webjars/**", "/swagger/**", "/user/exception");
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.setAllowCredentials(true);
+        config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        config.setAllowedMethods(Arrays.asList("HEAD","POST","GET","DELETE","PUT"));
+        config.setAllowedHeaders(Arrays.asList("*"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 }

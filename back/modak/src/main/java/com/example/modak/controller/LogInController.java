@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,12 +27,30 @@ public class LogInController {
     }
 
     @PostMapping(value = "/login")
-    public LogInResultDto signIn(
-            @ApiParam(value = "ID", required = true) @RequestParam String id,
-            @ApiParam(value = "Password", required = true) @RequestParam String password)
+    public LogInResultDto logIn(HttpServletRequest request,
+            @ApiParam(value = "Username", required = true) @RequestParam("username") String username,
+                                @ApiParam(value = "Password", required = true) @RequestParam("password") String password)
             throws RuntimeException {
 
-        LogInResultDto logInResultDto = logInService.logIn(id, password);
+        System.out.println("request.getMethod() = " + request.getMethod()); //GET
+        System.out.println("request.getProtocal() = " + request.getProtocol()); // HTTP/1.1
+        System.out.println("request.getScheme() = " + request.getScheme()); //http
+        // http://localhost:8080/request-header
+        System.out.println("request.getRequestURL() = " + request.getRequestURL());
+        // /request-test
+        System.out.println("request.getRequestURI() = " + request.getRequestURI());
+        //username=hi
+        System.out.println("request.getQueryString() = " +
+                request.getQueryString());
+        System.out.println("request.isSecure() = " + request.isSecure()); //https 사용 유무
+        Enumeration params = request.getParameterNames();
+        System.out.println("----------------------------");
+        while (params.hasMoreElements()){
+            String name = (String)params.nextElement();
+            System.out.println(name + " : " +request.getParameter(name));
+        }
+        System.out.println("----------------------------");
+        LogInResultDto logInResultDto = logInService.logIn(username, password);
 
         if (logInResultDto.getCode() == 0) {
             logInResultDto.getToken();
@@ -40,12 +60,13 @@ public class LogInController {
 
     @PostMapping(value = "/signup")
     public SignUpResultDto signUp(
-            @ApiParam(value = "ID", required = true) @RequestParam String id,
+            @ApiParam(value = "UID", required = true) @RequestParam String uid,
             @ApiParam(value = "비밀번호", required = true) @RequestParam String password,
             @ApiParam(value = "이름", required = true) @RequestParam String name,
-            @ApiParam(value = "권한", required = true) @RequestParam String role) {
+            @ApiParam(value = "email", required = true) @RequestParam String email,
+            @ApiParam(value = "권한", required = false) @RequestParam String role) {
 
-        SignUpResultDto signUpResultDto = logInService.signUp(id, password, name, role);
+        SignUpResultDto signUpResultDto = logInService.signUp(uid, password, name, email, role);
 
         return signUpResultDto;
     }
