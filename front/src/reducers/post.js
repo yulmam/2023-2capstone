@@ -27,6 +27,7 @@ const fetchDataFromServer = async (data) => {
 
 const throttledFetchData = throttle(fetchDataFromServer, 1000);
 
+// 정보 주 action
 export const submitReport = createAsyncThunk(
   "/post/submitReport",
   async (data, { fulfillWithValue, rejectWithValue }) => {

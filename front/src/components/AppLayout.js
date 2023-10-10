@@ -28,6 +28,7 @@ const items = [
     key: "mail",
     icon: <MailOutlined />,
   },
+
   {
     label: (
       <div>
@@ -36,59 +37,25 @@ const items = [
     ),
     key: "profile",
   },
-
   {
-    label: "Navigation Three - Submenu",
-    key: "SubMenu",
-    icon: <SettingOutlined />,
-    children: [
-      {
-        type: "group",
-        label: "Item 1",
-        children: [
-          {
-            label: "Option 1",
-            key: "setting:1",
-          },
-          {
-            label: "Option 2",
-            key: "setting:2",
-          },
-        ],
-      },
-      {
-        type: "group",
-        label: "Item 2",
-        children: [
-          {
-            label: "Option 3",
-            key: "setting:3",
-          },
-          {
-            label: "Option 4",
-            key: "setting:4",
-          },
-        ],
-      },
-    ],
+    label: <Link to="/notice_board">게시판</Link>,
+    key: "notice_board",
+    icon: <MailOutlined />,
   },
 ];
+
 const AppLayout = ({ children }) => {
   const { me } = useSelector((state) => state.user);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   return (
-    <Layout className="layout" style={{ height: "100vh" }}>
-      <Header
-        style={{
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
+    <Layout className="layout" style={{}}>
+      <Header>
         <div className="demo-logo" />
         <Menu theme="dark" mode="horizontal" items={items} />
       </Header>
+
       <Content
         style={{
           padding: "0 50px",
@@ -98,7 +65,6 @@ const AppLayout = ({ children }) => {
           className="site-layout-content"
           style={{
             background: colorBgContainer,
-            height: "80vh",
           }}
         >
           <Row gutter={8}>
