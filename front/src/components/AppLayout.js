@@ -40,7 +40,6 @@ const items = [
   {
     label: <Link to="/notice_board">게시판</Link>,
     key: "notice_board",
-    icon: <MailOutlined />,
   },
 ];
 
@@ -72,17 +71,10 @@ const AppLayout = ({ children }) => {
               {me ? <UserProfile /> : <LoginForm />}
             </Col>
             <Col xs={24} md={12}>
+              <div style={{ margin: 30 }}></div>
               {children}
             </Col>
-            <Col xs={24} md={6}>
-              <a
-                href="https://github.com/seroak"
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                Made by lee
-              </a>
-            </Col>
+            <Col xs={24} md={6}></Col>
           </Row>
         </div>
       </Content>
@@ -93,7 +85,7 @@ const AppLayout = ({ children }) => {
           backgroundColor: "white",
         }}
       >
-        Ant Design ©2023 Created by Ant UED
+        Design ©2023 Created by 모닥불
       </Footer>
     </Layout>
   );

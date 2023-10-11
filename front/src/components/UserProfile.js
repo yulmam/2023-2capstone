@@ -24,7 +24,7 @@ const UserProfile = ({ setIsLoggedIn }) => {
     <Card
       style={{
         width: 300,
-        margin: 10,
+        margin: 20,
       }}
       actions={[
         <SettingOutlined key="setting" />,
@@ -35,9 +35,10 @@ const UserProfile = ({ setIsLoggedIn }) => {
       <Meta
         avatar={<Avatar size={64} icon={<UserOutlined />} />}
         title={me.nickname}
-        description="This is the description"
       />
-      <LogoutButton onClick={onLogOut}>로그아웃</LogoutButton>
+      <LogoutButton style={{ marginLeft: -10 }} onClick={onLogOut}>
+        로그아웃
+      </LogoutButton>
     </Card>
   );
 };
