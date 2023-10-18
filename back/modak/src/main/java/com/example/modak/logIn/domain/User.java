@@ -1,4 +1,4 @@
-package com.example.modak.domain;
+package com.example.modak.logIn.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;

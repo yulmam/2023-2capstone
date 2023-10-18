@@ -1,4 +1,4 @@
-package com.example.modak.dto;
+package com.example.modak.logIn.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -10,6 +10,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class EntryPointErrorResponse {
+public class SignUpResultDto {
+
+    private boolean success;
+
+    private int code;
+
     private String msg;
 }

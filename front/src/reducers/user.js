@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import _ from "lodash";
-import axios from "axios";
+// import _ from "lodash";
+// import axios from "axios";
 export const initialState = {
   isLoggedIn: false,
   logInLoading: false, // 로그인 시도중
@@ -28,11 +28,10 @@ export const loginAction = createAsyncThunk(
   "user/login",
   async (data, { fulfillWithValue, rejectWithValue }) => {
     try {
-      console.log(data);
-      const response = await axios.post("/user/login", null, { params: data });
+      // const response = await axios.post("/user/login", data);
       console.log(data);
       await wait(1000);
-      return fulfillWithValue(response);
+      return fulfillWithValue(data);
     } catch (error) {
       throw rejectWithValue(error);
     }

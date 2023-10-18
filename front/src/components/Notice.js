@@ -24,13 +24,12 @@ const Notice = () => {
         hoverable
         style={{
           width: 500,
-          backgroundColor: "#ffccc7",
+          backgroundColor: "#fff1f0",
           margin: 10,
-          marginLeft: 50,
         }}
         onClick={onToggleNotice}
       >
-        <Meta title="게시판 제목" description="게시판 작성자" />
+        <Meta title="Europe Street beat" description="www.instagram.com" />
       </Card>
       {openNotice && (
         <Card
@@ -39,7 +38,7 @@ const Notice = () => {
           style={{
             width: 500,
             backgroundColor: "#ffd8bf",
-            marginLeft: 50,
+            margin: 10,
           }}
         >
           <p>내용</p>
@@ -59,12 +58,11 @@ const Notice = () => {
       {openComment && (
         <Card
           title="댓글창"
-          bordered={true}
+          bordered={false}
           style={{
             width: 500,
             backgroundColor: "#ffd8bf",
             margin: 10,
-            marginLeft: 50,
           }}
         >
           {array.map(() => (
@@ -72,16 +70,6 @@ const Notice = () => {
           ))}
 
           <TextArea rows={4} />
-          <Button
-            type="primary"
-            style={{
-              marginLeft: 380,
-              backgroundColor: "#ffd8bf",
-              color: "#000000",
-            }}
-          >
-            <span>댓글달기</span>
-          </Button>
         </Card>
       )}
     </div>
