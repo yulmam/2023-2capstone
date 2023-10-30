@@ -1,6 +1,6 @@
 package com.example.modak.config.security;
 
-import com.example.modak.dto.EntryPointErrorResponse;
+import com.example.modak.logIn.dto.EntryPointErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

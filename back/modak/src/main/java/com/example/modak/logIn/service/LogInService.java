@@ -1,7 +1,7 @@
-package com.example.modak.service;
+package com.example.modak.logIn.service;
 
-import com.example.modak.dto.LogInResultDto;
-import com.example.modak.dto.SignUpResultDto;
+import com.example.modak.logIn.dto.LogInResultDto;
+import com.example.modak.logIn.dto.SignUpResultDto;
 
 public interface LogInService {
     SignUpResultDto signUp(String id, String password, String name, String email, String role);

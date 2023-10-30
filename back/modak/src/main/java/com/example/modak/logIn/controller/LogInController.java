@@ -1,8 +1,8 @@
-package com.example.modak.controller;
+package com.example.modak.logIn.controller;
 
-import com.example.modak.dto.LogInResultDto;
-import com.example.modak.dto.SignUpResultDto;
-import com.example.modak.service.LogInService;
+import com.example.modak.logIn.dto.LogInResultDto;
+import com.example.modak.logIn.dto.SignUpResultDto;
+import com.example.modak.logIn.service.LogInService;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

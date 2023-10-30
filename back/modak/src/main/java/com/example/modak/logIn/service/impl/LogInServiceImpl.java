@@ -1,12 +1,12 @@
-package com.example.modak.service.impl;
+package com.example.modak.logIn.service.impl;
 
 import com.example.modak.common.CommonResponse;
 import com.example.modak.config.security.JwtTokenProvider;
-import com.example.modak.domain.User;
-import com.example.modak.dto.LogInResultDto;
-import com.example.modak.dto.SignUpResultDto;
-import com.example.modak.respository.UserRepository;
-import com.example.modak.service.LogInService;
+import com.example.modak.logIn.domain.User;
+import com.example.modak.logIn.dto.LogInResultDto;
+import com.example.modak.logIn.dto.SignUpResultDto;
+import com.example.modak.logIn.respository.UserRepository;
+import com.example.modak.logIn.service.LogInService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

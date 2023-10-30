@@ -1,9 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+<<<<<<< HEAD
 import { setRefreshToken } from "../storage/Cookie";
 import _ from "lodash";
 export const TOKEN_TIME_OUT = 600 * 1000;
 // import axios from "axios";
 
+=======
+// import _ from "lodash";
+// import axios from "axios";
+>>>>>>> 434509657068d8fe8091375ade4bee90f1f572c5
 export const initialState = {
   isLoggedIn: false,
   logInLoading: false, // 로그인 시도중
@@ -34,6 +39,7 @@ export const loginAction = createAsyncThunk(
   "user/login",
   async (data, { fulfillWithValue, rejectWithValue }) => {
     try {
+<<<<<<< HEAD
       console.log(data);
       // const response = await axios.post("/user/login", null, { params: data });
       console.log(data);
@@ -47,6 +53,11 @@ export const loginAction = createAsyncThunk(
       // 쿠키에 Refresh Token, store에 Access Token 저장
       //response에 받는 토큰 형식 확인
       // setRefreshToken(response.json.refresh_token);
+=======
+      // const response = await axios.post("/user/login", data);
+      console.log(data);
+      await wait(1000);
+>>>>>>> 434509657068d8fe8091375ade4bee90f1f572c5
       return fulfillWithValue(data);
     } catch (error) {
       throw rejectWithValue(error);

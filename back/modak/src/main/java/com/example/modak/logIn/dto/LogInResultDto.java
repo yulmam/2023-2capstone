@@ -1,4 +1,4 @@
-package com.example.modak.dto;
+package com.example.modak.logIn.dto;
 
 
 import lombok.*;

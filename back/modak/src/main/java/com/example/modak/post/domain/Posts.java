@@ -1,4 +1,4 @@
-package com.example.modak.domain;
+package com.example.modak.post.domain;
 
 
 import lombok.Getter;

@@ -27,8 +27,10 @@ const LoginForm = () => {
     <Form
       name="normal_login"
       className="login-form"
+      initialValues={{
+        remember: true,
+      }}
       onFinish={onSumbitForm}
-      style={{ margin: 20 }}
     >
       <Form.Item
         name="username"
@@ -65,6 +67,15 @@ const LoginForm = () => {
           required
         />
       </Form.Item>
+      <Form.Item>
+        <Form.Item name="remember" valuePropName="checked" noStyle>
+          <Checkbox>Remember me</Checkbox>
+        </Form.Item>
+
+        <Link className="login-form-forgot" href="">
+          Forgot password
+        </Link>
+      </Form.Item>
 
       <Form.Item>
         <Button
@@ -82,6 +93,7 @@ const LoginForm = () => {
         >
           sign up
         </SignupButton>
+        Or <Link href="">register now!</Link>
       </Form.Item>
     </Form>
   );

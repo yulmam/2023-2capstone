@@ -1,6 +1,6 @@
-package com.example.modak.service.impl;
+package com.example.modak.logIn.service.impl;
 
-import com.example.modak.respository.UserRepository;
+import com.example.modak.logIn.respository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
