@@ -5,7 +5,7 @@ import Comment from "./Comment";
 import { Card, Button, Input } from "antd";
 const { Meta } = Card;
 const { TextArea } = Input;
-const Notice = () => {
+const Notice = ({ post }) => {
   const [openNotice, setOpenNotice] = useState(false);
   const [openComment, setOpenComment] = useState(false);
   const onToggleNotice = useCallback(() => {
@@ -30,7 +30,7 @@ const Notice = () => {
         }}
         onClick={onToggleNotice}
       >
-        <Meta title="게시판 제목" description="게시판 작성자" />
+        <Meta title={post.title} description={post.User.nickname} />
       </Card>
       {openNotice && (
         <Card
