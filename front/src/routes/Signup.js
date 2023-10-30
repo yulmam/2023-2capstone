@@ -84,6 +84,7 @@ const Signup = () => {
           }}
           style={{
             maxWidth: 600,
+            margin: 50,
           }}
           scrollToFirstError
         >
@@ -105,7 +106,7 @@ const Signup = () => {
             />
           </Form.Item>
 
-          <Form.Item
+          {/* <Form.Item
             name="email"
             label="E-mail"
             rules={[
@@ -125,7 +126,7 @@ const Signup = () => {
               required
               onChange={onChangeEmail}
             />
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item
             name="password"
@@ -189,23 +190,6 @@ const Signup = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item
-            name="agreement"
-            valuePropName="checked"
-            rules={[
-              {
-                validator: (_, value) =>
-                  value
-                    ? Promise.resolve()
-                    : Promise.reject(new Error("Should accept agreement")),
-              },
-            ]}
-            {...tailFormItemLayout}
-          >
-            <Checkbox>
-              I have read the <a href="">agreement</a>
-            </Checkbox>
-          </Form.Item>
           <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">
               Register

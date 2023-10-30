@@ -29,11 +29,7 @@ const Notice = ({ post }) => {
         }}
         onClick={onToggleNotice}
       >
-<<<<<<< HEAD
-        <Meta title={post.title} description={post.User.nickname} />
-=======
-        <Meta title="Europe Street beat" description="www.instagram.com" />
->>>>>>> 434509657068d8fe8091375ade4bee90f1f572c5
+        <Meta title={post.title} description={post.content} />
       </Card>
       {openNotice && (
         <Card

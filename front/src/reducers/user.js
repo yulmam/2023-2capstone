@@ -1,14 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-<<<<<<< HEAD
 import { setRefreshToken } from "../storage/Cookie";
 import _ from "lodash";
+import axios from "axios";
 export const TOKEN_TIME_OUT = 600 * 1000;
-// import axios from "axios";
 
-=======
-// import _ from "lodash";
-// import axios from "axios";
->>>>>>> 434509657068d8fe8091375ade4bee90f1f572c5
 export const initialState = {
   isLoggedIn: false,
   logInLoading: false, // 로그인 시도중
@@ -39,25 +34,20 @@ export const loginAction = createAsyncThunk(
   "user/login",
   async (data, { fulfillWithValue, rejectWithValue }) => {
     try {
-<<<<<<< HEAD
       console.log(data);
-      // const response = await axios.post("/user/login", null, { params: data });
-      console.log(data);
+      const response = await axios.post("/user/login", data);
+      console.log(response.data);
       await wait(1000);
       // loacalStorage를 사용해서 토큰을 저장하는 것
-      // const { accessToken, refreshToken} = response;
-      // localStorage.setItem('access', accessToken);
-      // localStorage.setItem('refresh', refreshToken);
+      const { success, code, msg, token } = response.data;
+      console.log(token);
+      localStorage.setItem("access", token);
+
       // // 이렇게 axios요청할때 해더에 기본으로 accessToken을 붙이게 설정 할 수 있다
       // axios.defaults.headers.common['access'] = accessToken
       // 쿠키에 Refresh Token, store에 Access Token 저장
       //response에 받는 토큰 형식 확인
       // setRefreshToken(response.json.refresh_token);
-=======
-      // const response = await axios.post("/user/login", data);
-      console.log(data);
-      await wait(1000);
->>>>>>> 434509657068d8fe8091375ade4bee90f1f572c5
       return fulfillWithValue(data);
     } catch (error) {
       throw rejectWithValue(error);
@@ -104,8 +94,9 @@ const userSlice = createSlice({
         state.expireTime = new Date().getTime() + TOKEN_TIME_OUT;
       })
       .addCase(loginAction.rejected, (state, action) => {
+        console.log(action);
         state.logInLoading = false;
-        state.logInError = action.payload.data.message;
+        state.logInError = action.payload.data;
       })
       .addCase(logoutAction.pending, (state) => {
         state.logOutLoading = true;
