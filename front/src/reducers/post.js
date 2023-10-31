@@ -108,16 +108,22 @@ export const addImage = createAsyncThunk(
   }
 );
 
-export const loadPosts = createAsyncThunk("/post/loadPosts", async () => {
-  const access = localStorage.getItem("access");
-  const response = await axios.post("/post/loadPosts", {
-    headers: {
-      Authorization: access,
-    },
-  });
-
-  return response.data;
-});
+export const loadPosts = createAsyncThunk(
+  "/post/loadPosts",
+  async ({ fulfillWithValue, rejectWithValue }) => {
+    try {
+      const access = localStorage.getItem("access");
+      const response = await axios.get("/post/loadPosts", {
+        headers: {
+          "X-AUTH-TOKEN": access,
+        },
+      });
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
+  }
+);
 
 const postSlice = createSlice({
   name: "post",

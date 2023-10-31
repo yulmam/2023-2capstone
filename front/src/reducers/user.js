@@ -58,9 +58,9 @@ export const signUp = createAsyncThunk(
   "user/signup",
   async (data, { fulfillWithValue, rejectWithValue }) => {
     try {
-      // const response = await axios.post("/user", data);
+      const response = await axios.post("/user/signup", data);
       // response data안에config.data에 회원가입 정보들이 들어있다
-      return fulfillWithValue(data);
+      return fulfillWithValue(response.data);
     } catch (error) {
       //error.response.data 안에 send로 보낸 message가 들어있다
       throw rejectWithValue(error);

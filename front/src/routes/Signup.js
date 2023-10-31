@@ -41,7 +41,7 @@ const Signup = () => {
   const dispatch = useDispatch();
   const { signUpLoading } = useSelector((state) => state.user);
   const [form] = Form.useForm();
-  const [user_id, onChangeId] = useInput("");
+  const [uid, onChangeId] = useInput("");
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
   const [nickname, onChangeNickname] = useInput("");
@@ -55,15 +55,18 @@ const Signup = () => {
     }
   }, [me, navigate]);
 
-  const onChangePasswordCheck = useCallback((e) => {
-    setPasswordCheck(e.target.value);
-    setPasswordError(e.target.value !== password);
-  }, []);
+  const onChangePasswordCheck = useCallback(
+    (e) => {
+      setPasswordCheck(e.target.value);
+      setPasswordError(e.target.value !== password);
+    },
+    [password]
+  );
   const onSubmit = useCallback(
     (e) => {
-      dispatch(signUp({ user_id, email, password, nickname }));
+      dispatch(signUp({ uid, email, password, nickname }));
     },
-    [dispatch, user_id, email, nickname, password]
+    [dispatch, uid, email, nickname, password]
   );
 
   return (
@@ -90,7 +93,7 @@ const Signup = () => {
         >
           <Form.Item
             label="ID"
-            name="user_id"
+            name="uid"
             rules={[
               {
                 required: true,
@@ -100,13 +103,13 @@ const Signup = () => {
           >
             <Input
               name="user-id"
-              value={user_id}
+              value={uid}
               required
               onChange={onChangeEmail}
             />
           </Form.Item>
 
-          {/* <Form.Item
+          <Form.Item
             name="email"
             label="E-mail"
             rules={[
@@ -126,7 +129,7 @@ const Signup = () => {
               required
               onChange={onChangeEmail}
             />
-          </Form.Item> */}
+          </Form.Item>
 
           <Form.Item
             name="password"
