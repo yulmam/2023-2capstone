@@ -44,11 +44,11 @@ public class LogInController {
     public SignUpResultDto signUp(
             @ApiParam(value = "UID", required = true) @RequestParam String uid,
             @ApiParam(value = "비밀번호", required = true) @RequestParam String password,
-            @ApiParam(value = "이름", required = true) @RequestParam String name,
+            @ApiParam(value = "이름", required = true) @RequestParam String nickName,
             @ApiParam(value = "email", required = true) @RequestParam String email,
             @ApiParam(value = "권한", required = false) @RequestParam String role) {
 
-        SignUpResultDto signUpResultDto = logInService.signUp(uid, password, name, email, role);
+        SignUpResultDto signUpResultDto = logInService.signUp(uid, password, nickName, email, role);
 
         return signUpResultDto;
     }

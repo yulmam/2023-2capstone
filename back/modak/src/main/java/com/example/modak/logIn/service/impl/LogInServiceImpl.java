@@ -29,13 +29,13 @@ public class LogInServiceImpl implements LogInService {
     }
 
     @Override
-    public SignUpResultDto signUp(String uid, String password, String name, String email, String role) {
+    public SignUpResultDto signUp(String uid, String password, String nickName, String email, String role) {
 
         User user;
         if (role.equalsIgnoreCase("admin")) {
             user = User.builder()
                     .uid(uid)
-                    .name(name)
+                    .nickName(nickName)
                     .email(email)
                     .password(passwordEncoder.encode(password))
                     .roles(Collections.singletonList("ROLE_ADMIN"))
@@ -43,7 +43,7 @@ public class LogInServiceImpl implements LogInService {
         } else {
             user = User.builder()
                     .uid(uid)
-                    .name(name)
+                    .nickName(nickName)
                     .email(email)
                     .password(passwordEncoder.encode(password))
                     .roles(Collections.singletonList("ROLE_USER"))
@@ -53,7 +53,7 @@ public class LogInServiceImpl implements LogInService {
         User savedUser = userRepository.save(user);
         SignUpResultDto signUpResultDto = new SignUpResultDto();
 
-        if (!savedUser.getName().isEmpty()) {
+        if (!savedUser.getNickName().isEmpty()) {
             setSuccessResult(signUpResultDto);
         } else {
             setFailResult(signUpResultDto);
@@ -71,6 +71,7 @@ public class LogInServiceImpl implements LogInService {
         LogInResultDto logInResultDto = LogInResultDto.builder()
                 .token(jwtTokenProvider.createToken(String.valueOf(user.getUid()),
                         user.getRoles()))
+                .nickName(user.getNickName())
                 .build();
         setSuccessResult(logInResultDto);
         return logInResultDto;

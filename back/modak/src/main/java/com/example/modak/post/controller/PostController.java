@@ -11,8 +11,8 @@ import java.net.http.HttpRequest;
 @RestController
 @RequestMapping("/post")
 public class PostController {
-    @GetMapping("/loadPost")
-    public String seePost(HttpServletRequest request) {
-        return request.getHeader("X-AUTH-TOKEN");
+    @GetMapping("/loadPosts")
+    public String seePost() {
+        return "test";
     }
 }
