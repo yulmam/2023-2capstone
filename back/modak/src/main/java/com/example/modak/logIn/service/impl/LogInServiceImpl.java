@@ -5,6 +5,7 @@ import com.example.modak.config.security.JwtTokenProvider;
 import com.example.modak.logIn.domain.User;
 import com.example.modak.logIn.dto.LogInRequestDto;
 import com.example.modak.logIn.dto.LogInResultDto;
+import com.example.modak.logIn.dto.SignUpRequestDto;
 import com.example.modak.logIn.dto.SignUpResultDto;
 import com.example.modak.logIn.respository.UserRepository;
 import com.example.modak.logIn.service.LogInService;
@@ -29,23 +30,24 @@ public class LogInServiceImpl implements LogInService {
     }
 
     @Override
-    public SignUpResultDto signUp(String uid, String password, String nickName, String email, String role) {
+    public SignUpResultDto signUp(SignUpRequestDto signUpRequestDto) {
+
 
         User user;
-        if (role.equalsIgnoreCase("admin")) {
+        if (signUpRequestDto.getRole().equalsIgnoreCase("admin")) {
             user = User.builder()
-                    .uid(uid)
-                    .nickName(nickName)
-                    .email(email)
-                    .password(passwordEncoder.encode(password))
+                    .uid(signUpRequestDto.getUid())
+                    .nickName(signUpRequestDto.getNickName())
+                    .email(signUpRequestDto.getEmail())
+                    .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
                     .roles(Collections.singletonList("ROLE_ADMIN"))
                     .build();
         } else {
             user = User.builder()
-                    .uid(uid)
-                    .nickName(nickName)
-                    .email(email)
-                    .password(passwordEncoder.encode(password))
+                    .uid(signUpRequestDto.getUid())
+                    .nickName(signUpRequestDto.getNickName())
+                    .email(signUpRequestDto.getEmail())
+                    .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
                     .roles(Collections.singletonList("ROLE_USER"))
                     .build();
         }

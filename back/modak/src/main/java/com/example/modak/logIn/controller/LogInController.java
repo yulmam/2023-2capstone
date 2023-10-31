@@ -2,6 +2,7 @@ package com.example.modak.logIn.controller;
 
 import com.example.modak.logIn.dto.LogInRequestDto;
 import com.example.modak.logIn.dto.LogInResultDto;
+import com.example.modak.logIn.dto.SignUpRequestDto;
 import com.example.modak.logIn.dto.SignUpResultDto;
 import com.example.modak.logIn.service.LogInService;
 import io.swagger.annotations.ApiParam;
@@ -42,13 +43,9 @@ public class LogInController {
 
     @PostMapping(value = "/signup")
     public SignUpResultDto signUp(
-            @ApiParam(value = "UID", required = true) @RequestParam String uid,
-            @ApiParam(value = "비밀번호", required = true) @RequestParam String password,
-            @ApiParam(value = "이름", required = true) @RequestParam String nickName,
-            @ApiParam(value = "email", required = true) @RequestParam String email,
-            @ApiParam(value = "권한", required = false) @RequestParam String role) {
+            @ApiParam(value = "UID", required = true) @RequestBody SignUpRequestDto signUpRequestDto) {
 
-        SignUpResultDto signUpResultDto = logInService.signUp(uid, password, nickName, email, role);
+        SignUpResultDto signUpResultDto = logInService.signUp(signUpRequestDto);
 
         return signUpResultDto;
     }
