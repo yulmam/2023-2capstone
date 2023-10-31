@@ -109,7 +109,12 @@ export const addImage = createAsyncThunk(
 );
 
 export const loadPosts = createAsyncThunk("/post/loadPosts", async () => {
-  const response = await axios.post("/post/loadPosts");
+  const access = localStorage.getItem("access");
+  const response = await axios.post("/post/loadPosts", {
+    headers: {
+      Authorization: access,
+    },
+  });
 
   return response.data;
 });
