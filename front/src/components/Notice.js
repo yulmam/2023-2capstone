@@ -65,11 +65,22 @@ const Notice = ({ post }) => {
             margin: 10,
           }}
         >
-          {array.map(() => (
-            <Comment />
+          {post.Comments.map((comment) => (
+            <Comment key={comment.id} comment={comment} />
           ))}
 
           <TextArea rows={4} />
+          <Button
+            type="primary"
+            style={{
+              marginLeft: 380,
+              backgroundColor: "#ffd8bf",
+              color: "#000000",
+            }}
+            onClick={onToggleComment}
+          >
+            <span>댓글작성</span>
+          </Button>
         </Card>
       )}
     </div>

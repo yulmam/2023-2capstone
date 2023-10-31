@@ -11,14 +11,14 @@ const Notice_board = () => {
   const dispatch = useDispatch();
   const { mainPosts } = useSelector((state) => state.post);
 
-  // useEffect(() => {
-  //   dispatch(loadPosts());
-  // }, [dispatch]);
-
-  const lastId = mainPosts[mainPosts.length - 1]?.id;
   useEffect(() => {
-    dispatch(loadPosts(lastId));
-  }, [dispatch, lastId]);
+    dispatch(loadPosts());
+  }, [dispatch]);
+
+  // const lastId = mainPosts[mainPosts.length - 1]?.id;
+  // useEffect(() => {
+  //   dispatch(loadPosts(lastId));
+  // }, [dispatch, lastId]);
   return (
     <div>
       <AppLayout>

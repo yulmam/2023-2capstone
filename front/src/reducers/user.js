@@ -44,7 +44,7 @@ export const loginAction = createAsyncThunk(
       localStorage.setItem("access", token);
 
       // // 이렇게 axios요청할때 해더에 기본으로 accessToken을 붙이게 설정 할 수 있다
-      // axios.defaults.headers.common['access'] = accessToken
+
       // 쿠키에 Refresh Token, store에 Access Token 저장
       //response에 받는 토큰 형식 확인
       // setRefreshToken(response.json.refresh_token);

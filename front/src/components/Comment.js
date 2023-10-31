@@ -2,11 +2,11 @@ import React, { useState, useCallback } from "react";
 
 import { Card, Button, Input } from "antd";
 
-const Comment = () => {
+const Comment = ({ comment }) => {
   return (
     <div>
       <Card
-        title="댓글"
+        title={comment.nickname}
         bordered={false}
         style={{
           width: 400,
@@ -14,7 +14,7 @@ const Comment = () => {
           margin: 10,
         }}
       >
-        댓글 내용
+        {comment.comment}
       </Card>
     </div>
   );

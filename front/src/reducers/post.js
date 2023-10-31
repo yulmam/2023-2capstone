@@ -4,7 +4,7 @@ import {
   miniSerializeError,
 } from "@reduxjs/toolkit";
 import { throttle } from "lodash";
-
+import axios from "axios";
 export const initialState = {
   mainPosts: [],
   imagePaths: [],
@@ -43,7 +43,7 @@ const dummyPost = [
     ],
   },
   {
-    id: 1,
+    id: 2,
     title: "더미게시글 제목",
     content: "더미데이터입니다",
     User: {
@@ -108,10 +108,10 @@ export const addImage = createAsyncThunk(
   }
 );
 
-export const loadPosts = createAsyncThunk("/post/loadPosts", async (lastId) => {
-  //const response = await axios.post("/post/loadPosts");
+export const loadPosts = createAsyncThunk("/post/loadPosts", async () => {
+  const response = await axios.post("/post/loadPosts");
 
-  return;
+  return response.data;
 });
 
 const postSlice = createSlice({

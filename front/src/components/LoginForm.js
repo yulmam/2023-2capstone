@@ -15,13 +15,13 @@ const SignupButton = styled(Button)`
 const LoginForm = () => {
   const dispatch = useDispatch();
   const { logInLoading } = useSelector((state) => state.user);
-  const [username, onChangeusername] = useInput("");
+  const [uid, onChangeuid] = useInput("");
   const [password, onChangePassword] = useInput("");
 
   const onSumbitForm = useCallback(() => {
-    console.log(username, password);
-    dispatch(loginAction({ username, password }));
-  }, [username, password, dispatch]);
+    console.log(uid, password);
+    dispatch(loginAction({ uid, password }));
+  }, [uid, password, dispatch]);
 
   return (
     <Form
@@ -44,8 +44,8 @@ const LoginForm = () => {
         <Input
           prefix={<UserOutlined className="site-form-item-icon" />}
           placeholder="Username"
-          value={username}
-          onChange={onChangeusername}
+          value={uid}
+          onChange={onChangeuid}
           required
         />
       </Form.Item>
