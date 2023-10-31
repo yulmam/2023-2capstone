@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import _ from "lodash";
-// import axios from "axios";
+import { setRefreshToken } from "../storage/Cookie";
+import _ from "lodash";
+import axios from "axios";
+export const TOKEN_TIME_OUT = 600 * 1000;
+
 export const initialState = {
   isLoggedIn: false,
   logInLoading: false, // 로그인 시도중
@@ -15,6 +18,9 @@ export const initialState = {
   signUpData: {},
   loginData: {},
   me: null,
+  authenticated: false,
+  accessToken: null,
+  expireTime: null,
 };
 const dummyUser = (data) => ({
   ...data,
@@ -28,9 +34,20 @@ export const loginAction = createAsyncThunk(
   "user/login",
   async (data, { fulfillWithValue, rejectWithValue }) => {
     try {
-      // const response = await axios.post("/user/login", data);
       console.log(data);
+      const response = await axios.post("/user/login", data);
+      console.log(response.data);
       await wait(1000);
+      // loacalStorage를 사용해서 토큰을 저장하는 것
+      const { success, code, msg, token } = response.data;
+      console.log(token);
+      localStorage.setItem("access", token);
+
+      // // 이렇게 axios요청할때 해더에 기본으로 accessToken을 붙이게 설정 할 수 있다
+      // axios.defaults.headers.common['access'] = accessToken
+      // 쿠키에 Refresh Token, store에 Access Token 저장
+      //response에 받는 토큰 형식 확인
+      // setRefreshToken(response.json.refresh_token);
       return fulfillWithValue(data);
     } catch (error) {
       throw rejectWithValue(error);
@@ -72,10 +89,14 @@ const userSlice = createSlice({
         state.isLoggedIn = true;
         state.me = dummyUser(action.payload);
         state.loginData = action.payload;
+        state.authenticated = true;
+        state.accessToken = action.payload;
+        state.expireTime = new Date().getTime() + TOKEN_TIME_OUT;
       })
       .addCase(loginAction.rejected, (state, action) => {
+        console.log(action);
         state.logInLoading = false;
-        state.logInError = action.payload.data.message;
+        state.logInError = action.payload.data;
       })
       .addCase(logoutAction.pending, (state) => {
         state.logOutLoading = true;
@@ -86,6 +107,9 @@ const userSlice = createSlice({
         state.logInDone = false;
         state.isLoggedIn = false;
         state.me = null;
+        state.authenticated = false;
+        state.accessToken = null;
+        state.expireTime = null;
       })
       .addCase(logoutAction.rejected, (state, action) => {
         state.logOutLoading = false;

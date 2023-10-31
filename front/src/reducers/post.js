@@ -1,20 +1,64 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  miniSerializeError,
+} from "@reduxjs/toolkit";
 import { throttle } from "lodash";
 
 export const initialState = {
   mainPosts: [],
   imagePaths: [],
+  // 분석 요청 보내는 state
   submitReportLoading: false,
   submitReportDone: false,
   submitReportError: null,
+  // 분석 사진 업로드 state
   addImageLoading: false,
   addImageDone: false,
   addImageError: null,
+  // 게시글 전부 불러오는 state
+  loadPostsLoading: false,
+  loadPostsDone: false,
+  loadPostsError: null,
   // 나중에 데이터베이스에 넣을 state
   user_name: null,
   user_sex: null,
   user_age: null,
 };
+const dummyPost = [
+  {
+    id: 1,
+    title: "더미게시글 제목",
+    content: "더미데이터입니다",
+    User: {
+      id: 1,
+      nickname: "이규열",
+    },
+    Comments: [
+      {
+        id: 1,
+        nickname: "김한얼",
+        comment: "더미데이터 뎃글입니다",
+      },
+    ],
+  },
+  {
+    id: 1,
+    title: "더미게시글 제목",
+    content: "더미데이터입니다",
+    User: {
+      id: 1,
+      nickname: "이규열",
+    },
+    Comments: [
+      {
+        id: 1,
+        nickname: "김한얼",
+        comment: "더미데이터 뎃글입니다",
+      },
+    ],
+  },
+];
 const wait = (timeToDelay) =>
   new Promise((resolve) => setTimeout(resolve, timeToDelay));
 
@@ -64,6 +108,12 @@ export const addImage = createAsyncThunk(
   }
 );
 
+export const loadPosts = createAsyncThunk("/post/loadPosts", async (lastId) => {
+  //const response = await axios.post("/post/loadPosts");
+
+  return;
+});
+
 const postSlice = createSlice({
   name: "post",
   initialState,
@@ -102,6 +152,23 @@ const postSlice = createSlice({
       .addCase(addImage.rejected, (state, action) => {
         state.addImageLoading = false;
         state.addImageError = action.error;
+      })
+      .addCase(loadPosts.pending, (state, action) => {
+        state.loadPostsLoading = true;
+        state.loadPostsDone = false;
+      })
+      .addCase(loadPosts.fulfilled, (state, action) => {
+        // 계속 게시글이 쌓이는걸 방지
+        if (dummyPost.length !== state.mainPosts.length) {
+          state.mainPosts = state.mainPosts.concat(dummyPost);
+        }
+
+        state.loadPostsLoading = false;
+        state.loadPostsDone = true;
+      })
+      .addCase(loadPosts.rejected, (state, action) => {
+        state.loadPostsLoading = false;
+        state.loadPostsError = action.error;
       })
       .addDefaultCase((state) => state),
 });

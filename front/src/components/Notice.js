@@ -5,7 +5,7 @@ import Comment from "./Comment";
 import { Card, Button, Input } from "antd";
 const { Meta } = Card;
 const { TextArea } = Input;
-const Notice = () => {
+const Notice = ({ post }) => {
   const [openNotice, setOpenNotice] = useState(false);
   const [openComment, setOpenComment] = useState(false);
   const onToggleNotice = useCallback(() => {
@@ -29,7 +29,7 @@ const Notice = () => {
         }}
         onClick={onToggleNotice}
       >
-        <Meta title="Europe Street beat" description="www.instagram.com" />
+        <Meta title={post.title} description={post.content} />
       </Card>
       {openNotice && (
         <Card
