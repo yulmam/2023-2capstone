@@ -34,23 +34,14 @@ public class LogInServiceImpl implements LogInService {
 
 
         User user;
-        if (signUpRequestDto.getRole().equalsIgnoreCase("admin")) {
-            user = User.builder()
-                    .uid(signUpRequestDto.getUid())
-                    .nickName(signUpRequestDto.getNickName())
-                    .email(signUpRequestDto.getEmail())
-                    .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
-                    .roles(Collections.singletonList("ROLE_ADMIN"))
-                    .build();
-        } else {
-            user = User.builder()
-                    .uid(signUpRequestDto.getUid())
-                    .nickName(signUpRequestDto.getNickName())
-                    .email(signUpRequestDto.getEmail())
-                    .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
-                    .roles(Collections.singletonList("ROLE_USER"))
-                    .build();
-        }
+        user = User.builder()
+                .uid(signUpRequestDto.getUid())
+                .nickName(signUpRequestDto.getNickName())
+                .email(signUpRequestDto.getEmail())
+                .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
+                .roles(Collections.singletonList("ROLE_USER"))
+                .build();
+
 
         User savedUser = userRepository.save(user);
         SignUpResultDto signUpResultDto = new SignUpResultDto();
