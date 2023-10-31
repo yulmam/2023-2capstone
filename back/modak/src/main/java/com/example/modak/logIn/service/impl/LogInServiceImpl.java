@@ -3,6 +3,7 @@ package com.example.modak.logIn.service.impl;
 import com.example.modak.common.CommonResponse;
 import com.example.modak.config.security.JwtTokenProvider;
 import com.example.modak.logIn.domain.User;
+import com.example.modak.logIn.dto.LogInRequestDto;
 import com.example.modak.logIn.dto.LogInResultDto;
 import com.example.modak.logIn.dto.SignUpResultDto;
 import com.example.modak.logIn.respository.UserRepository;
@@ -28,12 +29,12 @@ public class LogInServiceImpl implements LogInService {
     }
 
     @Override
-    public SignUpResultDto signUp(String id, String password, String name, String email, String role) {
+    public SignUpResultDto signUp(String uid, String password, String name, String email, String role) {
 
         User user;
         if (role.equalsIgnoreCase("admin")) {
             user = User.builder()
-                    .uid(id)
+                    .uid(uid)
                     .name(name)
                     .email(email)
                     .password(passwordEncoder.encode(password))
@@ -41,7 +42,7 @@ public class LogInServiceImpl implements LogInService {
                     .build();
         } else {
             user = User.builder()
-                    .uid(id)
+                    .uid(uid)
                     .name(name)
                     .email(email)
                     .password(passwordEncoder.encode(password))
@@ -61,10 +62,10 @@ public class LogInServiceImpl implements LogInService {
     }
 
     @Override
-    public LogInResultDto logIn(String id, String password) throws RuntimeException {
-        User user = userRepository.getByUid(id);
+    public LogInResultDto logIn(LogInRequestDto logInRequestDto) throws RuntimeException {
+        User user = userRepository.getByUid(logInRequestDto.getUid());
 
-        if (!passwordEncoder.matches(password, user.getPassword())) {
+        if (!passwordEncoder.matches(logInRequestDto.getPassword(), user.getPassword())) {
             throw new RuntimeException();
         }
         LogInResultDto logInResultDto = LogInResultDto.builder()

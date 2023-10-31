@@ -1,5 +1,6 @@
 package com.example.modak.logIn.controller;
 
+import com.example.modak.logIn.dto.LogInRequestDto;
 import com.example.modak.logIn.dto.LogInResultDto;
 import com.example.modak.logIn.dto.SignUpResultDto;
 import com.example.modak.logIn.service.LogInService;
@@ -26,31 +27,12 @@ public class LogInController {
         this.logInService = logInService;
     }
 
+
     @PostMapping(value = "/login")
-    public LogInResultDto logIn(HttpServletRequest request,
-            @ApiParam(value = "Username", required = true) @RequestParam("username") String username,
-                                @ApiParam(value = "Password", required = true) @RequestParam("password") String password)
+    public LogInResultDto logIn(@ApiParam(value = "uid, password", required = true) @RequestBody LogInRequestDto logInRequestDto)
             throws RuntimeException {
 
-        System.out.println("request.getMethod() = " + request.getMethod()); //GET
-        System.out.println("request.getProtocal() = " + request.getProtocol()); // HTTP/1.1
-        System.out.println("request.getScheme() = " + request.getScheme()); //http
-        // http://localhost:8080/request-header
-        System.out.println("request.getRequestURL() = " + request.getRequestURL());
-        // /request-test
-        System.out.println("request.getRequestURI() = " + request.getRequestURI());
-        //username=hi
-        System.out.println("request.getQueryString() = " +
-                request.getQueryString());
-        System.out.println("request.isSecure() = " + request.isSecure()); //https 사용 유무
-        Enumeration params = request.getParameterNames();
-        System.out.println("----------------------------");
-        while (params.hasMoreElements()){
-            String name = (String)params.nextElement();
-            System.out.println(name + " : " +request.getParameter(name));
-        }
-        System.out.println("----------------------------");
-        LogInResultDto logInResultDto = logInService.logIn(username, password);
+        LogInResultDto logInResultDto = logInService.logIn(logInRequestDto);
 
         if (logInResultDto.getCode() == 0) {
             logInResultDto.getToken();
@@ -79,7 +61,6 @@ public class LogInController {
     @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<Map<String, String>> ExceptionHandler(RuntimeException e) {
         HttpHeaders responseHeaders = new HttpHeaders();
-        //responseHeaders.add(HttpHeaders.CONTENT_TYPE, "application/json");
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
 
         Map<String, String> map = new HashMap<>();

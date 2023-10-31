@@ -8,7 +8,7 @@ import lombok.*;
 @ToString
 @Builder
 public class SignUpRequestDto {
-    private String id;
+    private String uid;
 
     private String password;
 
