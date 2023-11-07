@@ -59,11 +59,7 @@ export const signUp = createAsyncThunk(
   "user/signup",
   async (data, { fulfillWithValue, rejectWithValue }) => {
     try {
-<<<<<<< Updated upstream
       console.log(data);
-=======
-      console.log(data)
->>>>>>> Stashed changes
       const response = await axios.post("/user/signup", data);
       // response data안에config.data에 회원가입 정보들이 들어있다
       return fulfillWithValue(response.data);

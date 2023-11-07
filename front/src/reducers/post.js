@@ -108,7 +108,6 @@ export const addImage = createAsyncThunk(
   }
 );
 
-<<<<<<< Updated upstream
 export const loadPosts = createAsyncThunk(
   "/post/loadPosts",
   async ({ fulfillWithValue, rejectWithValue }) => {
@@ -138,18 +137,6 @@ export const loadPosts = createAsyncThunk(
 // });
 
 
-=======
-export const loadPosts = createAsyncThunk("/post/loadPosts", async () => {
-  const access = localStorage.getItem("access");
-  const response = await axios.post("/post/loadPosts", {
-    headers: {
-      Authorization: access,
-    },
-  });
-
-  return response.data;
-});
->>>>>>> Stashed changes
 
 const postSlice = createSlice({
   name: "post",

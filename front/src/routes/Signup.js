@@ -107,16 +107,7 @@ const Signup = () => {
               },
             ]}
           >
-<<<<<<< Updated upstream
             <Input name="user-id" value={uid} required onChange={onChangeId} />
-=======
-            <Input
-              name="user-id"
-              value={uid}
-              required
-              onChange={onChangeId}
-            />
->>>>>>> Stashed changes
           </Form.Item>
 
           <Form.Item

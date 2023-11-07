@@ -34,7 +34,7 @@ public class LogInServiceImpl implements LogInService {
         User user;
         user = User.builder()
                 .uid(signUpRequestDto.getUid())
-                .nickName(signUpRequestDto.getNickname())
+                .nickName(signUpRequestDto.getNickName())
                 .email(signUpRequestDto.getEmail())
                 .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
                 .roles(Collections.singletonList("ROLE_USER"))

@@ -44,9 +44,8 @@ public class LogInController {
     @PostMapping(value = "/signup")
     public SignUpResultDto signUp(
             @ApiParam(value = "UID", required = true) @RequestBody SignUpRequestDto signUpRequestDto) {
-        System.out.println("test1");
+
         SignUpResultDto signUpResultDto = logInService.signUp(signUpRequestDto);
-        System.out.println("test2");
 
         return signUpResultDto;
     }
