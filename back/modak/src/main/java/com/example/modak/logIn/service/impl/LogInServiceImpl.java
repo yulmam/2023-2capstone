@@ -31,8 +31,6 @@ public class LogInServiceImpl implements LogInService {
 
     @Override
     public SignUpResultDto signUp(SignUpRequestDto signUpRequestDto) {
-
-
         User user;
         user = User.builder()
                 .uid(signUpRequestDto.getUid())
@@ -41,6 +39,7 @@ public class LogInServiceImpl implements LogInService {
                 .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
                 .roles(Collections.singletonList("ROLE_USER"))
                 .build();
+
 
         User savedUser = userRepository.save(user);
         SignUpResultDto signUpResultDto = new SignUpResultDto();

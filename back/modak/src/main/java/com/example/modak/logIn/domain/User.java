@@ -1,6 +1,7 @@
 package com.example.modak.logIn.domain;
 
 
+import com.example.modak.diagnosis.domain.Diagnosis;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import lombok.*;
@@ -44,6 +45,11 @@ public class User implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
+
+    @Column
+    @OneToMany(fetch = FetchType.LAZY)
+    List<Diagnosis> diagnoses;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

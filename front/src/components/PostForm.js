@@ -110,6 +110,7 @@ const PostForm = () => {
           maxWidth: 600,
           margin: 30,
           marginTop: 100,
+          marginLeft: 100,
         }}
         onFinish={onSumbitForm}
       >
@@ -123,6 +124,9 @@ const PostForm = () => {
             fileList={frontList}
             onPreview={handlePreview}
             onChange={handleFrontChange}
+            style={{
+              marginLeft: 40,
+            }}
           >
             {frontList.length >= 1 ? null : uploadButton}
           </Upload>
