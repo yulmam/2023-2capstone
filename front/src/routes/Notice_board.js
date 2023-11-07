@@ -12,6 +12,7 @@ const Notice_board = () => {
   const { mainPosts } = useSelector((state) => state.post);
 
   useEffect(() => {
+    console.log("hi");
     dispatch(loadPosts());
   }, [dispatch]);
 

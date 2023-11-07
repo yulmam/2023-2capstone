@@ -39,12 +39,12 @@ const tailFormItemLayout = {
 };
 const Signup = () => {
   const dispatch = useDispatch();
-  const { signUpLoading } = useSelector((state) => state.user);
+  const { signUpLoading, signUpDone } = useSelector((state) => state.user);
   const [form] = Form.useForm();
   const [uid, onChangeId] = useInput("");
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
-  const [nickname, onChangeNickname] = useInput("");
+  const [nickName, onChangeNickname] = useInput("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   const { me } = useSelector((state) => state.user);
@@ -55,6 +55,12 @@ const Signup = () => {
     }
   }, [me, navigate]);
 
+  useEffect(() => {
+    if (signUpDone) {
+      navigate("/");
+    }
+  }, [navigate, signUpDone]);
+
   const onChangePasswordCheck = useCallback(
     (e) => {
       setPasswordCheck(e.target.value);
@@ -64,9 +70,9 @@ const Signup = () => {
   );
   const onSubmit = useCallback(
     (e) => {
-      dispatch(signUp({ uid, email, password, nickname }));
+      dispatch(signUp({ uid, email, password, nickName }));
     },
-    [dispatch, uid, email, nickname, password]
+    [dispatch, uid, email, nickName, password]
   );
 
   return (
@@ -101,12 +107,7 @@ const Signup = () => {
               },
             ]}
           >
-            <Input
-              name="user-id"
-              value={uid}
-              required
-              onChange={onChangeEmail}
-            />
+            <Input name="user-id" value={uid} required onChange={onChangeId} />
           </Form.Item>
 
           <Form.Item
@@ -186,7 +187,7 @@ const Signup = () => {
                 whitespace: true,
               },
             ]}
-            value={nickname}
+            value={nickName}
             required
             onChange={onChangeNickname}
           >

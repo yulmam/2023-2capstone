@@ -8,7 +8,7 @@ const Home = () => {
 
   return (
     <div>
-      <AppLayout>{isLoggedIn && <PostForm />}</AppLayout>
+      <AppLayout>{<PostForm />}</AppLayout>
     </div>
   );
 };

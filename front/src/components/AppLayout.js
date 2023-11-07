@@ -74,7 +74,7 @@ const AppLayout = ({ children }) => {
             <Col xs={24} md={12}>
               {children}
             </Col>
-            <Col xs={24} md={6}>
+            {/* <Col xs={24} md={6}>
               <a
                 href="https://github.com/seroak"
                 target="_blank"
@@ -82,7 +82,7 @@ const AppLayout = ({ children }) => {
               >
                 Made by lee
               </a>
-            </Col>
+            </Col> */}
           </Row>
         </div>
       </Content>
