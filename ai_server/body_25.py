@@ -123,15 +123,15 @@ POSE_PAIRS_BODY_25 = [[0, 1], [0, 15], [0, 16], [1, 2], [1, 5], [1, 8], [8, 9], 
 #protoFile_mpi = "C:\\Users\\jiheunJung\\Desktop\\capstone\\mpi\\pose_deploy_linevec.prototxt"
 #protoFile_mpi_faster = "C:\\Users\\jiheunJung\\Desktop\\capstone\\mpi\\pose_deploy_linevec_faster_4_stages.prototxt"
 ##protoFile_coco = "C:\\Users\\jiheunJung\\Desktop\\capstone\\coco\\pose_deploy_linevec.prototxt"
-protoFile_body_25 = "C:\\Users\\jiheunJung\\Desktop\\capstone\\ai_server\\body_25\\pose_deploy.prototxt"
+protoFile_body_25 = "C:\\Users\\jiheunJung\\Desktop\\2023-2captsopne\\ai_server\\body_25\\pose_deploy.prototxt"
 
 # 훈련된 모델의 weight 를 저장하는 caffemodel 파일
 #weightsFile_mpi = "C:\\Users\\jiheunJung\\Desktop\\capstone\\mpi\\pose_iter_160000.caffemodel"
 #weightsFile_coco = "C:\\Users\\jiheunJung\\Desktop\\capstone\\coco\\pose_iter_440000.caffemodel"
-weightsFile_body_25 = "C:\\Users\\jiheunJung\\Desktop\\capstone\\ai_server\\body_25\\pose_iter_584000.caffemodel"
+weightsFile_body_25 = "C:\\Users\\jiheunJung\\Desktop\\2023-2captsopne\\ai_server\\body_25\\pose_iter_584000.caffemodel"
 
 # 이미지 경로
-man = "C:\\Users\\jiheunJung\\Desktop\\capstone\\ai_server\\Pictures\\bad.png"
+man = "C:\\Users\\jiheunJung\\Desktop\\2023-2captsopne\\ai_server\\Pictures\\bad.png"
 
 # 키포인트를 저장할 빈 리스트  
 points = []
