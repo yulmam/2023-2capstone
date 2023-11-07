@@ -20,5 +20,4 @@ public class Post {
     String user_id;
     String title;
     String content;
-    String
 }

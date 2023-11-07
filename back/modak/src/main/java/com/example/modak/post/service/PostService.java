@@ -13,6 +13,6 @@ public class PostService {
     PostRepository postRepository;
 
     public PostListDto getPostList(int listNum) {
-
+        return null;
     }
 }
