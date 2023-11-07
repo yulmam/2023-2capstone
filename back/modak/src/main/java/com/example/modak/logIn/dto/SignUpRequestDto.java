@@ -12,7 +12,7 @@ public class SignUpRequestDto {
 
     private String password;
 
-    private String nickName;
+    private String nickname;
 
     private String email;
 
