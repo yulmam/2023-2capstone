@@ -38,8 +38,7 @@ const PostForm = () => {
 
   const onSumbitForm = useCallback(() => {
     const formData = new FormData();
-    console.log("frontList", frontList);
-    console.log("sideList", sideList);
+
     const imageArray = [];
     frontList.forEach((e) => {
       console.log(e.originFileObj);
