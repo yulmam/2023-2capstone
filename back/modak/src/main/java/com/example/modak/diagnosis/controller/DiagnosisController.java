@@ -31,6 +31,7 @@ public class DiagnosisController {
                 .uid(Long.parseLong(uid))
                 .build();
         System.out.println(diagnosisRequestDto);
+        System.out.println("test");
         //        DiagnosisResultDto diagnosisResultDto = diagnosisService.diagnosis(diagnosisRequestDto);
 
     }
