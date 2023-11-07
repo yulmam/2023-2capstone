@@ -37,25 +37,18 @@ const PostForm = () => {
   const [sideList, setSideList] = useState([]);
 
   const onSumbitForm = useCallback(() => {
-    const formData = new FormData();
-
-    const imageArray = [];
+    const imageObject = [];
     frontList.forEach((e) => {
       console.log(e.originFileObj);
-      imageArray.push(e.originFileObj);
+      imageObject.push({ front: e.originFileObj });
     });
     sideList.forEach((e) => {
       console.log(e.originFileObj);
-      imageArray.push(e.originFileObj);
+      imageObject.push({ side: e.originFileObj });
     });
-    console.log(imageArray);
+    console.log(imageObject);
 
-    // formData.append("name", name);
-    // formData.append("sex", sex);
-    // formData.append("age", age);
-    // console.log(formData);
-
-    dispatch(submitForm(imageArray));
+    dispatch(submitForm(imageObject));
     // dispatch(submitReport(formData));
   }, [dispatch, frontList, sideList]);
 
