@@ -108,7 +108,7 @@ BODY_PARTS_BODY_25 = {0: "Nose", 1: "Neck", 2: "RShoulder", 3: "RElbow", 4: "RWr
 POSE_PAIRS_BODY_25 = [[0, 1], [0, 15], [0, 16], [1, 2], [1, 5], [1, 8], [8, 9], [8, 12], [9, 10], [12, 13], [2, 3],
                       [3, 4], [5, 6], [6, 7], [10, 11], [13, 14], [15, 17], [16, 18], [14, 21], [19, 21], [20, 21],
                       [11, 24], [22, 24], [23, 24]]
-
+jeong_gi = 123
 # 신경 네트워크의 구조를 지정하는 prototxt 파일 (다양한 계층이 배열되는 방법 등)
 
 #protoFile_mpi = "C:\\Users\\jiheunJung\\Desktop\\capstone\\mpi\\pose_deploy_linevec.prototxt"
