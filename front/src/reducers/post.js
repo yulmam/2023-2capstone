@@ -113,6 +113,7 @@ export const loadPosts = createAsyncThunk(
   async ({ fulfillWithValue, rejectWithValue }) => {
     try {
       const access = localStorage.getItem("access");
+      console.log(access);
       const response = await axios.get("/post/loadPosts", {
         headers: {
           "X-AUTH-TOKEN": access,
@@ -124,6 +125,18 @@ export const loadPosts = createAsyncThunk(
     }
   }
 );
+// export const loadPosts = createAsyncThunk("/post/loadPosts", async () => {
+//   const access = localStorage.getItem("access");
+//   console.log(access);
+//   const response = await axios.get("/post/loadPosts", {
+//     headers: {
+//       "X-AUTH-TOKEN": access,
+//     },
+//   });
+//   return response.data;
+// });
+
+
 
 const postSlice = createSlice({
   name: "post",

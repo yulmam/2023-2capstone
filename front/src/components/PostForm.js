@@ -3,7 +3,7 @@ import React, { useCallback, useState } from "react";
 import { Button, Form, Input, InputNumber, Select, Upload, Modal } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { submitReport, addImage } from "../reducers/post";
+import { submitForm } from "../reducers/diagnosis";
 import useInput from "../hooks/useInput";
 
 const getBase64 = (file) =>
@@ -13,7 +13,15 @@ const getBase64 = (file) =>
     reader.onload = () => resolve(reader.result);
     reader.onerror = (error) => reject(error);
   });
-const normFile = (e: any) => {
+
+const normFrontFile = (e) => {
+  if (Array.isArray(e)) {
+    return e;
+  }
+  return e?.fileList;
+};
+
+const normSideFile = (e) => {
   if (Array.isArray(e)) {
     return e;
   }
@@ -25,24 +33,24 @@ const PostForm = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState([]);
-  const [name, onChangeName] = useInput("");
-  const [sex, setSex] = useState("");
-  const [age, setAge] = useState("");
-  const { imagePaths } = useSelector((state) => state.post);
+  const [frontList, setFrontList] = useState([]);
+  const [sideList, setSideList] = useState([]);
 
   const onSumbitForm = useCallback(() => {
-    const formData = new FormData();
-    imagePaths.forEach((p) => {
-      formData.append("image", p);
+    const imageObject = [];
+    frontList.forEach((e) => {
+      console.log(e.originFileObj);
+      imageObject.push({ front: e.originFileObj });
     });
-    formData.append("name", name);
-    formData.append("sex", sex);
-    formData.append("age", age);
-    console.log(formData);
-    navigate("/result");
-    dispatch(submitReport(formData));
-  }, [age, dispatch, imagePaths, name, navigate, sex]);
+    sideList.forEach((e) => {
+      console.log(e.originFileObj);
+      imageObject.push({ side: e.originFileObj });
+    });
+    console.log(imageObject);
+
+    dispatch(submitForm(imageObject));
+    // dispatch(submitReport(formData));
+  }, [dispatch, frontList, sideList]);
 
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
@@ -55,16 +63,17 @@ const PostForm = () => {
       file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
     );
   };
-  const onChangeSex = (value) => {
-    setSex(value);
+
+  const handleFrontChange = (e) => {
+    console.log("setfrontlist", e.fileList);
+    setFrontList(e.fileList);
+    console.log("frontList", frontList);
   };
-  const onChangeAge = (value) => {
-    setAge(value);
-  };
-  const handleChange = ({ fileList: newFileList }) => {
-    dispatch(addImage(newFileList));
-    setFileList(newFileList);
-    console.log(fileList);
+
+  const handleSideChange = (e) => {
+    console.log("setsidelist", e.fileList);
+    setSideList(e.fileList);
+    console.log("sideList", sideList);
   };
   const uploadButton = (
     <div>
@@ -93,41 +102,54 @@ const PostForm = () => {
           maxWidth: 600,
           margin: 30,
           marginTop: 100,
+          marginLeft: 100,
         }}
         onFinish={onSumbitForm}
       >
-        <Form.Item label="이름">
-          <Input name="name" value={name} required onChange={onChangeName} />
-        </Form.Item>
-        <Form.Item label="성별">
-          <Select onChange={onChangeSex}>
-            <Select.Option value="남자">남자</Select.Option>
-            <Select.Option value="여자">여자</Select.Option>
-          </Select>
-        </Form.Item>
-
-        <Form.Item label="나이">
-          <InputNumber
-            name="age"
-            defaultvalue="1"
-            required
-            onChange={onChangeAge}
-          />
+        <Form.Item
+          label="앞모습 사진"
+          valuePropName="FileList"
+          getValueFromEvent={normFrontFile}
+        >
+          <Upload
+            listType="picture-card"
+            fileList={frontList}
+            onPreview={handlePreview}
+            onChange={handleFrontChange}
+            style={{
+              marginLeft: 40,
+            }}
+          >
+            {frontList.length >= 1 ? null : uploadButton}
+          </Upload>
+          <Modal
+            open={previewOpen}
+            title={previewTitle}
+            footer={null}
+            onCancel={handleCancel}
+          >
+            <img
+              alt="example"
+              style={{
+                width: "100%",
+              }}
+              src={previewImage}
+            />
+          </Modal>
         </Form.Item>
 
         <Form.Item
-          label="사진"
-          valuePropName="fileList"
-          getValueFromEvent={normFile}
+          label="옆모습 사진"
+          valuePropName="FileList"
+          getValueFromEvent={normSideFile}
         >
           <Upload
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
             listType="picture-card"
-            fileList={fileList}
+            fileList={sideList}
             onPreview={handlePreview}
-            onChange={handleChange}
+            onChange={handleSideChange}
           >
-            {fileList.length >= 8 ? null : uploadButton}
+            {sideList.length >= 1 ? null : uploadButton}
           </Upload>
           <Modal
             open={previewOpen}

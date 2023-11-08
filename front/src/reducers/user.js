@@ -12,10 +12,11 @@ export const initialState = {
 
   logOutLoading: false, //로그아웃 시도중
   logOutError: null, // 로그아웃 에러
-  signUpLoading: false, // 로그인 시도중
-  signUpError: null, // 로그인 에러
-  signUpDone: false, // 로그인 상태 체크
-  signUpData: {},
+
+  signUpLoading: false, // 회원가입 시도중
+  signUpError: null, // 회워가입 에러
+  signUpDone: false, // 회원가입 상태 체크
+
   loginData: {},
   me: null,
   authenticated: false,
@@ -58,6 +59,7 @@ export const signUp = createAsyncThunk(
   "user/signup",
   async (data, { fulfillWithValue, rejectWithValue }) => {
     try {
+      console.log(data);
       const response = await axios.post("/user/signup", data);
       // response data안에config.data에 회원가입 정보들이 들어있다
       return fulfillWithValue(response.data);

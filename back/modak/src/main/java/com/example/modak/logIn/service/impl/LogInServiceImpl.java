@@ -31,8 +31,6 @@ public class LogInServiceImpl implements LogInService {
 
     @Override
     public SignUpResultDto signUp(SignUpRequestDto signUpRequestDto) {
-
-
         User user;
         user = User.builder()
                 .uid(signUpRequestDto.getUid())
