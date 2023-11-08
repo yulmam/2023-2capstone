@@ -108,25 +108,8 @@ BODY_PARTS_BODY_25 = {0: "Nose", 1: "Neck", 2: "RShoulder", 3: "RElbow", 4: "RWr
 POSE_PAIRS_BODY_25 = [[0, 1], [0, 15], [0, 16], [1, 2], [1, 5], [1, 8], [8, 9], [8, 12], [9, 10], [12, 13], [2, 3],
                       [3, 4], [5, 6], [6, 7], [10, 11], [13, 14], [15, 17], [16, 18], [14, 21], [19, 21], [20, 21],
                       [11, 24], [22, 24], [23, 24]]
-jeong_gi = 123
+
 # 신경 네트워크의 구조를 지정하는 prototxt 파일 (다양한 계층이 배열되는 방법 등)
-<<<<<<< Updated upstream
-
-#protoFile_mpi = "C:\\Users\\jiheunJung\\Desktop\\capstone\\mpi\\pose_deploy_linevec.prototxt"
-#protoFile_mpi_faster = "C:\\Users\\jiheunJung\\Desktop\\capstone\\mpi\\pose_deploy_linevec_faster_4_stages.prototxt"
-##protoFile_coco = "C:\\Users\\jiheunJung\\Desktop\\capstone\\coco\\pose_deploy_linevec.prototxt"
-protoFile_body_25 = "C:\\Users\\jiheunJung\\Desktop\\2023-2captsopne\\ai_server\\body_25\\pose_deploy.prototxt"
-
-# 훈련된 모델의 weight 를 저장하는 caffemodel 파일
-#weightsFile_mpi = "C:\\Users\\jiheunJung\\Desktop\\capstone\\mpi\\pose_iter_160000.caffemodel"
-#weightsFile_coco = "C:\\Users\\jiheunJung\\Desktop\\capstone\\coco\\pose_iter_440000.caffemodel"
-weightsFile_body_25 = "C:\\Users\\jiheunJung\\Desktop\\2023-2captsopne\\ai_server\\body_25\\pose_iter_584000.caffemodel"
-
-# 이미지 경로
-man = "C:\\Users\\jiheunJung\\Desktop\\2023-2captsopne\\ai_server\\Pictures\\bad.png"
-
-=======
->>>>>>> Stashed changes
 protoFile_body_25 = ".\\body_25\\pose_deploy.prototxt"
 
 # 훈련된 모델의 weight 를 저장하는 caffemodel 파일
@@ -134,12 +117,6 @@ weightsFile_body_25 = ".\\body_25\\pose_iter_584000.caffemodel"
 
 # 이미지 경로
 man = ".\\Pictures\\bad.png"
-<<<<<<< Updated upstream
-
-
-frame_body_25 = cv2.imread(man)
-=======
->>>>>>> Stashed changes
 
 frame_body_25 = cv2.imread(man)
 
