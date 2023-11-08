@@ -5,7 +5,17 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { submitForm } from "../reducers/diagnosis";
 import useInput from "../hooks/useInput";
+const customLabelStyle = {
+  fontSize: "20px", // 원하는 폰트 크기로 변경
+  fontWeight: "bold",
+  marginTop: 60,
+};
+const containerStyle = {
+  display: "flex",
+  flexDirection: "column",
 
+  justifyContent: "center", // 수평 가운데 정렬
+};
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -99,49 +109,53 @@ const PostForm = () => {
         layout="horizontal"
         encType="multipart/form-data"
         style={{
-          maxWidth: 600,
-          margin: 30,
           marginTop: 100,
-          marginLeft: 100,
+          marginLeft: 300,
         }}
         onFinish={onSumbitForm}
       >
-        <Form.Item
-          label="앞모습 사진"
-          valuePropName="FileList"
-          getValueFromEvent={normFrontFile}
-        >
-          <Upload
-            listType="picture-card"
-            fileList={frontList}
-            onPreview={handlePreview}
-            onChange={handleFrontChange}
-            style={{
-              marginLeft: 40,
-            }}
+        <div style={containerStyle}>
+          <Form.Item
+            valuePropName="FileList"
+            getValueFromEvent={normFrontFile}
+            colon={false}
+            labelCol={{ span: 4 }}
+            labelAlign="left"
+            label={<span style={customLabelStyle}>앞모습 사진:</span>}
           >
-            {frontList.length >= 1 ? null : uploadButton}
-          </Upload>
-          <Modal
-            open={previewOpen}
-            title={previewTitle}
-            footer={null}
-            onCancel={handleCancel}
-          >
-            <img
-              alt="example"
+            <Upload
+              listType="picture-card"
+              fileList={frontList}
+              onPreview={handlePreview}
+              onChange={handleFrontChange}
               style={{
-                width: "100%",
+                marginLeft: 40,
               }}
-              src={previewImage}
-            />
-          </Modal>
-        </Form.Item>
+            >
+              {frontList.length >= 1 ? null : uploadButton}
+            </Upload>
+            <Modal
+              open={previewOpen}
+              title={previewTitle}
+              footer={null}
+              onCancel={handleCancel}
+            >
+              <img
+                alt="example"
+                style={{
+                  width: "100%",
+                }}
+                src={previewImage}
+              />
+            </Modal>
+          </Form.Item>
+        </div>
 
         <Form.Item
-          label="옆모습 사진"
           valuePropName="FileList"
-          getValueFromEvent={normSideFile}
+          getValueFromEvent={normFrontFile}
+          // label={<span style={customLabelStyle}>옆모습 사진:</span>}
+          label="옆모습 사진"
         >
           <Upload
             listType="picture-card"
@@ -167,7 +181,7 @@ const PostForm = () => {
           </Modal>
         </Form.Item>
 
-        <Form.Item style={{ marginLeft: 50 }}>
+        <Form.Item style={{ marginLeft: 400 }}>
           <Button type="primary" htmlType="submit">
             제출
           </Button>
