@@ -17,7 +17,7 @@ const Notice = ({ post }) => {
   const onToggleComment = useCallback(() => {
     setOpenComment((prev) => !prev);
   }, []);
-  let array = [1, 2, 3];
+
   return (
     <div>
       <Card

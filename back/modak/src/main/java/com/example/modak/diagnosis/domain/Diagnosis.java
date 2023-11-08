@@ -1,6 +1,7 @@
 package com.example.modak.diagnosis.domain;
 
 import com.example.modak.logIn.domain.User;
+<<<<<<< HEAD
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,6 +24,17 @@ public class Diagnosis {
     @Column
     long scoliosis;
     @Column
+=======
+
+import javax.persistence.ManyToOne;
+import java.util.Date;
+
+public class Diagnosis {
+
+    long id;
+    long tutleNeckResult;
+    long scoliosis;
+>>>>>>> origin/main
     Date date;
     @ManyToOne
     User user;
