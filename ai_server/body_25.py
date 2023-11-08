@@ -1,6 +1,7 @@
 import cv2
 
 shoulderx = 0
+earx = 0
 
 def output_keypoints(frame, proto_file, weights_file, threshold, model_name, BODY_PARTS):
     global points
@@ -63,10 +64,14 @@ def output_keypoints(frame, proto_file, weights_file, threshold, model_name, BOD
                 global shoulderx
                 shoulderx = x
                 print(f"i: {i}, shoulderx: {shoulderx}, x: {x}")
+            #earx
+            if (i == 17) or (i == 18):
+                global earx
+                earx = x
+                print(f"i: {i}, earx: {earx}, x: {x}")
         else:  # [not pointed]
             #cv2.circle(frame, (x, y), 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
             #cv2.putText(frame, str(i), (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 0), 1, lineType=cv2.LINE_AA)
-
             points.append(None)
             print(f"[not pointed] {BODY_PARTS[i]} ({i}) => prob: {prob:.5f} / x: {x} / y: {y}")
 
@@ -94,23 +99,6 @@ def output_keypoints_with_lines(frame, POSE_PAIRS):
     cv2.imshow("Turtle neck Diagnosis", frame)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
-'''    
-BODY_PARTS_MPI = {0: "Head", 1: "Neck", 2: "RShoulder", 3: "RElbow", 4: "RWrist",
-                    5: "LShoulder", 6: "LElbow", 7: "LWrist", 8: "RHip", 9: "RKnee",
-                    10: "RAnkle", 11: "LHip", 12: "LKnee", 13: "LAnkle", 14: "Chest",
-                    15: "Background"}
-
-POSE_PAIRS_MPI = [[0, 1], [1, 2], [1, 5], [1, 14], [2, 3], [3, 4], [5, 6],
-                  [6, 7], [8, 9], [9, 10], [11, 12], [12, 13], [14, 8], [14, 11]]
-
-BODY_PARTS_COCO = {0: "Nose", 1: "Neck", 2: "RShoulder", 3: "RElbow", 4: "RWrist",
-                   5: "LShoulder", 6: "LElbow", 7: "LWrist", 8: "RHip", 9: "RKnee",
-                   10: "RAnkle", 11: "LHip", 12: "LKnee", 13: "LAnkle", 14: "REye",
-                   15: "LEye", 16: "REar", 17: "LEar", 18: "Background"}
-
-POSE_PAIRS_COCO = [[0, 1], [0, 14], [0, 15], [1, 2], [1, 5], [1, 8], [1, 11], [2, 3], [3, 4],
-                   [5, 6], [6, 7], [8, 9], [9, 10], [12, 13], [11, 12], [14, 16], [15, 17]]
-'''
 BODY_PARTS_BODY_25 = {0: "Nose", 1: "Neck", 2: "RShoulder", 3: "RElbow", 4: "RWrist",
                       5: "LShoulder", 6: "LElbow", 7: "LWrist", 8: "MidHip", 9: "RHip",
                       10: "RKnee", 11: "RAnkle", 12: "LHip", 13: "LKnee", 14: "LAnkle",
@@ -122,36 +110,18 @@ POSE_PAIRS_BODY_25 = [[0, 1], [0, 15], [0, 16], [1, 2], [1, 5], [1, 8], [8, 9], 
                       [11, 24], [22, 24], [23, 24]]
 
 # 신경 네트워크의 구조를 지정하는 prototxt 파일 (다양한 계층이 배열되는 방법 등)
-#protoFile_mpi = "C:\\Users\\jiheunJung\\Desktop\\capstone\\mpi\\pose_deploy_linevec.prototxt"
-#protoFile_mpi_faster = "C:\\Users\\jiheunJung\\Desktop\\capstone\\mpi\\pose_deploy_linevec_faster_4_stages.prototxt"
-##protoFile_coco = "C:\\Users\\jiheunJung\\Desktop\\capstone\\coco\\pose_deploy_linevec.prototxt"
-protoFile_body_25 = "C:\\Users\\jiheunJung\\Desktop\\2023-2captsopne\\ai_server\\body_25\\pose_deploy.prototxt"
+
+protoFile_body_25 = ".\\body_25\\pose_deploy.prototxt"
 
 # 훈련된 모델의 weight 를 저장하는 caffemodel 파일
-#weightsFile_mpi = "C:\\Users\\jiheunJung\\Desktop\\capstone\\mpi\\pose_iter_160000.caffemodel"
-#weightsFile_coco = "C:\\Users\\jiheunJung\\Desktop\\capstone\\coco\\pose_iter_440000.caffemodel"
-weightsFile_body_25 = "C:\\Users\\jiheunJung\\Desktop\\2023-2captsopne\\ai_server\\body_25\\pose_iter_584000.caffemodel"
+weightsFile_body_25 = ".\\body_25\\pose_iter_584000.caffemodel"
 
 # 이미지 경로
-man = "C:\\Users\\jiheunJung\\Desktop\\2023-2captsopne\\ai_server\\Pictures\\bad.png"
+man = ".\\Pictures\\bad.png"
 
-# 키포인트를 저장할 빈 리스트  
-points = []
-
-# 이미지 읽어오기
-##frame_mpii = cv2.imread(man)
-##frame_coco = frame_mpii.copy()
 frame_body_25 = cv2.imread(man)
 
-# MPII Model
-## frame_MPII = output_keypoints(frame=frame_mpii, proto_file=protoFile_mpi_faster, weights_file=weightsFile_mpi,
-##                             threshold=0.2, model_name="MPII", BODY_PARTS=BODY_PARTS_MPI)
-##output_keypoints_with_lines(frame=frame_MPII, POSE_PAIRS=POSE_PAIRS_MPI)
-
-# COCO Model
-## frame_COCO = output_keypoints(frame=frame_coco, proto_file=protoFile_coco, weights_file=weightsFile_coco,
-##                            threshold=0.2, model_name="COCO", BODY_PARTS=BODY_PARTS_COCO)
-##output_keypoints_with_lines(frame=frame_COCO, POSE_PAIRS=POSE_PAIRS_COCO)
+frame_body_25 = cv2.imread(man)
 
 # BODY_25 Model
 frame_BODY_25 = output_keypoints(frame=frame_body_25, proto_file=protoFile_body_25, weights_file=weightsFile_body_25,
