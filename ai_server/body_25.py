@@ -110,6 +110,7 @@ POSE_PAIRS_BODY_25 = [[0, 1], [0, 15], [0, 16], [1, 2], [1, 5], [1, 8], [8, 9], 
                       [11, 24], [22, 24], [23, 24]]
 jeong_gi = 123
 # 신경 네트워크의 구조를 지정하는 prototxt 파일 (다양한 계층이 배열되는 방법 등)
+<<<<<<< Updated upstream
 
 #protoFile_mpi = "C:\\Users\\jiheunJung\\Desktop\\capstone\\mpi\\pose_deploy_linevec.prototxt"
 #protoFile_mpi_faster = "C:\\Users\\jiheunJung\\Desktop\\capstone\\mpi\\pose_deploy_linevec_faster_4_stages.prototxt"
@@ -124,6 +125,8 @@ weightsFile_body_25 = "C:\\Users\\jiheunJung\\Desktop\\2023-2captsopne\\ai_serve
 # 이미지 경로
 man = "C:\\Users\\jiheunJung\\Desktop\\2023-2captsopne\\ai_server\\Pictures\\bad.png"
 
+=======
+>>>>>>> Stashed changes
 protoFile_body_25 = ".\\body_25\\pose_deploy.prototxt"
 
 # 훈련된 모델의 weight 를 저장하는 caffemodel 파일
@@ -131,9 +134,12 @@ weightsFile_body_25 = ".\\body_25\\pose_iter_584000.caffemodel"
 
 # 이미지 경로
 man = ".\\Pictures\\bad.png"
+<<<<<<< Updated upstream
 
 
 frame_body_25 = cv2.imread(man)
+=======
+>>>>>>> Stashed changes
 
 frame_body_25 = cv2.imread(man)
 
