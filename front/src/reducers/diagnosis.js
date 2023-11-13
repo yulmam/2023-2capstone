@@ -18,8 +18,6 @@ export const submitForm = createAsyncThunk(
     try {
       console.log(data);
 
-      console.log(data);
-
       const response = await axios.post("/diagnosis/submitForm", data);
       return fulfillWithValue(response.data);
     } catch (error) {

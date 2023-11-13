@@ -92,9 +92,7 @@ const AppLayout = ({ children }) => {
           marginTop: 100,
           backgroundColor: "white",
         }}
-      >
-        Ant Design ©2023 Created by Ant UED
-      </Footer>
+      ></Footer>
     </Layout>
   );
 };

@@ -1,6 +1,15 @@
 import { PlusOutlined } from "@ant-design/icons";
 import React, { useCallback, useState } from "react";
-import { Button, Form, Input, InputNumber, Select, Upload, Modal } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Select,
+  Upload,
+  Modal,
+  Space,
+} from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { submitForm } from "../reducers/diagnosis";
@@ -15,6 +24,9 @@ const containerStyle = {
   flexDirection: "column",
 
   justifyContent: "center", // 수평 가운데 정렬
+};
+const onChange = (value) => {
+  console.log("changed", value);
 };
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -53,32 +65,26 @@ const PostForm = () => {
     frontList.forEach((e) => {
       console.log(e.originFileObj);
       imageArray.push(e.originFileObj);
+      formData.append("front", e.originFileObj);
     });
     sideList.forEach((e) => {
       console.log(e.originFileObj);
       imageArray.push(e.originFileObj);
+      formData.append("side", e.originFileObj);
     });
-    console.log(imageArray);
 
+    console.log(formData);
     // formData.append("name", name);
     // formData.append("sex", sex);
     // formData.append("age", age);
     // console.log(formData);
-
-    dispatch(submitForm(imageArray));
-
-    const imageObject = [];
-    frontList.forEach((e) => {
-      console.log(e.originFileObj);
-      imageObject.push({ front: e.originFileObj });
-    });
-    sideList.forEach((e) => {
-      console.log(e.originFileObj);
-      imageObject.push({ side: e.originFileObj });
-    });
-    console.log(imageObject);
-
-    dispatch(submitForm(imageObject));
+    for (let key of formData.keys()) {
+      console.log(key, ":", formData.get(key));
+    }
+    for (let value of formData.values()) {
+      console.log(value);
+    }
+    dispatch(submitForm(formData));
 
     // dispatch(submitReport(formData));
   }, [dispatch, frontList, sideList]);
@@ -129,20 +135,33 @@ const PostForm = () => {
         }}
         layout="horizontal"
         encType="multipart/form-data"
-        style={{
-          marginTop: 100,
-          marginLeft: 300,
-        }}
         onFinish={onSumbitForm}
       >
+        <Form.Item
+          label="눈과 귀의 거리"
+          style={{ marginLeft: 300, marginTop: 50 }}
+          labelAlign="left"
+        >
+          <InputNumber
+            style={{
+              width: 200,
+            }}
+            defaultValue="1"
+            min="0"
+            max="100"
+            step="0.01"
+            onChange={onChange}
+            stringMode
+          />
+        </Form.Item>
         <div style={containerStyle}>
           <Form.Item
             valuePropName="FileList"
             getValueFromEvent={normFrontFile}
-            colon={false}
-            labelCol={{ span: 4 }}
             labelAlign="left"
-            label={<span style={customLabelStyle}>앞모습 사진:</span>}
+            // label={<span style={customLabelStyle}>앞모습 사진:</span>}
+            label="앞모습 사진"
+            style={{ marginLeft: 300 }}
           >
             <Upload
               listType="picture-card"
@@ -175,14 +194,19 @@ const PostForm = () => {
         <Form.Item
           valuePropName="FileList"
           getValueFromEvent={normFrontFile}
+          labelAlign="left"
           // label={<span style={customLabelStyle}>옆모습 사진:</span>}
           label="옆모습 사진"
+          style={{ marginLeft: 300 }}
         >
           <Upload
             listType="picture-card"
             fileList={sideList}
             onPreview={handlePreview}
             onChange={handleSideChange}
+            style={{
+              marginLeft: 300,
+            }}
           >
             {sideList.length >= 1 ? null : uploadButton}
           </Upload>
@@ -202,7 +226,7 @@ const PostForm = () => {
           </Modal>
         </Form.Item>
 
-        <Form.Item style={{ marginLeft: 400 }}>
+        <Form.Item style={{ marginLeft: 500 }}>
           <Button type="primary" htmlType="submit">
             제출
           </Button>
