@@ -36,12 +36,6 @@ public class DiagnosisController {
 
     @PostMapping("/submitForm")
     public String diagnosis(@ModelAttribute DiagnosisRequestDto diagnosisRequestDto) throws IOException {
-        System.out.println(diagnosisRequestDto.getFront());
-        System.out.println(diagnosisRequestDto);
-        RestRequestDto restRequestDto = RestRequestDto.builder()
-                .front(diagnosisRequestDto.getFront())
-                .side(diagnosisRequestDto.getSide())
-                .build();
         MultipartFile front = diagnosisRequestDto.getFront();
         MultipartFile side = diagnosisRequestDto.getSide();
 
