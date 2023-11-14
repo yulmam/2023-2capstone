@@ -77,6 +77,7 @@ def output_keypoints(frame, proto_file, weights_file, threshold, model_name, BOD
 
     cv2.imshow("Output_Keypoints", frame)
     cv2.waitKey(0)
+    print('hi')
     return frame
 
 def output_keypoints_with_lines(frame, POSE_PAIRS):

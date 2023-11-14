@@ -10,7 +10,7 @@
 
 # production
 /build
-.ai_server/myenv
+/ai_server/body_25.py
 # misc
 .DS_Store
 .env.local
