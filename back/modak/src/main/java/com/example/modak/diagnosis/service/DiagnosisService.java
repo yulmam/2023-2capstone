@@ -17,10 +17,7 @@ public class DiagnosisService {
     UserRepository userRepository;
 
     public DiagnosisResultDto diagnosis(DiagnosisRequestDto diagnosisRequestDto){
-        RestRequestDto restRequestDto = RestRequestDto.builder()
-                .files(diagnosisRequestDto.getFiles())
-                .build();
-        RestResponseDto restResponseDto = postPicture(restRequestDto);
+
         return null;
     }
 

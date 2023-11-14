@@ -2,6 +2,7 @@ package com.example.modak.diagnosis.domain;
 
 import com.example.modak.logIn.domain.User;
 import lombok.*;
+import org.hibernate.annotations.Columns;
 
 import javax.persistence.*;
 
@@ -18,10 +19,11 @@ public class Diagnosis {
     @GeneratedValue
     long id;
     @Column
-    long tutleNeckResult;
+    long turtleNeckResult;
     @Column
     long scoliosis;
-    @Column
+
     @ManyToOne
+    @JoinColumn(name="userFk")
     User user;
 }

@@ -13,7 +13,6 @@ import java.util.List;
 @Builder
 public class DiagnosisRequestDto {
 
-    long uid;
-
-    List<MultipartFile> files;
+    MultipartFile front;
+    MultipartFile side;
 }
