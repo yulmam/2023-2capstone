@@ -91,14 +91,19 @@ def output_keypoints_with_lines(frame, POSE_PAIRS):
             print(f"[not linked] {part_a} {points[part_a]} <=> {part_b} {points[part_b]}")
 
     cv2.imshow("output_keypoints_with_lines", frame)
+    cv2.imwrite("./download/image.png",frame)
+  
+    
     cv2.waitKey(0)
     cv2.destroyAllWindows()
     print(f"shoulderx: {shoulderx}")
     red = (0, 0, 255)
     cv2.line(frame, (shoulderx, 0),(shoulderx, 460), red, 3)
     cv2.imshow("Turtle neck Diagnosis", frame)
+    cv2.imshow("Turtle neck Diagnosis", frame)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
 BODY_PARTS_BODY_25 = {0: "Nose", 1: "Neck", 2: "RShoulder", 3: "RElbow", 4: "RWrist",
                       5: "LShoulder", 6: "LElbow", 7: "LWrist", 8: "MidHip", 9: "RHip",
                       10: "RKnee", 11: "RAnkle", 12: "LHip", 13: "LKnee", 14: "LAnkle",

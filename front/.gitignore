@@ -10,7 +10,7 @@
 
 # production
 /build
-ai_server/venv
+.ai_server/myenv
 # misc
 .DS_Store
 .env.local
