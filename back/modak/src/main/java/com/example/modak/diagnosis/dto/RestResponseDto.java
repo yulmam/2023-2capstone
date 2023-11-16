@@ -11,5 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 public class RestResponseDto {
-    String variable;
+    Byte[] front;
+    Byte[] side;
+    String value;
 }

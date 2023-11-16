@@ -22,7 +22,7 @@ import java.io.InputStream;
 @Service
 public class RestService {
 
-    public ResponseEntity<RestResponseDto> rest(RestRequestDto restRequestDto) throws IOException {
+    public RestResponseDto rest(RestRequestDto restRequestDto) throws IOException {
 
         MultiValueMap<String, Object> body
                 = new LinkedMultiValueMap<>();
@@ -38,6 +38,6 @@ public class RestService {
 
         String serverUrl = "http://localhost:5000/run";
 
-        return new RestTemplate().postForEntity(serverUrl, requestEntity, RestResponseDto.class);
+        return new RestTemplate().postForObject(serverUrl, requestEntity, RestResponseDto.class);
     }
 }
