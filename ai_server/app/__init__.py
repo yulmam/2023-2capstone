@@ -1,6 +1,7 @@
-from flask import Flask
-from app.views import add_numbers
+from flask import Flask, request, send_file
+
 from body_25 import output_keypoints_with_lines, output_keypoints
+from werkzeug.utils import secure_filename
 import cv2
 app = Flask(__name__)
 
@@ -9,7 +10,12 @@ def index():
     return "Welcome to the index page!"
 
 @app.route('/run', methods=["POST"])
-def add_numbers_route():
+def ai_run():
+    print(request.files.get("front"))
+    print(request.files.get("side"))
+    print(request.files["front"])
+    img=request.files["front"]
+    img.save('./upload/front.png')
     BODY_PARTS_BODY_25 = {0: "Nose", 1: "Neck", 2: "RShoulder", 3: "RElbow", 4: "RWrist",
                     5: "LShoulder", 6: "LElbow", 7: "LWrist", 8: "MidHip", 9: "RHip",
                     10: "RKnee", 11: "RAnkle", 12: "LHip", 13: "LKnee", 14: "LAnkle",
@@ -27,7 +33,7 @@ def add_numbers_route():
     weightsFile_body_25 = ".\\body_25\\pose_iter_584000.caffemodel"
 
     # 이미지 경로
-    man = ".\\Pictures\\good.png"
+    man = ".\\upload\\front.png"
 
     frame_body_25 = cv2.imread(man)
    
@@ -36,7 +42,9 @@ def add_numbers_route():
                                 threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25)
     
     output_keypoints_with_lines(frame=frame_BODY_25, POSE_PAIRS=POSE_PAIRS_BODY_25)
+    image_path = "/download/image.jpg"
+    variable_value= "value"
+    files = {'front': open(image_path, 'rb')}
+    data = {'variable' : variable_value}
     
-    
-    
-    return
+    return request.post(files=files, data=data)
