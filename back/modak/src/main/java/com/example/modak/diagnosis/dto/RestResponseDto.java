@@ -11,10 +11,5 @@ import java.util.List;
 @Getter
 @Setter
 public class RestResponseDto {
-
-    long turtleNeck;
-
-    long scoliosis;
-
-    List<MultipartFile> images;
+    String variable;
 }

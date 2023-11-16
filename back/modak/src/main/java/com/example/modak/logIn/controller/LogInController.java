@@ -30,7 +30,7 @@ public class LogInController {
 
 
     @PostMapping(value = "/login")
-    public LogInResultDto logIn(@ApiParam(value = "uid, password", required = true) @RequestBody LogInRequestDto logInRequestDto)
+    public ResponseEntity<LogInResultDto> logIn(@ApiParam(value = "uid, password", required = true) @RequestBody LogInRequestDto logInRequestDto)
             throws RuntimeException {
 
         LogInResultDto logInResultDto = logInService.logIn(logInRequestDto);
@@ -38,16 +38,16 @@ public class LogInController {
         if (logInResultDto.getCode() == 0) {
             logInResultDto.getToken();
         }
-        return logInResultDto;
+        return ResponseEntity.ok(logInResultDto);
     }
 
     @PostMapping(value = "/signup")
-    public SignUpResultDto signUp(
+    public ResponseEntity<SignUpResultDto> signUp(
             @ApiParam(value = "UID", required = true) @RequestBody SignUpRequestDto signUpRequestDto) {
 
         SignUpResultDto signUpResultDto = logInService.signUp(signUpRequestDto);
 
-        return signUpResultDto;
+        return ResponseEntity.ok(signUpResultDto);
     }
 
     @GetMapping(value = "/exception")

@@ -23,6 +23,8 @@ public class Diagnosis {
     @Column
     long scoliosis;
 
+
+
     @ManyToOne
     @JoinColumn(name="userFk")
     User user;

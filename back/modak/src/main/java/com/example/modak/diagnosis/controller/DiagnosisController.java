@@ -3,16 +3,15 @@ package com.example.modak.diagnosis.controller;
 
 import com.example.modak.config.security.JwtTokenProvider;
 import com.example.modak.diagnosis.dto.DiagnosisRequestDto;
+import com.example.modak.diagnosis.dto.DiagnosisResultDto;
 import com.example.modak.diagnosis.dto.RestRequestDto;
 import com.example.modak.diagnosis.dto.RestResponseDto;
 import com.example.modak.diagnosis.service.DiagnosisService;
+import com.example.modak.diagnosis.service.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
@@ -33,49 +32,26 @@ public class DiagnosisController {
     JwtTokenProvider jwtTokenProvider;
     @Autowired
     DiagnosisService diagnosisService;
+    @Autowired
+    RestService restService;
 
     @PostMapping("/submitForm")
-    public String diagnosis(@ModelAttribute DiagnosisRequestDto diagnosisRequestDto) throws IOException {
-        MultipartFile front = diagnosisRequestDto.getFront();
-        MultipartFile side = diagnosisRequestDto.getSide();
+    public ResponseEntity<DiagnosisResultDto> diagnosis(HttpServletRequest request, @ModelAttribute DiagnosisRequestDto diagnosisRequestDto) throws IOException {
+        RestRequestDto restRequestDto = RestRequestDto.builder()
+                .front(diagnosisRequestDto.getFront())
+                .side(diagnosisRequestDto.getSide())
+                .build();
 
+        ResponseEntity<RestResponseDto> entityRestResponseDto = restService.rest(restRequestDto);
 
-        MultiValueMap<String, Object> body
-                = new LinkedMultiValueMap<>();
+        String userName = jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(request));
+        RestResponseDto restResponseDto = entityRestResponseDto.getBody();
 
-        body.add("front", new MultipartInputStreamFileResource(front.getInputStream(), front.getOriginalFilename()));
-        body.add("side", new MultipartInputStreamFileResource(side.getInputStream(), side.getOriginalFilename()));
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-        HttpEntity<MultiValueMap<String, Object>> requestEntity
-                = new HttpEntity<>(body, headers);
+        DiagnosisResultDto diagnosisResultDto = diagnosisService.diagnosis(userName, restResponseDto);
 
-        String serverUrl = "http://localhost:5000/run";
-
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate
-                .postForEntity(serverUrl, requestEntity, String.class);
-        return "test";
+        return null;
     }
 
-    class MultipartInputStreamFileResource extends InputStreamResource {
 
-        private final String filename;
-
-        MultipartInputStreamFileResource(InputStream inputStream, String filename) {
-            super(inputStream);
-            this.filename = filename;
-        }
-
-        @Override
-        public String getFilename() {
-            return this.filename;
-        }
-
-        @Override
-        public long contentLength() throws IOException {
-            return -1; // we do not want to generally read the whole stream into memory ...
-        }
-    }
 
 }
