@@ -17,8 +17,29 @@ export const submitForm = createAsyncThunk(
   async (data, { fulfillWithValue, rejectWithValue }) => {
     try {
       console.log(data);
+      const access = localStorage.getItem("access");
+      console.log(access);
+      const response = await axios.post(
+        "/diagnosis/submitForm",
+        {
+          headers: {
+            "X-AUTH-TOKEN": access,
+          },
+        },
+        data
+      );
 
-      const response = await axios.post("/diagnosis/submitForm", data);
+      // const response = await axios.post(
+      //   "/diagnosis/submitForm",
+      //   {
+      //     headers: {
+      //       "X-AUTH-TOKEN": access,
+      //     },
+      //   },
+      //   data
+      // );
+
+      console.log(response);
       return fulfillWithValue(response.data);
     } catch (error) {
       throw rejectWithValue(error.response);
