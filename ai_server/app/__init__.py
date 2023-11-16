@@ -1,7 +1,9 @@
-from flask import Flask
-from app.views import add_numbers
+from flask import Flask, request, jsonify
+
 from body_25 import output_keypoints_with_lines, output_keypoints
+from werkzeug.utils import secure_filename
 import cv2
+import base64
 app = Flask(__name__)
 
 @app.route('/')
@@ -9,7 +11,12 @@ def index():
     return "Welcome to the index page!"
 
 @app.route('/run', methods=["POST"])
-def add_numbers_route():
+def ai_run():
+    print(request.files.get("front"))
+    print(request.files.get("side"))
+    print(request.files["front"])
+    img=request.files["front"]
+    img.save('./upload/front.png')
     BODY_PARTS_BODY_25 = {0: "Nose", 1: "Neck", 2: "RShoulder", 3: "RElbow", 4: "RWrist",
                     5: "LShoulder", 6: "LElbow", 7: "LWrist", 8: "MidHip", 9: "RHip",
                     10: "RKnee", 11: "RAnkle", 12: "LHip", 13: "LKnee", 14: "LAnkle",
@@ -27,7 +34,7 @@ def add_numbers_route():
     weightsFile_body_25 = ".\\body_25\\pose_iter_584000.caffemodel"
 
     # 이미지 경로
-    man = ".\\Pictures\\good.png"
+    man = ".\\upload\\front.png"
 
     frame_body_25 = cv2.imread(man)
    
@@ -36,7 +43,20 @@ def add_numbers_route():
                                 threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25)
     
     output_keypoints_with_lines(frame=frame_BODY_25, POSE_PAIRS=POSE_PAIRS_BODY_25)
-    
-    
-    
-    return
+    image_path1 = ".\\download\\image.png"
+    image_path2 = ".\\download\\front.png"
+    variable_value= "value"
+    with open(image_path1, 'rb') as img1_file:
+        encoded_image1 = base64.b64encode(img1_file.read()).decode('utf-8')
+    with open(image_path2, 'rb') as img2_file:
+        encoded_image2 = base64.b64encode(img2_file.read()).decode('utf-8')
+    value = "value"
+    response_data = {
+        'front': encoded_image1,
+        'side' : encoded_image2,
+        'value' : value
+    }
+    print("hi")
+   
+
+    return jsonify(response_data)
