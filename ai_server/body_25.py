@@ -8,6 +8,9 @@ side_shoulderx = side_earx = side_eyex = 0
 front_Rshoulderx = front_Rshouldery = front_Rhipx = front_Rhipy = 0
 front_Lshoulderx = front_Lshouldery = front_Lhipx = front_Lhipy = 0
 
+# 진단 결과
+turtleneck_result = scoliosis_result = 0
+
 # 사진 출력 함수
 def image_printing(frame):
     cv2.imshow("Turtle neck Diagnosis", frame)
@@ -175,15 +178,16 @@ frame_front = cv2.imread(frontman)
 #                              threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25)
 frame_SIDE = output_keypoints(frame=frame_side, proto_file=protoFile_body_25, weights_file=weightsFile_body_25,
                               threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25, picturetype = "side")
-fomula.turtleneck_fomula(earx=side_earx, shoulderx=side_shoulderx, eyex=side_eyex)          # 거북목 진단식
+turtleneck_result = fomula.turtleneck_fomula(earx=side_earx, shoulderx=side_shoulderx, eyex=side_eyex)          # 거북목 진단식
 image_printing(frame=frame_SIDE)
+print(f"turtleneck_result: {turtleneck_result}")
 
 frame_FRONT = output_keypoints(frame=frame_front, proto_file=protoFile_body_25, weights_file=weightsFile_body_25,
                               threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25, picturetype = "front")
 # 정면 사진 관절 라인
 frame_FRONT = output_keypoints_with_lines(frame=frame_FRONT, POSE_PAIRS=POSE_PAIRS_BODY_25)
-fomula.scoliosis_fomula(Lshouldery=front_Lshouldery, Rshouldery=front_Rshouldery, Lhipy=front_Lhipy, Rhipy=front_Rhipy)
+scoliosis_result = fomula.scoliosis_fomula(Lshouldery=front_Lshouldery, Rshouldery=front_Rshouldery, Lhipy=front_Lhipy, Rhipy=front_Rhipy)
 image_printing(frame=frame_FRONT)
-
+print(f"scoliosis_result: {scoliosis_result}")
 # output_keypoints_with_lines(frame=frame_BODY_25, POSE_PAIRS=POSE_PAIRS_BODY_25)
 
