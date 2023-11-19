@@ -8,11 +8,11 @@ const Home = () => {
   const { me } = useSelector((state) => state.user);
   const { submitReportLoading } = useSelector((state) => state.post);
   const navigate = useNavigate();
-  useEffect(() => {
-    if (!(me && me.id)) {
-      navigate("/");
-    }
-  }, [me, navigate]);
+  // useEffect(() => {
+  //   if (!(me && me.id)) {
+  //     navigate("/");
+  //   }
+  // }, [me, navigate]);
   return (
     <div>
       <AppLayout>{submitReportLoading ? <Loading /> : <Report />}</AppLayout>

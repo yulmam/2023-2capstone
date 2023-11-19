@@ -1,5 +1,6 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import { PlusOutlined } from "@ant-design/icons";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import {
   Button,
   Form,
@@ -12,7 +13,8 @@ import {
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { submitForm } from "../reducers/diagnosis";
+import { submitForm, dispatchImageURL } from "../reducers/diagnosis";
+
 import useInput from "../hooks/useInput";
 const customLabelStyle = {
   fontSize: "20px", // 원하는 폰트 크기로 변경
@@ -57,6 +59,8 @@ const PostForm = () => {
   const [previewTitle, setPreviewTitle] = useState("");
   const [frontList, setFrontList] = useState([]);
   const [sideList, setSideList] = useState([]);
+  const [imageUrl, setImageUrl] = useState(null);
+  const { front, side } = useSelector((state) => state.diagnosis);
 
   const onSumbitForm = useCallback(() => {
     const formData = new FormData();
@@ -84,10 +88,23 @@ const PostForm = () => {
     for (let value of formData.values()) {
       console.log(value);
     }
-    dispatch(submitForm(formData));
+    // dispatch(submitForm(formData));
+    // 이미지 처리하는 로직
+    const uint8Array = new Uint8Array(front);
+    const blob = new Blob([uint8Array], { type: "image/png" });
+    console.log(blob);
+
+    const url = URL.createObjectURL(blob);
+    console.log(url);
+    setImageUrl(url);
+    dispatch(dispatchImageURL(url));
+    // 모든 로직이 끝나고 화면이동
+    // 모든 로직이 끝나고 화면을 이동할지 이동하고 로직이 돌아가는지는
+    //navigate위치 조정해서 테스트
+    navigate("/Result");
 
     // dispatch(submitReport(formData));
-  }, [dispatch, frontList, sideList]);
+  }, [dispatch, front, frontList, navigate, sideList]);
 
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
@@ -124,6 +141,18 @@ const PostForm = () => {
       </div>
     </div>
   );
+  useEffect(() => {
+    if (front) {
+      const uint8Array = new Uint8Array(front);
+      const blob = new Blob([uint8Array], { type: "image/png" });
+      console.log(blob);
+
+      const url = URL.createObjectURL(blob);
+      console.log(url);
+      setImageUrl(url);
+    }
+  }, [front]);
+
   return (
     <>
       <Form
@@ -232,6 +261,11 @@ const PostForm = () => {
           </Button>
         </Form.Item>
       </Form>
+      {imageUrl && (
+        <div>
+          <img src={imageUrl} alt="Binary Image" />
+        </div>
+      )}
     </>
   );
 };
