@@ -13,7 +13,7 @@ import {
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { submitForm, dispatchImageURL } from "../reducers/diagnosis";
+import { submitForm } from "../reducers/diagnosis";
 
 import useInput from "../hooks/useInput";
 const customLabelStyle = {
@@ -24,7 +24,6 @@ const customLabelStyle = {
 const containerStyle = {
   display: "flex",
   flexDirection: "column",
-
   justifyContent: "center", // 수평 가운데 정렬
 };
 const onChange = (value) => {
@@ -78,33 +77,23 @@ const PostForm = () => {
     });
 
     console.log(formData);
-    // formData.append("name", name);
-    // formData.append("sex", sex);
-    // formData.append("age", age);
-    // console.log(formData);
+
     for (let key of formData.keys()) {
       console.log(key, ":", formData.get(key));
     }
     for (let value of formData.values()) {
       console.log(value);
     }
-    // dispatch(submitForm(formData));
+    dispatch(submitForm(formData));
     // 이미지 처리하는 로직
-    const uint8Array = new Uint8Array(front);
-    const blob = new Blob([uint8Array], { type: "image/png" });
-    console.log(blob);
 
-    const url = URL.createObjectURL(blob);
-    console.log(url);
-    setImageUrl(url);
-    dispatch(dispatchImageURL(url));
     // 모든 로직이 끝나고 화면이동
     // 모든 로직이 끝나고 화면을 이동할지 이동하고 로직이 돌아가는지는
     //navigate위치 조정해서 테스트
     navigate("/Result");
 
     // dispatch(submitReport(formData));
-  }, [dispatch, front, frontList, navigate, sideList]);
+  }, [dispatch, frontList, navigate, sideList]);
 
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
@@ -261,11 +250,6 @@ const PostForm = () => {
           </Button>
         </Form.Item>
       </Form>
-      {imageUrl && (
-        <div>
-          <img src={imageUrl} alt="Binary Image" />
-        </div>
-      )}
     </>
   );
 };

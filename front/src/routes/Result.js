@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 const Home = () => {
   const { me } = useSelector((state) => state.user);
-  const { submitReportLoading } = useSelector((state) => state.post);
+  const { submitFormLoading } = useSelector((state) => state.diagnosis);
   const navigate = useNavigate();
   // useEffect(() => {
   //   if (!(me && me.id)) {
@@ -15,7 +15,7 @@ const Home = () => {
   // }, [me, navigate]);
   return (
     <div>
-      <AppLayout>{submitReportLoading ? <Loading /> : <Report />}</AppLayout>
+      <AppLayout>{submitFormLoading ? <Loading /> : <Report />}</AppLayout>
     </div>
   );
 };

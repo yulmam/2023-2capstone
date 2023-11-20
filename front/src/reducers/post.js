@@ -136,8 +136,6 @@ export const loadPosts = createAsyncThunk(
 //   return response.data;
 // });
 
-
-
 const postSlice = createSlice({
   name: "post",
   initialState,
@@ -150,11 +148,6 @@ const postSlice = createSlice({
         state.submitReportError = null;
       })
       .addCase(submitReport.fulfilled, (state, action) => {
-        // dispatch로 넘겨준 데이터는 action.payload에 저장된다
-        // 임시로 만들어준 코드 데이터베이스에 저장되어야하는 state가 맞다
-        state.user_name = action.payload.name;
-        state.user_sex = action.payload.sex;
-        state.user_age = action.payload.age;
         state.submitReportLoading = false;
         state.submitReportDone = true;
       })

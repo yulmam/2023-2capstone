@@ -8,6 +8,7 @@ const { TextArea } = Input;
 const Notice = ({ post }) => {
   const [openNotice, setOpenNotice] = useState(false);
   const [openComment, setOpenComment] = useState(false);
+
   const onToggleNotice = useCallback(() => {
     setOpenNotice((prev) => !prev);
     if (openComment === true) {
