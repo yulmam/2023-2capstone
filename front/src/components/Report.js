@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Loading.css";
-import { Col, Row, Card, Space, Image } from "antd";
+import { Col, Row, Card, Space } from "antd";
 import { dispatchImageURL } from "../reducers/diagnosis";
 const { Meta } = Card;
 const level = "좋다";

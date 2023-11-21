@@ -1,20 +1,16 @@
+
+
 import cv2
 import numpy as np
 import fomula
 from PIL import ImageFont, ImageDraw, Image
 
-# 계산식에 필요한 각 관절 좌표
-side_shoulderx = side_earx = side_eyex = 0
-front_Rshoulderx = front_Rshouldery = front_Rhipx = front_Rhipy = 0
-front_Lshoulderx = front_Lshouldery = front_Lhipx = front_Lhipy = 0
 
-# 진단 결과
-turtleneck_result = scoliosis_result = 0
 
 # 사진 출력 함수
-def image_printing(frame):
+def image_printing(frame, picture_name):
     cv2.imshow("Turtle neck Diagnosis", frame)
-    cv2.imwrite("./download/image7.png",frame)
+    cv2.imwrite(f"./download/{picture_name}.png",frame)
     cv2.waitKey(0)
     
     #화면 종료
@@ -27,7 +23,7 @@ def PutTextHangul(src, text, pos, font_size, font_color):                # openc
     draw.text(pos, text, font=font, fill= font_color)
     return np.array(img_pil)
 
-def output_keypoints(frame, proto_file, weights_file, threshold, model_name, BODY_PARTS, picturetype):
+def output_keypoints(frame, proto_file, weights_file, threshold, model_name, BODY_PARTS, picturetype, side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery, front_Rhipx, front_Rhipy, front_Lhipx, front_Lhipy):
 
     global points
     net = cv2.dnn.readNetFromCaffe(proto_file, weights_file)            # 네트워크 불러오기
@@ -75,13 +71,13 @@ def output_keypoints(frame, proto_file, weights_file, threshold, model_name, BOD
             print(f"[pointed] {BODY_PARTS[i]} ({i}) => prob: {prob:.5f} / x: {x} / y: {y}")
             if picturetype == "side":
                 if (i == 2) or (i == 5): 
-                    global side_shoulderx
+                    print(f"side_shoulderx = {side_shoulderx}")
                     side_shoulderx = x
+                    print(f"side_shoulderx = {side_shoulderx}")
                     cv2.circle(frame, (x, y), 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
                     frame = PutTextHangul(frame, '어깨', (x+10, y), 20, (0,255,255))
                 #earx
                 if (i == 17) or (i == 18):
-                    global side_earx
                     side_earx = x
                     cv2.circle(frame, (x, y), 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
                     frame = PutTextHangul(frame, '귀', (x+10, y), 20, (0,255,255))
@@ -90,22 +86,26 @@ def output_keypoints(frame, proto_file, weights_file, threshold, model_name, BOD
             else: # picture == "front"
                 # Shoulder
                 if (i == 2):
-                    global front_Rshouldery
+                    front_Rshoulderx = x
                     front_Rshouldery = y
+                
                     cv2.circle(frame, (x, y), 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
                 elif (i == 5):
-                    global front_Lshouldery
+                    front_Lshoulderx = x
                     front_Lshouldery = y
+                
                     cv2.circle(frame, (x, y), 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
                 # Hip
                 elif (i == 9):
-                    global front_Rhipy
+                    front_Rhipx = x
                     front_Rhipy = y
+
                     cv2.circle(frame, (x, y), 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
                     # frame = PutTextHangul(frame, '귀', (x+10, y), 20, (0,255,255))
                 elif (i == 12):
-                    global front_Lhipy
+                    front_Lhipx = x
                     front_Lhipy = y
+
                     cv2.circle(frame, (x, y), 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
                     # frame = PutTextHangul(frame, '귀', (x+10, y), 20, (0,255,255))
                     # print(f"i: {i}, x: {x}")    
@@ -120,15 +120,14 @@ def output_keypoints(frame, proto_file, weights_file, threshold, model_name, BOD
     print(f"points: {points}")
     # cv2.imshow("Output_Keypoints", frame)
     # cv2.waitKey(0)
-    return frame
+    return (frame,side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery, front_Rhipx, front_Rhipy, front_Lhipx, front_Lhipy)
 
-def output_keypoints_with_lines(frame, POSE_PAIRS):
-    print()
+def output_keypoints_with_lines(frame, POSE_PAIRS, side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery, front_Rhipx, front_Rhipy, front_Lhipx, front_Lhipy):
     for pair in POSE_PAIRS:
         part_a = pair[0]  # 0 (Head)
         part_b = pair[1]  # 1 (Neck)
-        print(f"pair[0]: {pair[0]}")
-        print(f"pair[1]: {pair[1]}")
+        # print(f"pair[0]: {pair[0]}")
+        # print(f"pair[1]: {pair[1]}")
         
         cv2.line(frame, points[2], points[5], (0, 255, 0), 3)
         frame = PutTextHangul(frame, '어깨 기울기', (front_Lshoulderx+10, front_Lshouldery + 15), 20, (0,255,255))
@@ -146,48 +145,4 @@ def output_keypoints_with_lines(frame, POSE_PAIRS):
 
     # print(f"front_shoulderx: {front_shoulderx}")
 
-    return frame
-
-BODY_PARTS_BODY_25 = {0: "Nose", 1: "Neck", 2: "RShoulder", 3: "RElbow", 4: "RWrist",
-                       5: "LShoulder", 6: "LElbow", 7: "LWrist", 8: "MidHip", 9: "RHip",
-                       10: "RKnee", 11: "RAnkle", 12: "LHip", 13: "LKnee", 14: "LAnkle",
-                       15: "REye", 16: "LEye", 17: "REar", 18: "LEar", 19: "LBigToe",
-                       20: "LSmallToe", 21: "LHeel", 22: "RBigToe", 23: "RSmallToe", 24: "RHeel", 25: "Background"}
-
-POSE_PAIRS_BODY_25 = [[0, 1], [0, 15], [0, 16], [1, 2], [1, 5], [1, 8], [8, 9], [8, 12], [9, 10], [12, 13], [2, 3],
-                       [3, 4], [5, 6], [6, 7], [10, 11], [13, 14], [15, 17], [16, 18], [14, 21], [19, 21], [20, 21],
-                       [11, 24], [22, 24], [23, 24]]
-
-# 신경 네트워크의 구조를 지정하는 prototxt 파일 (다양한 계층이 배열되는 방법 등)
-protoFile_body_25 = ".\\body_25\\pose_deploy.prototxt"
-
-# 훈련된 모델의 weight 를 저장하는 caffemodel 파일
-weightsFile_body_25 = ".\\body_25\\pose_iter_584000.caffemodel"
-
-# 이미지 경로
-# sideman = ".\\Pictures\\side_good.png"
-sideman = ".\\Pictures\\side_good.png"
-frontman = ".\\Pictures\\scoliosis_test7.jpg"
-
-# frame_body_25 = cv2.imread(man)
-frame_side = cv2.imread(sideman)
-frame_front = cv2.imread(frontman)
-
-# BODY_25 Model (front, side)
-#frame_BODY_25 = output_keypoints(frame=frame_body_25, proto_file=protoFile_body_25, weights_file=weightsFile_body_25,
-#                              threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25)
-frame_SIDE = output_keypoints(frame=frame_side, proto_file=protoFile_body_25, weights_file=weightsFile_body_25,
-                              threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25, picturetype = "side")
-turtleneck_result = fomula.turtleneck_fomula(earx=side_earx, shoulderx=side_shoulderx, eyex=side_eyex)          # 거북목 진단식
-image_printing(frame=frame_SIDE)
-print(f"turtleneck_result: {turtleneck_result}")
-
-frame_FRONT = output_keypoints(frame=frame_front, proto_file=protoFile_body_25, weights_file=weightsFile_body_25,
-                              threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25, picturetype = "front")
-# 정면 사진 관절 라인
-frame_FRONT = output_keypoints_with_lines(frame=frame_FRONT, POSE_PAIRS=POSE_PAIRS_BODY_25)
-scoliosis_result = fomula.scoliosis_fomula(Lshouldery=front_Lshouldery, Rshouldery=front_Rshouldery, Lhipy=front_Lhipy, Rhipy=front_Rhipy)
-image_printing(frame=frame_FRONT)
-print(f"scoliosis_result: {scoliosis_result}")
-# output_keypoints_with_lines(frame=frame_BODY_25, POSE_PAIRS=POSE_PAIRS_BODY_25)
-
+    return (frame, side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery, front_Rhipx, front_Rhipy, front_Lhipx, front_Lhipy) 
