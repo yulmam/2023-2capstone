@@ -10,6 +10,9 @@ export const initialState = {
   diagnosisLoading: false,
   diagnosisDone: false,
   diagnosisError: null,
+  front: [],
+  side: [],
+  imageURL: "",
 };
 //form데이터를 보내는 axios요청
 export const submitForm = createAsyncThunk(
@@ -19,15 +22,7 @@ export const submitForm = createAsyncThunk(
       console.log(data);
       const access = localStorage.getItem("access");
       console.log(access);
-      const response = await axios.post(
-        "/diagnosis/submitForm",
-        {
-          headers: {
-            "X-AUTH-TOKEN": access,
-          },
-        },
-        data
-      );
+      const response = await axios.post("/diagnosis/submitForm", data);
 
       // const response = await axios.post(
       //   "/diagnosis/submitForm",
@@ -50,7 +45,11 @@ export const submitForm = createAsyncThunk(
 const diagnosisSlice = createSlice({
   name: "post",
   initialState,
-  reducers: {},
+  reducers: {
+    dispatchImageURL(state, action) {
+      state.imageURL = action.payload;
+    },
+  },
   extraReducers: (builder) =>
     builder
       .addCase(submitForm.pending, (state, action) => {
@@ -60,6 +59,8 @@ const diagnosisSlice = createSlice({
       .addCase(submitForm.fulfilled, (state, action) => {
         state.submitFormLoading = false;
         state.submitFormDone = true;
+        state.front = action.payload.front;
+        state.side = action.payload.side;
       })
       .addCase(submitForm.rejected, (state, action) => {
         state.submitFormLoading = false;
@@ -67,4 +68,5 @@ const diagnosisSlice = createSlice({
       })
       .addDefaultCase((state) => state),
 });
+export const { dispatchImageURL } = diagnosisSlice.actions;
 export default diagnosisSlice;
