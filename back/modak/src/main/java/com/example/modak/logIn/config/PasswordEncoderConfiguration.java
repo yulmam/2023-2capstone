@@ -1,4 +1,4 @@
-package com.example.modak.config;
+package com.example.modak.logIn.config;
 
 
 import org.springframework.context.annotation.Bean;

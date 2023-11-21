@@ -3,8 +3,11 @@ package com.example.modak.diagnosis.domain;
 import com.example.modak.logIn.domain.User;
 import lombok.*;
 import org.hibernate.annotations.Columns;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -17,15 +20,23 @@ public class Diagnosis {
 
     @Id
     @GeneratedValue
-    long id;
+    private long id;
     @Column
-    long turtleNeckResult;
+    private float turtleneckValue;
     @Column
-    long scoliosis;
-
-
-
+    private int turtleneckCheck;
+    @Column
+    private float discValue;
+    @Column
+    private int discCheck;
+    @Column
+    private float shoulderAngle;
+    @Column
+    private float hipAngle;
+    @CreationTimestamp
+    @Column(name = "ins_date")
+    private LocalDateTime insDate;
     @ManyToOne
     @JoinColumn(name="userFk")
-    User user;
+    private User user;
 }

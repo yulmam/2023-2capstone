@@ -1,4 +1,4 @@
-package com.example.modak.config.security;
+package com.example.modak.logIn.config.security;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;

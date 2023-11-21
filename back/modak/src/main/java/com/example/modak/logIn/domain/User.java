@@ -48,7 +48,7 @@ public class User implements UserDetails {
 
     @Column
     @OneToMany(fetch = FetchType.LAZY)
-    List<Diagnosis> diagnoses;
+    List<Diagnosis> diagnosis;
 
 
     @Override

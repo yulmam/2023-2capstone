@@ -1,7 +1,7 @@
 package com.example.modak.logIn.service.impl;
 
 import com.example.modak.common.CommonResponse;
-import com.example.modak.config.security.JwtTokenProvider;
+import com.example.modak.logIn.config.security.JwtTokenProvider;
 import com.example.modak.logIn.domain.User;
 import com.example.modak.logIn.dto.LogInRequestDto;
 import com.example.modak.logIn.dto.LogInResultDto;

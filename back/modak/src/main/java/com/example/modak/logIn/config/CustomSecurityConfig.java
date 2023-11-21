@@ -1,4 +1,4 @@
-package com.example.modak.config;
+package com.example.modak.logIn.config;
 
 
 import lombok.RequiredArgsConstructor;

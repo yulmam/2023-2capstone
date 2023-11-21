@@ -2,6 +2,7 @@ package com.example.modak.diagnosis.service;
 
 
 import com.example.modak.diagnosis.controller.DiagnosisController;
+import com.example.modak.diagnosis.dto.DiagnosisRequestDto;
 import com.example.modak.diagnosis.dto.RestRequestDto;
 import com.example.modak.diagnosis.dto.RestResponseDto;
 import com.example.modak.diagnosis.util.MultipartInputStreamFileResource;
@@ -22,22 +23,30 @@ import java.io.InputStream;
 @Service
 public class RestService {
 
-    public RestResponseDto rest(RestRequestDto restRequestDto) throws IOException {
+    public RestResponseDto rest(DiagnosisRequestDto diagnosisRequestDto) throws IOException {
 
-        MultiValueMap<String, Object> body
-                = new LinkedMultiValueMap<>();
-        MultipartFile front = restRequestDto.getFront();
-        MultipartFile side = restRequestDto.getSide();
-        body.add("front", new MultipartInputStreamFileResource(front.getInputStream(), front.getOriginalFilename()));
-        body.add("side", new MultipartInputStreamFileResource(side.getInputStream(), side.getOriginalFilename()));
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-        HttpEntity<MultiValueMap<String, Object>> requestEntity
-                = new HttpEntity<>(body, headers);
 
         String serverUrl = "http://localhost:5000/run";
+        HttpEntity<MultiValueMap<String, Object>> requestEntity
+                = new HttpEntity<>(makeBody(diagnosisRequestDto), makeHeaders());
 
         return new RestTemplate().postForObject(serverUrl, requestEntity, RestResponseDto.class);
     }
+
+    private MultiValueMap<String, Object> makeBody(DiagnosisRequestDto diagnosisRequestDto) throws IOException {
+        MultiValueMap<String, Object> body
+                = new LinkedMultiValueMap<>();
+        MultipartFile front = diagnosisRequestDto.getFront();
+        MultipartFile side = diagnosisRequestDto.getSide();
+        body.add("front", new MultipartInputStreamFileResource(front.getInputStream(), front.getOriginalFilename()));
+        body.add("side", new MultipartInputStreamFileResource(side.getInputStream(), side.getOriginalFilename()));
+        return body;
+    }
+
+    private HttpHeaders makeHeaders(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        return headers;
+    }
+
 }

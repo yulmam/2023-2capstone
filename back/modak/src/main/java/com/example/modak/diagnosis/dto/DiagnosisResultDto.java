@@ -10,7 +10,11 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DiagnosisResultDto {
-    MultipartFile front;
-    MultipartFile side;
-    String value;
+    String nickName;
+    Byte[] front;
+    Byte[] side;
+    float turtleneckValue;
+    int turtleneckCheck;
+    float discValue;
+    int discCheck;
 }

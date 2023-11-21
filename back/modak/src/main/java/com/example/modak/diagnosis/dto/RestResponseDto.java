@@ -11,7 +11,13 @@ import java.util.List;
 @Getter
 @Setter
 public class RestResponseDto {
+    int check;
     Byte[] front;
     Byte[] side;
-    String value;
+    float turtleneckValue;
+    int turtleneckCheck;
+    float discValue;
+    int discCheck;
+    float shoulderAngle;
+    float hipAngle;
 }

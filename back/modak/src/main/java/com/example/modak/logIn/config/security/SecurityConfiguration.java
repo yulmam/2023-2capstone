@@ -1,4 +1,4 @@
-package com.example.modak.config.security;
+package com.example.modak.logIn.config.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

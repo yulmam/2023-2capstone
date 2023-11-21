@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.persistence.*;
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class DiagnosisService {
@@ -24,34 +26,46 @@ public class DiagnosisService {
     @Autowired
     DiagnosisRepository diagnosisRepository;
 
-    public DiagnosisResultDto diagnosis(String userName, RestResponseDto restResponseDto){
-//        Diagnois diagnois = Diagnosis.builder()
-//                .
-//
-//
-//
-//
-//
-//        User user;
-//        user = User.builder()
-//                .uid(signUpRequestDto.getUid())
-//                .nickName(signUpRequestDto.getNickName())
-//                .email(signUpRequestDto.getEmail())
-//                .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
-//                .roles(Collections.singletonList("ROLE_USER"))
-//                .build();
-//
-//
-//        User savedUser = userRepository.save(user);
-//        SignUpResultDto signUpResultDto = new SignUpResultDto();
-//
-//        if (!savedUser.getNickName().isEmpty()) {
-//            setSuccessResult(signUpResultDto);
-//        } else {
-//            setFailResult(signUpResultDto);
-//        }
-//        return signUpResultDto;
+    public String saveDiagnosticResult(String uid, RestResponseDto restResponseDto){
+
+        User user = userRepository.getByUid(uid);
+
+        Diagnosis diagnosis = Diagnosis.builder()
+                .user(user)
+                .turtleneckValue(restResponseDto.getTurtleneckValue())
+                .discValue(restResponseDto.getDiscValue())
+                .shoulderAngle(restResponseDto.getShoulderAngle())
+                .hipAngle(restResponseDto.getDiscCheck())
+                .build();
+
+        diagnosisRepository.save(diagnosis);
+        return user.getNickName();
+    }
+
+    public String history(String uid){
+        User user = userRepository.getByUid(uid);
+        List<Diagnosis> diagnosisList= user.getDiagnosis();
+
+
+
         return null;
     }
 
+
+//    @Id
+//    @GeneratedValue
+//    private long id;
+//    @Column
+//    private long turtleneckValue;
+//    @Column
+//    private long discValue;
+//    @Column
+//    private long shoulderAngle;
+//    @Column
+//    private long hipAngle;
+//    @Column
+//    private long faceAngle;
+//    @ManyToOne
+//    @JoinColumn(name="userFk")
+//    private User user;
 }

@@ -1,4 +1,4 @@
-package com.example.modak.config.security;
+package com.example.modak.logIn.config.security;
 
 import com.example.modak.logIn.dto.EntryPointErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
