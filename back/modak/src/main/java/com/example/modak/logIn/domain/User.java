@@ -47,68 +47,39 @@ public class User implements UserDetails {
     private List<String> roles = new ArrayList<>();
 
     @Column
-    @OneToMany(fetch = FetchType.LAZY)
-    List<Diagnosis> diagnosis;
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    List<Diagnosis> diagnosisList = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
-    /**
-     * security 에서 사용하는 회원 구분 id
-     *
-     * @return uid
-     */
     @JsonProperty(access = Access.WRITE_ONLY)
     @Override
     public String getUsername() {
         return this.uid;
     }
 
-    /**
-     * 계정이 만료되었는지 체크하는 로직
-     * 이 예제에서는 사용하지 않으므로 true 값 return
-     *
-     * @return true
-     */
     @JsonProperty(access = Access.WRITE_ONLY)
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
-    /**
-     * 계정이 잠겼는지 체크하는 로직
-     * 이 예제에서는 사용하지 않으므로 true 값 return
-     *
-     * @return true
-     */
     @JsonProperty(access = Access.WRITE_ONLY)
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
-    /**
-     * 계정의 패스워드가 만료되었는지 체크하는 로직
-     * 이 예제에서는 사용하지 않으므로 true 값 return
-     *
-     * @return true
-     */
     @JsonProperty(access = Access.WRITE_ONLY)
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
-    /**
-     * 계정이 사용가능한지 체크하는 로직
-     * 이 예제에서는 사용하지 않으므로 true 값 return
-     *
-     * @return true
-     */
+
     @JsonProperty(access = Access.WRITE_ONLY)
     @Override
     public boolean isEnabled() {

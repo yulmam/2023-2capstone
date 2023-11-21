@@ -38,13 +38,14 @@ public class DiagnosisService {
                 .hipAngle(restResponseDto.getDiscCheck())
                 .build();
 
+        user.getDiagnosisList().add(diagnosis);
         diagnosisRepository.save(diagnosis);
+        userRepository.save(user);
         return user.getNickName();
     }
 
     public String history(String uid){
         User user = userRepository.getByUid(uid);
-        List<Diagnosis> diagnosisList= user.getDiagnosis();
 
 
 

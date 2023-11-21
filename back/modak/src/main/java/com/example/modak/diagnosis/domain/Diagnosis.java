@@ -36,7 +36,8 @@ public class Diagnosis {
     @CreationTimestamp
     @Column(name = "ins_date")
     private LocalDateTime insDate;
-    @ManyToOne
-    @JoinColumn(name="userFk")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id")
     private User user;
 }
