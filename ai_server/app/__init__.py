@@ -67,6 +67,7 @@ def ai_run():
                                 front_Rhipy=front_Rhipy, front_Lhipx=front_Lhipx, front_Lhipy=front_Lhipy)
     print("옆모습 어깨 전역변수",side_shoulderx);
     image_printing(frame=frame_SIDE, picture_name="side")
+
     print(f"side_earx: {side_earx}, side_shoulderx: {side_shoulderx}, side_eyex= {side_eyex}")
     TurtleneckValue = fomula.ear_to_shoulder_cm(earx=side_earx, shoulderx=side_shoulderx, eyex=side_eyex)           # 귀부터 어깨까지 거리
     TurtleneckCheck = fomula.turtleneck_fomula(earx=side_earx, shoulderx=side_shoulderx, eyex=side_eyex)            # 거북목 수치화 ex) 1: 정상상태, 2: 거북목 의심상태, 3: 거북목상태, 0: 에러(다른 사진으로 교체)
@@ -79,7 +80,7 @@ def ai_run():
     
     (frame_FRONT, side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery,
     front_Rhipx, front_Rhipy, front_Lhipx, front_Lhipy) = output_keypoints(frame=frame_front, proto_file=protoFile_body_25, weights_file=weightsFile_body_25,
-                                threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25, picturetype = "side",
+                                threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25, picturetype = "front",
                                 side_shoulderx=side_shoulderx, side_earx=side_earx, front_Rshoulderx=front_Rshoulderx, front_Rshouldery=front_Rshouldery,
                                 front_Lshoulderx=front_Lshoulderx, front_Lshouldery=front_Lshouldery, front_Rhipx=front_Rhipx,
                                 front_Rhipy=front_Rhipy, front_Lhipx=front_Lhipx, front_Lhipy=front_Lhipy)
@@ -104,9 +105,14 @@ def ai_run():
         encoded_image2 = base64.b64encode(img2_file.read()).decode('utf-8')
     value = "value"
     response_data = {
-        'front': encoded_image1,
-        'side' : encoded_image2,
-        'value' : value
+        'side': encoded_image1,
+        'front' : encoded_image2,
+        'turtleneckValue' : TurtleneckValue,
+        'turtleneckCheck' : TurtleneckCheck,
+        'discValue' : discValue,
+        'discCheck' : discCheck,
+        'shoulderAngle': shoulderAngle,
+        'hipAngle' : hipAngle,
     }
     print("hi")
    

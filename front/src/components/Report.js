@@ -8,19 +8,26 @@ const { Meta } = Card;
 const level = "좋다";
 const shoulderAngle = 20;
 const Report = () => {
-  const dispatch = useDispatch();
-  const [imageUrl, setImageUrl] = useState(null);
+  const [front_imageUrl, setFrontImageUrl] = useState(null);
+  const [side_imageUrl, setSideImageUrl] = useState(null);
   const { front, side } = useSelector((state) => state.diagnosis);
   useEffect(() => {
-    const uint8Array = new Uint8Array(front);
-    const blob = new Blob([uint8Array], { type: "image/png" });
-    console.log(blob);
+    //front 사진
+    const fornt_uint8Array = new Uint8Array(front);
+    const front_blob = new Blob([fornt_uint8Array], { type: "image/png" });
+    console.log(front_blob);
 
-    const url = URL.createObjectURL(blob);
-    console.log(url);
-    setImageUrl(url);
-    dispatch(dispatchImageURL(url));
-  }, [dispatch, front]);
+    const front_url = URL.createObjectURL(front_blob);
+    console.log(front_url);
+    setFrontImageUrl(front_url);
+    //side 사진
+    const side_uint8Array = new Uint8Array(side);
+    const side_blob = new Blob([side_uint8Array], { type: "image/png" });
+    console.log(side_blob);
+
+    const side_url = URL.createObjectURL(side_blob);
+    setSideImageUrl(side_url);
+  }, [front, side]);
 
   return (
     <div>
@@ -30,11 +37,8 @@ const Report = () => {
           <div
             style={{ display: "flex", flexDirection: "row", marginTop: 200 }}
           >
-            <img style={{ width: 300 }} src={imageUrl} />
-            <img
-              style={{ width: 300 }}
-              src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-            />
+            <img style={{ width: 500 }} src={front_imageUrl} />
+            <img style={{ width: 500 }} src={side_imageUrl} />
           </div>
 
           <Space direction="vertical" size="middle" style={{ display: "flex" }}>
