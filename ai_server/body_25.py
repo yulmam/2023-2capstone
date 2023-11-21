@@ -9,7 +9,7 @@ from PIL import ImageFont, ImageDraw, Image
 
 # 사진 출력 함수
 def image_printing(frame, picture_name):
-    cv2.imshow("Turtle neck Diagnosis", frame)
+    
     cv2.imwrite(f"./download/{picture_name}.png",frame)
     cv2.waitKey(0)
     

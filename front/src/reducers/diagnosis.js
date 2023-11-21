@@ -21,18 +21,14 @@ export const submitForm = createAsyncThunk(
     try {
       console.log(data);
       const access = localStorage.getItem("access");
-      console.log(access);
-      const response = await axios.post("/diagnosis/submitForm", data);
+      // console.log(access);
+      // const response = await axios.post("/diagnosis/submitForm", data);
 
-      // const response = await axios.post(
-      //   "/diagnosis/submitForm",
-      //   {
-      //     headers: {
-      //       "X-AUTH-TOKEN": access,
-      //     },
-      //   },
-      //   data
-      // );
+      const response = await axios.post("/diagnosis/submitForm", data, {
+        headers: {
+          "X-AUTH-TOKEN": access,
+        },
+      });
 
       console.log(response);
       return fulfillWithValue(response.data);
