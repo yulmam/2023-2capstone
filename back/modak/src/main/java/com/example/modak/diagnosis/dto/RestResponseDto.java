@@ -11,7 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 public class RestResponseDto {
-    int check;
     Byte[] front;
     Byte[] side;
     float turtleneckValue;

@@ -28,13 +28,15 @@ public class DiagnosisService {
     public String saveDiagnosticResult(String uid, RestResponseDto restResponseDto){
 
         User user = userRepository.getByUid(uid);
-
+        System.out.println("check");
         Diagnosis diagnosis = Diagnosis.builder()
                 .user(user)
                 .turtleneckValue(restResponseDto.getTurtleneckValue())
+                .turtleneckCheck(restResponseDto.getTurtleneckCheck())
                 .discValue(restResponseDto.getDiscValue())
+                .discCheck(restResponseDto.getDiscCheck())
                 .shoulderAngle(restResponseDto.getShoulderAngle())
-                .hipAngle(restResponseDto.getDiscCheck())
+                .hipAngle(restResponseDto.getHipAngle())
                 .build();
 
         user.getDiagnosisList().add(diagnosis);

@@ -1,14 +1,14 @@
 package com.example.modak.diagnosis.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
-@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
+@Builder
+@Getter
 public class DiagnosisResultDto {
     String nickName;
     Byte[] front;

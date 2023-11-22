@@ -29,15 +29,15 @@ public class DiagnosisController {
     public ResponseEntity<DiagnosisResultDto> diagnosis(HttpServletRequest request, @ModelAttribute DiagnosisRequestDto diagnosisRequestDto) throws IOException, IllegalArgumentException {
 
         RestResponseDto restResponseDto = restService.rest(diagnosisRequestDto);
-
-        if(restResponseDto.getCheck() == 0){
-            throw new IllegalArgumentException("잘못된 사진을 보냈습니다.");
-        }
-
+        System.out.println(restResponseDto.getShoulderAngle());
+        System.out.println(restResponseDto.getHipAngle());
+        System.out.println(restResponseDto.getTurtleneckCheck());
+        System.out.println(restResponseDto.getDiscCheck());
         String uid = jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(request));
 
         String nickName = diagnosisService.saveDiagnosticResult(uid, restResponseDto);
-
+        System.out.println(nickName);
+        System.out.println(uid);
         DiagnosisResultDto diagnosisResultDto = DiagnosisResultDto.builder()
                 .nickName(nickName)
                 .front(restResponseDto.getFront())
@@ -53,8 +53,9 @@ public class DiagnosisController {
 
     @GetMapping("/history")
     public ResponseEntity<HistoryDto> history(HttpServletRequest request){
+        System.out.println("history");
         String uid = jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(request));
-
+        System.out.println(uid);
         return ResponseEntity.ok(diagnosisService.history(uid));
     }
 
