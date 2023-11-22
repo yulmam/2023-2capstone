@@ -33,6 +33,7 @@ public class Diagnosis {
     private float shoulderAngle;
     @Column
     private float hipAngle;
+
     @CreationTimestamp
     @Column(name = "ins_date")
     private LocalDateTime insDate;

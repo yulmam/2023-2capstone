@@ -1,11 +1,8 @@
 package com.example.modak.diagnosis.controller;
 
 
-import com.example.modak.diagnosis.dto.DiagnosisResultDto;
+import com.example.modak.diagnosis.dto.*;
 import com.example.modak.logIn.config.security.JwtTokenProvider;
-import com.example.modak.diagnosis.dto.DiagnosisRequestDto;
-import com.example.modak.diagnosis.dto.RestRequestDto;
-import com.example.modak.diagnosis.dto.RestResponseDto;
 import com.example.modak.diagnosis.service.DiagnosisService;
 import com.example.modak.diagnosis.service.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,11 +52,10 @@ public class DiagnosisController {
     }
 
     @GetMapping("/history")
-    public ResponseEntity<Object> history(HttpServletRequest request){
+    public ResponseEntity<HistoryDto> history(HttpServletRequest request){
+        String uid = jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(request));
 
-//        diagnosisService.history();
-
-        return null;
+        return ResponseEntity.ok(diagnosisService.history(uid));
     }
 
 
