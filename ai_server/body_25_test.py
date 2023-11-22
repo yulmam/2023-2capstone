@@ -4,9 +4,6 @@ import fomula
 from PIL import ImageFont, ImageDraw, Image
 
 # 계산식에 필요한 각 관절 좌표
-side_shoulderx = side_earx = side_eyex = 0
-front_Rshouldfront_Rhipy = 0
-front_Lshoulderx = front_Lshouldery = front_Lhipx = front_Lhipy = 0erx = front_Rshouldery = front_Rhipx = 
 
 side_shoulderx = side_earx = side_eyex = 0
 front_Rshoulderx = front_Rshouldery = front_Rhipx = front_Rhipy = 0

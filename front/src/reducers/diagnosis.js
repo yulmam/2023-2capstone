@@ -12,6 +12,12 @@ export const initialState = {
   diagnosisError: null,
   front: [],
   side: [],
+  // 유저 몸상태 체크하는 state
+  loadUserStateLoading: false,
+  loadUserStateDone: false,
+  loadUserStateError: null,
+  tutleneckValue: [],
+  time: [],
   imageURL: "",
 };
 //form데이터를 보내는 axios요청
@@ -37,7 +43,25 @@ export const submitForm = createAsyncThunk(
     }
   }
 );
-
+export const loadUserState = createAsyncThunk(
+  "/diagnosis/history",
+  async (data, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const access = localStorage.getItem("access");
+      console.log(access);
+      console.log("hi");
+      const response = await axios.get("/diagnosis/history", {
+        headers: {
+          "X-AUTH-TOKEN": access,
+        },
+      });
+      console.log(response.data);
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
+  }
+);
 const diagnosisSlice = createSlice({
   name: "post",
   initialState,
@@ -61,6 +85,23 @@ const diagnosisSlice = createSlice({
       .addCase(submitForm.rejected, (state, action) => {
         state.submitFormLoading = false;
         state.submitFormError = action.error;
+      })
+      .addCase(loadUserState.pending, (state, action) => {
+        state.loadUserStateLoading = true;
+        state.loadUserStateDone = false;
+        state.loadUserStateError = null;
+      })
+      .addCase(loadUserState.fulfilled, (state, action) => {
+        console.log(action.payload.turtleneckValue);
+        state.imagePaths = action.payload;
+        state.tutleneckValue = action.payload.turtleneckValue;
+        state.time = action.payload.time;
+        state.loadUserStateLoading = false;
+        state.loadUserStateDone = true;
+      })
+      .addCase(loadUserState.rejected, (state, action) => {
+        state.loadUserStateLoading = false;
+        state.loadUserStateError = action.error;
       })
       .addDefaultCase((state) => state),
 });

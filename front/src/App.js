@@ -6,7 +6,7 @@ import Home from "./routes/Home";
 import Signup from "./routes/Signup";
 import Result from "./routes/Result";
 import Notice_board from "./routes/Notice_board";
-
+import History from "./routes/History";
 function App() {
   return (
     <BrowserRouter>
@@ -16,6 +16,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/Notice_board" element={<Notice_board />} />
           <Route path="/result" element={<Result />} />
+          <Route path="/history" element={<History />} />
         </Routes>
       </div>
     </BrowserRouter>

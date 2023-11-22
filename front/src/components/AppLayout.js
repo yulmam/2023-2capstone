@@ -42,6 +42,10 @@ const items = [
     key: "notice_board",
     icon: <MailOutlined />,
   },
+  {
+    label: <Link to="/history">내 몸상태</Link>,
+    key: "history",
+  },
 ];
 
 const AppLayout = ({ children }) => {

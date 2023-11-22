@@ -114,9 +114,9 @@ def output_keypoints(frame, proto_file, weights_file, threshold, model_name, BOD
             points.append(None)
             print(f"[not pointed] {BODY_PARTS[i]} ({i}) => prob: {prob:.5f} / x: {x} / y: {y}")
     if picturetype == "side":
-        cv2.line(frame, (side_shoulderx, 0),(side_shoulderx, 460), (0, 0, 255), 3)
+        # cv2.line(frame, (side_shoulderx, 0),(side_shoulderx, 460), (0, 0, 255), 3)
         print(f"side_shoulderx: {side_shoulderx}") 
-        frame = PutTextHangul(frame, '기준점', (side_shoulderx+10, 100), 20, (0,0,255))
+        # frame = PutTextHangul(frame, '기준점', (side_shoulderx+10, 100), 20, (0,0,255))
     print(f"points: {points}")
     # cv2.imshow("Output_Keypoints", frame)
     # cv2.waitKey(0)

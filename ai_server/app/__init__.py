@@ -104,6 +104,7 @@ def ai_run():
     with open(image_path2, 'rb') as img2_file:
         encoded_image2 = base64.b64encode(img2_file.read()).decode('utf-8')
     value = "value"
+
     response_data = {
         'side': encoded_image1,
         'front' : encoded_image2,

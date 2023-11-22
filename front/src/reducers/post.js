@@ -20,6 +20,7 @@ export const initialState = {
   loadPostsLoading: false,
   loadPostsDone: false,
   loadPostsError: null,
+
   // 나중에 데이터베이스에 넣을 state
   user_name: null,
   user_sex: null,
@@ -125,6 +126,7 @@ export const loadPosts = createAsyncThunk(
     }
   }
 );
+
 // export const loadPosts = createAsyncThunk("/post/loadPosts", async () => {
 //   const access = localStorage.getItem("access");
 //   console.log(access);
@@ -187,6 +189,7 @@ const postSlice = createSlice({
         state.loadPostsLoading = false;
         state.loadPostsError = action.error;
       })
+
       .addDefaultCase((state) => state),
 });
 export default postSlice;

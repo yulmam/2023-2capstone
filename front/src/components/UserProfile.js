@@ -34,7 +34,7 @@ const UserProfile = ({ setIsLoggedIn }) => {
     >
       <Meta
         avatar={<Avatar size={64} icon={<UserOutlined />} />}
-        title={me.nickname}
+        title={me}
         description="This is the description"
       />
       <LogoutButton onClick={onLogOut}>로그아웃</LogoutButton>

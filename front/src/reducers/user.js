@@ -40,8 +40,9 @@ export const loginAction = createAsyncThunk(
       console.log(response.data);
       await wait(1000);
       // loacalStorage를 사용해서 토큰을 저장하는 것
-      const { success, code, msg, token } = response.data;
+      const { success, code, msg, token, nickName } = response.data;
       console.log(token);
+      console.log(nickName);
       localStorage.setItem("access", token);
 
       // // 이렇게 axios요청할때 해더에 기본으로 accessToken을 붙이게 설정 할 수 있다
@@ -49,7 +50,7 @@ export const loginAction = createAsyncThunk(
       // 쿠키에 Refresh Token, store에 Access Token 저장
       //response에 받는 토큰 형식 확인
       // setRefreshToken(response.json.refresh_token);
-      return fulfillWithValue(data);
+      return fulfillWithValue(response.data);
     } catch (error) {
       throw rejectWithValue(error);
     }
@@ -89,7 +90,7 @@ const userSlice = createSlice({
         state.logInLoading = false;
         state.logInDone = true;
         state.isLoggedIn = true;
-        state.me = dummyUser(action.payload);
+        state.me = action.payload.nickName;
         state.loginData = action.payload;
         state.authenticated = true;
         state.accessToken = action.payload;
