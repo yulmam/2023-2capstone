@@ -155,23 +155,6 @@ const PostForm = () => {
         encType="multipart/form-data"
         onFinish={onSumbitForm}
       >
-        <Form.Item
-          label="눈과 귀의 거리"
-          style={{ marginLeft: 300, marginTop: 50 }}
-          labelAlign="left"
-        >
-          <InputNumber
-            style={{
-              width: 200,
-            }}
-            defaultValue="1"
-            min="0"
-            max="100"
-            step="0.01"
-            onChange={onChange}
-            stringMode
-          />
-        </Form.Item>
         <div style={containerStyle}>
           <Form.Item
             valuePropName="FileList"
@@ -179,7 +162,7 @@ const PostForm = () => {
             labelAlign="left"
             // label={<span style={customLabelStyle}>앞모습 사진:</span>}
             label="앞모습 사진"
-            style={{ marginLeft: 300 }}
+            style={{ marginLeft: 300, marginTop: 50 }}
           >
             <Upload
               listType="picture-card"

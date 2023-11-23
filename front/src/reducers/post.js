@@ -111,16 +111,16 @@ export const addImage = createAsyncThunk(
 
 export const loadPosts = createAsyncThunk(
   "/post/loadPosts",
-  async ({ fulfillWithValue, rejectWithValue }) => {
+  async (data, { fulfillWithValue, rejectWithValue }) => {
     try {
       const access = localStorage.getItem("access");
       console.log(access);
-      const response = await axios.get("/post/loadPosts", {
-        headers: {
-          "X-AUTH-TOKEN": access,
-        },
-      });
-      return fulfillWithValue(response.data);
+      // const response = await axios.get("/post/loadPosts", {
+      //   headers: {
+      //     "X-AUTH-TOKEN": access,
+      //   },
+      // });
+      return fulfillWithValue();
     } catch (error) {
       throw rejectWithValue(error);
     }

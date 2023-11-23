@@ -3,7 +3,13 @@ import LoginForm from "./LoginForm";
 import UserProfile from "./UserProfile";
 import { createGlobalStyle } from "styled-components";
 import { useSelector } from "react-redux";
-import { MailOutlined, SettingOutlined } from "@ant-design/icons";
+import {
+  HomeOutlined,
+  AppstoreOutlined,
+  SettingOutlined,
+  MailOutlined,
+} from "@ant-design/icons";
+import "./AppLayout.css";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Menu, Input, Row, Col, Breadcrumb, Layout, theme } from "antd";
@@ -22,42 +28,27 @@ const Global = createGlobalStyle`
   }
 `;
 
-const items = [
-  {
-    label: <Link to="/">홈 화면</Link>,
-    key: "mail",
-    icon: <MailOutlined />,
-  },
-
-  {
-    label: (
-      <div>
-        <Link to="/signup">회원가입</Link>
-      </div>
-    ),
-    key: "profile",
-  },
-  {
-    label: <Link to="/notice_board">게시판</Link>,
-    key: "notice_board",
-    icon: <MailOutlined />,
-  },
-  {
-    label: <Link to="/history">내 몸상태</Link>,
-    key: "history",
-  },
-];
-
 const AppLayout = ({ children }) => {
   const { me } = useSelector((state) => state.user);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   return (
-    <Layout className="layout" style={{}}>
-      <Header>
-        <div className="demo-logo" />
-        <Menu theme="dark" mode="horizontal" items={items} />
+    <Layout className="layout">
+      <Header style={{ height: 100 }}>
+        <nav>
+          <Link to="/">홈 화면</Link>
+          <Link to="/signup">회원가입</Link>
+          <Link to="/notice_board">게시판</Link>
+          <Link to="/MainService">몸상태 체크</Link>
+          <Link to="/history">내 몸상태</Link>
+          <Link to="/login" class="right">
+            로그인
+          </Link>
+          <Link to="/signup" class="right">
+            회원가입
+          </Link>
+        </nav>
       </Header>
 
       <Content
