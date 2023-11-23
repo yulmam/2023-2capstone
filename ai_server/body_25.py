@@ -5,8 +5,6 @@ import numpy as np
 import fomula
 from PIL import ImageFont, ImageDraw, Image
 
-
-
 # 사진 출력 함수
 def image_printing(frame, picture_name):
     
@@ -23,8 +21,10 @@ def PutTextHangul(src, text, pos, font_size, font_color):                # openc
     draw.text(pos, text, font=font, fill= font_color)
     return np.array(img_pil)
 
-def output_keypoints(frame, proto_file, weights_file, threshold, model_name, BODY_PARTS, picturetype, side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery, front_Rhipx, front_Rhipy, front_Lhipx, front_Lhipy):
+def output_keypoints(frame, proto_file, weights_file, threshold, model_name, BODY_PARTS, picturetype):
 
+    side_shoulderx = side_earx = 0
+    front_Rshoulderx = front_Rshouldery = front_Lshoulderx = front_Lshouldery = 0
     global points
     net = cv2.dnn.readNetFromCaffe(proto_file, weights_file)            # 네트워크 불러오기
 
@@ -68,51 +68,51 @@ def output_keypoints(frame, proto_file, weights_file, threshold, model_name, BOD
         if prob > threshold:  # [pointed]
 
             points.append((x, y))
-            print(f"[pointed] {BODY_PARTS[i]} ({i}) => prob: {prob:.5f} / x: {x} / y: {y}")
-            if picturetype == "side":
-                if (i == 2) or (i == 5): 
-                    print(f"side_shoulderx = {side_shoulderx}")
-                    side_shoulderx = x
-                    print(f"side_shoulderx = {side_shoulderx}")
-                    cv2.circle(frame, (x, y), 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
-                    frame = PutTextHangul(frame, '어깨', (x+10, y), 20, (0,255,255))
-                #earx
-                if (i == 17) or (i == 18):
-                    side_earx = x
-                    cv2.circle(frame, (x, y), 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
-                    frame = PutTextHangul(frame, '귀', (x+10, y), 20, (0,255,255))
-                if (i == 15) or (i == 16):                  # side_eyex 저장
-                    side_eyex = x
-            else: # picture == "front"
-                # Shoulder
-                if (i == 2):
-                    front_Rshoulderx = x
-                    front_Rshouldery = y
-                
-                    cv2.circle(frame, (x, y), 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
-                elif (i == 5):
-                    front_Lshoulderx = x
-                    front_Lshouldery = y
-                
-                    cv2.circle(frame, (x, y), 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
-                # Hip
-                elif (i == 9):
-                    front_Rhipx = x
-                    front_Rhipy = y
-
-                    cv2.circle(frame, (x, y), 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
-                    # frame = PutTextHangul(frame, '귀', (x+10, y), 20, (0,255,255))
-                elif (i == 12):
-                    front_Lhipx = x
-                    front_Lhipy = y
-
-                    cv2.circle(frame, (x, y), 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
-                    # frame = PutTextHangul(frame, '귀', (x+10, y), 20, (0,255,255))
-                    # print(f"i: {i}, x: {x}")    
+            print(f"[pointed] {BODY_PARTS[i]} ({i}) => prob: {prob:.5f} / x: {x} / y: {y}") 
         else:  # [not pointed]
             #cv2.circle(frame, (x, y), 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
             points.append(None)
+            if i == 16:                      #왼쪽귀가 안보이므로 오른쪽 측면사진
+                side_photo = "right"
+            elif i == 18:
+                side_phto = "left"
             print(f"[not pointed] {BODY_PARTS[i]} ({i}) => prob: {prob:.5f} / x: {x} / y: {y}")
+    if picturetype == "side":
+        if side_photo == "right":                   # 왼쪽귀가 안보이므로 오른쪽 측면 사진
+            cv2.circle(frame, points[2], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+            frame = PutTextHangul(frame, '어깨', (points[2][0]+10, points[2][1]), 20, (0,255,255))
+            cv2.circle(frame, points[15], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+            frame = PutTextHangul(frame, '눈', (points[15][0]+10, points[15][1]), 20, (0,255,255))
+            cv2.circle(frame, points[17], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+            frame = PutTextHangul(frame, '귀', (points[17][0]+10, points[17][1]), 20, (0,255,255))
+            side_shoulderx = points[2][0]
+            side_earx = points[17][0]
+        elif side_phto == "left":
+            cv2.circle(frame, points[5], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+            frame = PutTextHangul(frame, '어깨', (points[5][0]+10, points[5][1]), 20, (0,255,255))
+            cv2.circle(frame, points[16], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+            frame = PutTextHangul(frame, '눈', (points[16][0]+10, points[16][1]), 20, (0,255,255))
+            cv2.circle(frame, points[18], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+            frame = PutTextHangul(frame, '귀', (points[18][0]+10, points[18][1]), 20, (0,255,255))
+            side_shoulderx = points[5][0]
+            side_earx = points[18][0]
+    elif picturetype == "front":
+        cv2.circle(frame, points[0], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+        frame = PutTextHangul(frame, '코', (points[0][0]+10, points[0][1]), 20, (0,255,255))
+        cv2.circle(frame, points[1], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+        frame = PutTextHangul(frame, '목', (points[1][0]+10, points[1][1]), 20, (0,255,255))
+        cv2.circle(frame, points[2], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+        front_Rshoulderx = points[2][0]
+        front_Rshouldery = points[2][1]
+        cv2.circle(frame, points[5], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+        front_Lshoulderx = points[5][0]
+        front_Lshouldery = points[5][1]
+        frame = PutTextHangul(frame, '어깨', (points[1][0], points[5][1]+10), 20, (0,255,255))
+        cv2.circle(frame, points[8], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+        cv2.circle(frame, points[9], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+        cv2.circle(frame, points[12], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+        frame = PutTextHangul(frame, '골반', (points[8][0], points[8][1]+10), 20, (0,255,255))
+        
     if picturetype == "side":
         # cv2.line(frame, (side_shoulderx, 0),(side_shoulderx, 460), (0, 0, 255), 3)
         print(f"side_shoulderx: {side_shoulderx}") 
@@ -120,7 +120,7 @@ def output_keypoints(frame, proto_file, weights_file, threshold, model_name, BOD
     print(f"points: {points}")
     # cv2.imshow("Output_Keypoints", frame)
     # cv2.waitKey(0)
-    return (frame,side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery, front_Rhipx, front_Rhipy, front_Lhipx, front_Lhipy)
+    return (frame,side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery)
 
 def output_keypoints_with_lines(frame, POSE_PAIRS, side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery, front_Rhipx, front_Rhipy, front_Lhipx, front_Lhipy):
     for pair in POSE_PAIRS:

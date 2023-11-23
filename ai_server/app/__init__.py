@@ -47,11 +47,9 @@ def ai_run():
     weightsFile_body_25 = ".\\body_25\\pose_iter_584000.caffemodel"
 
     # 이미지 경로
-    # sideman = ".\\Pictures\\side_good.png"
     sideman = ".\\upload\\side.png"
     frontman = ".\\upload\\front.png"
 
-    # frame_body_25 = cv2.imread(man)
     frame_side = cv2.imread(sideman)
     frame_front = cv2.imread(frontman)
 
@@ -59,13 +57,9 @@ def ai_run():
     #frame_BODY_25 = output_keypoints(frame=frame_body_25, proto_file=protoFile_body_25, weights_file=weightsFile_body_25,
     #                              threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25)
     
-    (frame_SIDE, side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery,
-    front_Rhipx, front_Rhipy, front_Lhipx, front_Lhipy)= output_keypoints(frame=frame_side, proto_file=protoFile_body_25, weights_file=weightsFile_body_25,
-                                threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25, picturetype = "side",
-                                side_shoulderx=side_shoulderx, side_earx=side_earx, front_Rshoulderx=front_Rshoulderx, front_Rshouldery=front_Rshouldery,
-                                front_Lshoulderx=front_Lshoulderx, front_Lshouldery=front_Lshouldery, front_Rhipx=front_Rhipx,
-                                front_Rhipy=front_Rhipy, front_Lhipx=front_Lhipx, front_Lhipy=front_Lhipy)
-    print("옆모습 어깨 전역변수",side_shoulderx);
+    (frame_SIDE, side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery)= output_keypoints(
+        frame=frame_side, proto_file=protoFile_body_25, weights_file=weightsFile_body_25, threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25, picturetype = "side")
+    print("옆모습 어깨 전역변수", side_shoulderx);
     image_printing(frame=frame_SIDE, picture_name="side")
 
     print(f"side_earx: {side_earx}, side_shoulderx: {side_shoulderx}, side_eyex= {side_eyex}")
@@ -73,17 +67,10 @@ def ai_run():
     TurtleneckCheck = fomula.turtleneck_fomula(earx=side_earx, shoulderx=side_shoulderx, eyex=side_eyex)            # 거북목 수치화 ex) 1: 정상상태, 2: 거북목 의심상태, 3: 거북목상태, 0: 에러(다른 사진으로 교체)
 
     print(f"TurtleneckValue: {TurtleneckValue}cm, TurtleneckCheck: {TurtleneckCheck}")
-
-    side_shoulderx = side_earx = side_eyex = 0
-    front_Rshoulderx = front_Rshouldery = front_Rhipx = front_Rhipy = 0
-    front_Lshoulderx = front_Lshouldery = front_Lhipx = front_Lhipy = 0
     
     (frame_FRONT, side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery,
     front_Rhipx, front_Rhipy, front_Lhipx, front_Lhipy) = output_keypoints(frame=frame_front, proto_file=protoFile_body_25, weights_file=weightsFile_body_25,
-                                threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25, picturetype = "front",
-                                side_shoulderx=side_shoulderx, side_earx=side_earx, front_Rshoulderx=front_Rshoulderx, front_Rshouldery=front_Rshouldery,
-                                front_Lshoulderx=front_Lshoulderx, front_Lshouldery=front_Lshouldery, front_Rhipx=front_Rhipx,
-                                front_Rhipy=front_Rhipy, front_Lhipx=front_Lhipx, front_Lhipy=front_Lhipy)
+                                threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25, picturetype = "front")
     # 정면 사진 관절 라인
     (frame_front, side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery,
     front_Rhipx, front_Rhipy, front_Lhipx, front_Lhipy) = output_keypoints_with_lines(frame=frame_FRONT, POSE_PAIRS=POSE_PAIRS_BODY_25, side_shoulderx=side_shoulderx, side_earx=side_earx, front_Rshoulderx=front_Rshoulderx, front_Rshouldery=front_Rshouldery,
