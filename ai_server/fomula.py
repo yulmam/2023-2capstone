@@ -3,8 +3,8 @@ import numpy as np
 def turtleneck_fomula(earx, shoulderx, eyex):
     print("[거북목 진단결과]")
 
-    A = shoulderx - earx
-    B = earx - eyex
+    A = abs(shoulderx - earx)
+    B = abs(earx - eyex)
 
     if B/6*5 < A:
         print("거북목 상태")
@@ -31,8 +31,8 @@ def disc_fomula(Lshouldery, Rshouldery, Lhipy, Rhipy):
 
 def ear_to_shoulder_cm(earx, shoulderx, eyex):
     
-    A = shoulderx - earx
-    B = earx - eyex
+    A = abs(shoulderx - earx)
+    B = abs(earx - eyex)
     
     print(f"A:{A}")
     print(f"B:{B}")

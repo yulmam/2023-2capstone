@@ -23,7 +23,7 @@ def ai_run():
     side_shoulderx = side_earx = side_eyex = 0
     front_Rshoulderx = front_Rshouldery = front_Rhipx = front_Rhipy = 0
     front_Lshoulderx = front_Lshouldery = front_Lhipx = front_Lhipy = 0
-
+    
     img=request.files["front"]
     img.save('./upload/front.png')
     img=request.files["side"]
@@ -57,10 +57,8 @@ def ai_run():
     #frame_BODY_25 = output_keypoints(frame=frame_body_25, proto_file=protoFile_body_25, weights_file=weightsFile_body_25,
     #                              threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25)
     
-    (frame_SIDE, side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery)= output_keypoints(
+    frame_SIDE= output_keypoints(
         frame=frame_side, proto_file=protoFile_body_25, weights_file=weightsFile_body_25, threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25, picturetype = "side")
-    print("옆모습 어깨 전역변수", side_shoulderx);
-    image_printing(frame=frame_SIDE, picture_name="side")
 
     print(f"side_earx: {side_earx}, side_shoulderx: {side_shoulderx}, side_eyex= {side_eyex}")
     TurtleneckValue = fomula.ear_to_shoulder_cm(earx=side_earx, shoulderx=side_shoulderx, eyex=side_eyex)           # 귀부터 어깨까지 거리
@@ -68,20 +66,15 @@ def ai_run():
 
     print(f"TurtleneckValue: {TurtleneckValue}cm, TurtleneckCheck: {TurtleneckCheck}")
     
-    (frame_FRONT, side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery,
-    front_Rhipx, front_Rhipy, front_Lhipx, front_Lhipy) = output_keypoints(frame=frame_front, proto_file=protoFile_body_25, weights_file=weightsFile_body_25,
-                                threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25, picturetype = "front")
+    frame_FRONT = output_keypoints(
+        frame=frame_front, proto_file=protoFile_body_25, weights_file=weightsFile_body_25, threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25, picturetype = "front")
     # 정면 사진 관절 라인
-    (frame_front, side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery,
-    front_Rhipx, front_Rhipy, front_Lhipx, front_Lhipy) = output_keypoints_with_lines(frame=frame_FRONT, POSE_PAIRS=POSE_PAIRS_BODY_25, side_shoulderx=side_shoulderx, side_earx=side_earx, front_Rshoulderx=front_Rshoulderx, front_Rshouldery=front_Rshouldery,
-                                front_Lshoulderx=front_Lshoulderx, front_Lshouldery=front_Lshouldery, front_Rhipx=front_Rhipx,
-                                front_Rhipy=front_Rhipy, front_Lhipx=front_Lhipx, front_Lhipy=front_Lhipy)
-    image_printing(frame=frame_front, picture_name="front")
+    # frame_front = output_keypoints_with_lines(frame=frame_FRONT, POSE_PAIRS=POSE_PAIRS_BODY_25, side_shoulderx=side_shoulderx, side_earx=side_earx, 
+    #                             front_Rshoulderx=front_Rshoulderx, front_Rshouldery=front_Rshouldery, front_Lshoulderx=front_Lshoulderx, front_Lshouldery=front_Lshouldery)
+    # image_printing(frame=frame_front, picture_name="front")
 
     discValue = fomula.shoulder_and_hip_angle(Lshoulderx=front_Lshoulderx, Lshouldery=front_Lshouldery, Rshoulderx=front_Rshoulderx, Rshouldery=front_Rshouldery, Lhipx=front_Lhipx, Lhipy=front_Lhipy, Rhipx=front_Rhipx, Rhipy=front_Rhipy)
     discCheck = fomula.disc_fomula(Lshouldery=front_Lshouldery, Rshouldery=front_Rshouldery, Lhipy=front_Lhipy, Rhipy=front_Rhipy)
-    shoulderAngle = fomula.shoulderAngle(Lshoulderx=front_Lshoulderx, Lshouldery=front_Lshouldery, Rshoulderx=front_Rshoulderx, Rshouldery=front_Rshouldery)
-    hipAngle = fomula.hipAngle(Lhipx=front_Lhipx, Lhipy=front_Lhipy, Rhipx=front_Rhipx, Rhipy=front_Rhipy)
 
     image_path1 = ".\\download\\side.png"
     image_path2 = ".\\download\\front.png"

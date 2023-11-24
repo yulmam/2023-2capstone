@@ -23,6 +23,7 @@ def PutTextHangul(src, text, pos, font_size, font_color):                # openc
 
 def output_keypoints(frame, proto_file, weights_file, threshold, model_name, BODY_PARTS, picturetype):
 
+    # disc = [0, 1, 2, 5, 8, 9, 12]
     side_shoulderx = side_earx = 0
     front_Rshoulderx = front_Rshouldery = front_Lshoulderx = front_Lshouldery = 0
     global points
@@ -49,8 +50,10 @@ def output_keypoints(frame, proto_file, weights_file, threshold, model_name, BOD
 
     frame_height, frame_width = frame.shape[:2]                         # 원본 이미지의 높이, 너비를 받아오기
 
-    points = []                                                         # 포인트 리스트 초기화
-
+    points = []                                                         # 포인트 리스트 초기화                                                      
+    side = []
+    front = []
+    
     print(f"\n============================== {picturetype} picture ==============================")
     for i in range(len(BODY_PARTS)):
 
@@ -80,69 +83,96 @@ def output_keypoints(frame, proto_file, weights_file, threshold, model_name, BOD
     if picturetype == "side":
         if side_photo == "right":                   # 왼쪽귀가 안보이므로 오른쪽 측면 사진
             cv2.circle(frame, points[2], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+            side.append(points[2])
             frame = PutTextHangul(frame, '어깨', (points[2][0]+10, points[2][1]), 20, (0,255,255))
             cv2.circle(frame, points[15], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+            side.append(points[15])
             frame = PutTextHangul(frame, '눈', (points[15][0]+10, points[15][1]), 20, (0,255,255))
             cv2.circle(frame, points[17], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+            side.append(points[17])
             frame = PutTextHangul(frame, '귀', (points[17][0]+10, points[17][1]), 20, (0,255,255))
-            side_shoulderx = points[2][0]
-            side_earx = points[17][0]
+            # side_shoulderx = points[2][0]
+            # side_eyex = points[15][0]
+            # side_earx = points[17][0]
         elif side_phto == "left":
             cv2.circle(frame, points[5], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+            side.append(points[5])
             frame = PutTextHangul(frame, '어깨', (points[5][0]+10, points[5][1]), 20, (0,255,255))
             cv2.circle(frame, points[16], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
             frame = PutTextHangul(frame, '눈', (points[16][0]+10, points[16][1]), 20, (0,255,255))
             cv2.circle(frame, points[18], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+            side.append(points[18])
             frame = PutTextHangul(frame, '귀', (points[18][0]+10, points[18][1]), 20, (0,255,255))
-            side_shoulderx = points[5][0]
-            side_earx = points[18][0]
+            # side_shoulderx = points[5][0]
+            # side_eyex = points[16][0]
+            # side_earx = points[18][0]
     elif picturetype == "front":
         cv2.circle(frame, points[0], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+        #front_Nosex = points[0][0]
+        #front_Nosey = points[0][1]
+        front.append(points[0])
         frame = PutTextHangul(frame, '코', (points[0][0]+10, points[0][1]), 20, (0,255,255))
         cv2.circle(frame, points[1], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+        #front_Neckx = points[1][0]
+        #front_Necky = points[1][1]
+        front.append(points[1])
         frame = PutTextHangul(frame, '목', (points[1][0]+10, points[1][1]), 20, (0,255,255))
         cv2.circle(frame, points[2], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
-        front_Rshoulderx = points[2][0]
-        front_Rshouldery = points[2][1]
+        #front_Rshoulderx = points[2][0]
+        #front_Rshouldery = points[2][1]
+        front.append(points[2])
         cv2.circle(frame, points[5], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
-        front_Lshoulderx = points[5][0]
-        front_Lshouldery = points[5][1]
+        #front_Lshoulderx = points[5][0]
+        #front_Lshouldery = points[5][1]
+        front.append(points[5])
         frame = PutTextHangul(frame, '어깨', (points[1][0], points[5][1]+10), 20, (0,255,255))
         cv2.circle(frame, points[8], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+        #front_MidHipx = points[8][0]
+        #front_MidHipy = points[8][1]
+        front.append(points[8])
         cv2.circle(frame, points[9], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+        #front_RHipx = points[9][0]
+        #front_RHipy = points[9][1]
+        front.append(points[9])
         cv2.circle(frame, points[12], 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
+        #front_LHipx = points[12][0]
+        #front_LHipy = points[12][1]
+        front.append(points[12])
         frame = PutTextHangul(frame, '골반', (points[8][0], points[8][1]+10), 20, (0,255,255))
-        
     if picturetype == "side":
+        frame = output_keypoints_with_lines(frame = frame, type = side, picture_name = picturetype)
         # cv2.line(frame, (side_shoulderx, 0),(side_shoulderx, 460), (0, 0, 255), 3)
         print(f"side_shoulderx: {side_shoulderx}") 
         # frame = PutTextHangul(frame, '기준점', (side_shoulderx+10, 100), 20, (0,0,255))
+    elif picturetype == "front":
+        frame = output_keypoints_with_lines(frame = frame, type = front, picture_name = picturetype)
     print(f"points: {points}")
     # cv2.imshow("Output_Keypoints", frame)
     # cv2.waitKey(0)
-    return (frame,side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery)
+    return frame
 
-def output_keypoints_with_lines(frame, POSE_PAIRS, side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery, front_Rhipx, front_Rhipy, front_Lhipx, front_Lhipy):
-    for pair in POSE_PAIRS:
-        part_a = pair[0]  # 0 (Head)
-        part_b = pair[1]  # 1 (Neck)
-        # print(f"pair[0]: {pair[0]}")
-        # print(f"pair[1]: {pair[1]}")
-        
-        cv2.line(frame, points[2], points[5], (0, 255, 0), 3)
-        frame = PutTextHangul(frame, '어깨 기울기', (front_Lshoulderx+10, front_Lshouldery + 15), 20, (0,255,255))
-        cv2.line(frame, points[9], points[12], (0, 255, 0), 3)
-        frame = PutTextHangul(frame, '골반 기울기', (front_Lhipx+10, front_Lhipy + 10), 20, (0,255,255))
+def output_keypoints_with_lines(frame, type, picture_name):
+    #front 0 : Nose, 1 : Neck, 2 : Lshoulder, 3 : Rshoulder, 4 : MidHip, 5 : LHip, 6 : RHip
+    if picture_name == "front":
+        cv2.line(frame, type[0], type[1], (0, 255, 0), 3)    # 코 - 목
+        # frame = PutTextHangul(frame, '어깨 기울기', (front_Lshoulderx+10, front_Lshouldery + 15), 20, (0,255,255))
+        cv2.line(frame, type[1], type[2], (0, 255, 0), 3)   # 목 - 왼쪽어깨
+        cv2.line(frame, type[1], type[3], (0, 255, 0), 3)   # 목 - 오른쪽어깨
+        cv2.line(frame, type[1], type[4], (0, 255, 0), 3)   # 목 - 중앙골반
+        cv2.line(frame, type[4], type[5], (0, 255, 0), 3)   # 중앙골반 - 왼쪽골반
+        cv2.line(frame, type[4], type[6], (0, 255, 0), 3)   # 중앙골반 - 오른쪽골반
+    elif picture_name == "side":
+        cv2.line(frame, type[0], type[1], (0, 255, 0), 3)   # 어깨 - 귀
+    # frame = PutTextHangul(frame, '골반 기울기', (front_Lhipx+10, front_Lhipy + 10), 20, (0,255,255))
         # if points[part_a] and points[part_b]:
         #     print(f"[linked] {part_a} {points[part_a]} <=> {part_b} {points[part_b]}")
         #     cv2.line(frame, points[part_a], points[part_b], (0, 255, 0), 3)
         # else:
         #     print(f"[not linked] {part_a} {points[part_a]} <=> {part_b} {points[part_b]}")
-        
+    image_printing(frame = frame, picture_name = picture_name)
     # cv2.imshow("output_keypoints_with_lines", frame)
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
 
     # print(f"front_shoulderx: {front_shoulderx}")
-
-    return (frame, side_shoulderx, side_earx, front_Rshoulderx, front_Rshouldery, front_Lshoulderx, front_Lshouldery, front_Rhipx, front_Rhipy, front_Lhipx, front_Lhipy) 
+    return frame
