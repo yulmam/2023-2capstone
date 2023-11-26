@@ -25,7 +25,7 @@ const Notice = ({ post }) => {
         hoverable
         style={{
           width: 500,
-          backgroundColor: "#fff1f0",
+          backgroundColor: "#d6e4ff",
           margin: 10,
         }}
         onClick={onToggleNotice}
@@ -38,7 +38,7 @@ const Notice = ({ post }) => {
           bordered={false}
           style={{
             width: 500,
-            backgroundColor: "#ffd8bf",
+            backgroundColor: "#85a5ff",
             margin: 10,
           }}
         >
@@ -47,7 +47,7 @@ const Notice = ({ post }) => {
             type="primary"
             style={{
               marginLeft: 380,
-              backgroundColor: "#ffd8bf",
+              backgroundColor: "#597ef7",
               color: "#000000",
             }}
             onClick={onToggleComment}
@@ -62,7 +62,7 @@ const Notice = ({ post }) => {
           bordered={false}
           style={{
             width: 500,
-            backgroundColor: "#ffd8bf",
+            backgroundColor: "#597ef7",
             margin: 10,
           }}
         >
@@ -75,7 +75,7 @@ const Notice = ({ post }) => {
             type="primary"
             style={{
               marginLeft: 380,
-              backgroundColor: "#ffd8bf",
+              backgroundColor: "#2f54eb",
               color: "#000000",
             }}
             onClick={onToggleComment}

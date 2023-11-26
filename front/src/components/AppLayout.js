@@ -38,7 +38,6 @@ const AppLayout = ({ children }) => {
       <Header style={{ height: 100 }}>
         <nav>
           <Link to="/">홈 화면</Link>
-          <Link to="/signup">회원가입</Link>
           <Link to="/notice_board">게시판</Link>
           <Link to="/MainService">몸상태 체크</Link>
           <Link to="/history">내 몸상태</Link>
@@ -84,10 +83,12 @@ const AppLayout = ({ children }) => {
       <Footer
         style={{
           textAlign: "center",
-          marginTop: 100,
+          marginTop: 50,
           backgroundColor: "white",
         }}
-      ></Footer>
+      >
+        design by modakbul
+      </Footer>
     </Layout>
   );
 };
