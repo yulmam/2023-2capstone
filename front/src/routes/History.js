@@ -24,15 +24,9 @@ const History = () => {
   }, [me, navigate]);
 
   useEffect(() => {
-    if (signUpDone) {
-      navigate("/");
-    }
-  }, [navigate, signUpDone]);
-  useEffect(() => {
     console.log("hi");
     dispatch(loadUserState());
-    console.log(tutleneckValue);
-  }, [dispatch, tutleneckValue]);
+  }, [dispatch]);
 
   const [options, setOptions] = useState({
     xAxis: {
@@ -50,21 +44,21 @@ const History = () => {
     ],
     autoResize: true,
   });
-  // useEffect(() => {
-  //   setOptions((prevState) => ({
-  //     ...prevState,
-  //     xAxis: {
-  //       ...prevState.xAxis,
-  //       data: time,
-  //     },
-  //     series: [
-  //       {
-  //         ...prevState.series,
-  //         data: tutleneckValue,
-  //       },
-  //     ],
-  //   }));
-  // }, [time, tutleneckValue]);
+  useEffect(() => {
+    setOptions((prevState) => ({
+      ...prevState,
+      xAxis: {
+        ...prevState.xAxis,
+        data: time,
+      },
+      series: [
+        {
+          ...prevState.series,
+          data: tutleneckValue,
+        },
+      ],
+    }));
+  }, [time, tutleneckValue]);
   useEffect(() => {
     console.log(options);
 
