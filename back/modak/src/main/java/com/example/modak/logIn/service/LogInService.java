@@ -7,5 +7,4 @@ public interface LogInService {
 
     LogInResultDto logIn(LogInRequestDto logInRequestDto) throws RuntimeException;
 
-    LogOutResultDto logout();
 }

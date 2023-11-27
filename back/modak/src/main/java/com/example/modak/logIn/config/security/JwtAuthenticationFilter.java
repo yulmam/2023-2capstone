@@ -15,10 +15,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
-    private final RedisTemplate<String, String> redisTemplate;
-    public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider, RedisTemplate redisTemplate) {
+
+    public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
-        this.redisTemplate = redisTemplate;
     }
 
 
@@ -30,10 +29,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 
         if (token != null && jwtTokenProvider.validateToken(token)) {
-            if(redisTemplate.opsForValue().get(token)==null){
                 Authentication authentication = jwtTokenProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
+
         }
 
         filterChain.doFilter(servletRequest, servletResponse);

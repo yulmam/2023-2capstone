@@ -21,12 +21,10 @@ import java.util.Map;
 public class LogInController {
 
    private final LogInService logInService;
-   private final JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    public LogInController(LogInService logInService, JwtTokenProvider jwtTokenProvider) {
+    public LogInController(LogInService logInService) {
         this.logInService = logInService;
-        this.jwtTokenProvider = jwtTokenProvider;
     }
 
 
@@ -42,11 +40,6 @@ public class LogInController {
         return ResponseEntity.ok(logInResultDto);
     }
 
-    @GetMapping(value = "/logout")
-    public LogOutResultDto logOut(HttpServletRequest request){
-        String token = jwtTokenProvider.resolveToken(request);
-        return logInService.logout();
-    }
 
     @PostMapping(value = "/signup")
     public ResponseEntity<SignUpResultDto> signUp(

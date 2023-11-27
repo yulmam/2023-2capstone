@@ -20,15 +20,13 @@ public class LogInServiceImpl implements LogInService {
     public final UserRepository userRepository;
     public final JwtTokenProvider jwtTokenProvider;
     public final PasswordEncoder passwordEncoder;
-    public final RedisTemplate<String, String> redisTemplate;
 
     @Autowired
     public LogInServiceImpl(UserRepository userRepository, JwtTokenProvider jwtTokenProvider,
-                            PasswordEncoder passwordEncoder, RedisTemplate<String, String> redisTemplate) {
+                            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.jwtTokenProvider = jwtTokenProvider;
         this.passwordEncoder = passwordEncoder;
-        this.redisTemplate = redisTemplate;
     }
 
     @Override
@@ -69,24 +67,7 @@ public class LogInServiceImpl implements LogInService {
                 .build();
         setSuccessResult(logInResultDto);
         System.out.println("test1");
-        redisTemplate.opsForValue().set("JWT_TOKEN" + logInRequestDto.getUid(), token, jwtTokenProvider.getExpiration(token), TimeUnit.MILLISECONDS);
         return logInResultDto;
-    }
-
-    public LogOutResultDto logout() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        LogOutResultDto result = new LogOutResultDto();
-        if(redisTemplate.opsForValue().get("JWT_TOKEN" + user.getUid()) != null){
-            redisTemplate.delete("JWT_TOKEN:" + user.getUid());
-            result.setSuccess(true);
-            result.setCode(CommonResponse.SUCCESS.getCode());
-            result.setMsg(CommonResponse.SUCCESS.getMsg());
-            return result;
-        }
-        result.setSuccess(false);
-        result.setCode(CommonResponse.FAIL.getCode());
-        result.setMsg(CommonResponse.FAIL.getMsg());
-        return result;
     }
 
     // 결과 모델에 api 요청 성공 데이터를 세팅해주는 메소드
