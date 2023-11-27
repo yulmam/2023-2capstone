@@ -58,71 +58,71 @@ def ai_run():
     # BODY_25 Model (front, side)
     #frame_BODY_25 = output_keypoints(frame=frame_body_25, proto_file=protoFile_body_25, weights_file=weightsFile_body_25,
     #                              threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25)
-    try:
-        (frame_SIDE, value, error_check)= output_keypoints(
-            frame=frame_side, proto_file=protoFile_body_25, weights_file=weightsFile_body_25, threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25, picturetype = "side")
+    #try:
+    (frame_SIDE, value)= output_keypoints(
+        frame=frame_side, proto_file=protoFile_body_25, weights_file=weightsFile_body_25, threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25, picturetype = "side")
 
-        TurtleneckValue = value[0]
-        TurtleneckCheck = value[1]
+    TurtleneckValue = value[0]
+    TurtleneckCheck = value[1]
         #print(f"side_earx: {side_earx}, side_shoulderx: {side_shoulderx}, side_eyex= {side_eyex}")
         #TurtleneckValue = fomula.ear_to_shoulder_cm(earx=side_earx, shoulderx=side_shoulderx, eyex=side_eyex)           # 귀부터 어깨까지 거리
         #TurtleneckCheck = fomula.turtleneck_fomula(earx=side_earx, shoulderx=side_shoulderx, eyex=side_eyex)            # 거북목 수치화 ex) 1: 정상상태, 2: 거북목 의심상태, 3: 거북목상태, 0: 에러(다른 사진으로 교체)
 
-        print(f"TurtleneckValue: {TurtleneckValue}cm, TurtleneckCheck: {TurtleneckCheck}")
+    print(f"TurtleneckValue: {TurtleneckValue}cm, TurtleneckCheck: {TurtleneckCheck}")
         
-        (frame_FRONT, value, error_check) = output_keypoints(
-            frame=frame_front, proto_file=protoFile_body_25, weights_file=weightsFile_body_25, threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25, picturetype = "front")
+    (frame_FRONT, value) = output_keypoints(
+        frame=frame_front, proto_file=protoFile_body_25, weights_file=weightsFile_body_25, threshold=0.2, model_name="BODY_25", BODY_PARTS=BODY_PARTS_BODY_25, picturetype = "front")
         # 정면 사진 관절 라인
         # frame_front = output_keypoints_with_lines(frame=frame_FRONT, POSE_PAIRS=POSE_PAIRS_BODY_25, side_shoulderx=side_shoulderx, side_earx=side_earx, 
         #                             front_Rshoulderx=front_Rshoulderx, front_Rshouldery=front_Rshouldery, front_Lshoulderx=front_Lshoulderx, front_Lshouldery=front_Lshouldery)
         # image_printing(frame=frame_front, picture_name="front")
-        print(value[0])
-        print(value[1])
-        discValue = value[0]
-        discCheck = value[1]
+    print(value[0])
+    print(value[1])
+    discValue = value[0]
+    discCheck = value[1]
         #discValue = fomula.shoulder_and_hip_angle(Lshoulderx=front_Lshoulderx, Lshouldery=front_Lshouldery, Rshoulderx=front_Rshoulderx, Rshouldery=front_Rshouldery, Lhipx=front_Lhipx, Lhipy=front_Lhipy, Rhipx=front_Rhipx, Rhipy=front_Rhipy)
         #discCheck = fomula.disc_fomula(Lshouldery=front_Lshouldery, Rshouldery=front_Rshouldery, Lhipy=front_Lhipy, Rhipy=front_Rhipy)
 
-        image_path1 = ".\\download\\side.png"
-        image_path2 = ".\\download\\front.png"
-        variable_value= "value"
-        with open(image_path1, 'rb') as img1_file:
-            encoded_image1 = base64.b64encode(img1_file.read()).decode('utf-8')
-        with open(image_path2, 'rb') as img2_file:
-            encoded_image2 = base64.b64encode(img2_file.read()).decode('utf-8')
-        value = "value"
+    image_path1 = ".\\download\\side.png"
+    image_path2 = ".\\download\\front.png"
+    variable_value= "value"
+    with open(image_path1, 'rb') as img1_file:
+        encoded_image1 = base64.b64encode(img1_file.read()).decode('utf-8')
+    with open(image_path2, 'rb') as img2_file:
+        encoded_image2 = base64.b64encode(img2_file.read()).decode('utf-8')
+    value = "value"
 
-        response_data = {
-            'side': encoded_image1,
-            'front' : encoded_image2,
-            'turtleneckValue' : TurtleneckValue,
-            'turtleneckCheck' : TurtleneckCheck,
-            'discValue' : discValue,
-            'discCheck' : discCheck,
+    response_data = {
+        'side': encoded_image1,
+        'front' : encoded_image2,
+        'turtleneckValue' : TurtleneckValue,
+        'turtleneckCheck' : TurtleneckCheck,
+        'discValue' : discValue,
+        'discCheck' : discCheck,
         }
-        print("hi")
+    print("hi")
     
-        return jsonify(response_data)
+    return jsonify(response_data)
     
-    except:
-        image_path1 = "./upload/front.png"
-        image_path2 = "./upload/front.png"
+    # except:
+    #     image_path1 = "./upload/front.png"
+    #     image_path2 = "./upload/front.png"
         
-        with open(image_path1, 'rb') as img1_file:
-            encoded_image1 = base64.b64encode(img1_file.read()).decode('utf-8')
-        with open(image_path2, 'rb') as img2_file:
-            encoded_image2 = base64.b64encode(img2_file.read()).decode('utf-8')
-        TurtleneckValue = TurtleneckCheck = discValue = discCheck = 0
-        print(TurtleneckValue)
-        print(TurtleneckCheck)
-        print(discValue)
-        print(discCheck)
-        response_data = {
-            'side': encoded_image1,
-            'front' : encoded_image2,
-            'turtleneckValue' : TurtleneckValue,
-            'turtleneckCheck' : TurtleneckCheck,
-            'discValue' : discValue,
-            'discCheck' : discCheck,
-        }
-        return jsonify(response_data)
+    #     with open(image_path1, 'rb') as img1_file:
+    #         encoded_image1 = base64.b64encode(img1_file.read()).decode('utf-8')
+    #     with open(image_path2, 'rb') as img2_file:
+    #         encoded_image2 = base64.b64encode(img2_file.read()).decode('utf-8')
+    #     TurtleneckValue = TurtleneckCheck = discValue = discCheck = 0
+    #     print(TurtleneckValue)
+    #     print(TurtleneckCheck)
+    #     print(discValue)
+    #     print(discCheck)
+    #     response_data = {
+    #         'side': encoded_image1,
+    #         'front' : encoded_image2,
+    #         'turtleneckValue' : TurtleneckValue,
+    #         'turtleneckCheck' : TurtleneckCheck,
+    #         'discValue' : discValue,
+    #         'discCheck' : discCheck,
+    #     }
+    #     return jsonify(response_data)
