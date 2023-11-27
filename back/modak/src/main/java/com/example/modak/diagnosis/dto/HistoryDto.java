@@ -2,6 +2,7 @@ package com.example.modak.diagnosis.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,5 +16,5 @@ import java.util.List;
 public class HistoryDto {
     List<Float> turtleneckValue;
     List<Float> discValue;
-    List<LocalDateTime> time;
+    List<LocalDate> time;
 }

@@ -6,6 +6,7 @@ import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -36,7 +37,7 @@ public class Diagnosis {
 
     @CreationTimestamp
     @Column(name = "ins_date")
-    private LocalDateTime insDate;
+    private LocalDate insDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")

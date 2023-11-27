@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -48,7 +49,7 @@ public class DiagnosisService {
         List<Diagnosis> diagnosisList = user.getDiagnosisList();
         List<Float> turtleneckValue = diagnosisList.stream().map(Diagnosis::getTurtleneckValue).toList();
         List<Float> discValue = diagnosisList.stream().map(Diagnosis::getDiscValue).toList();
-        List<LocalDateTime> time = diagnosisList.stream().map(Diagnosis::getInsDate).toList();
+        List<LocalDate> time = diagnosisList.stream().map(Diagnosis::getInsDate).toList();
         return HistoryDto.builder()
                 .turtleneckValue(turtleneckValue)
                 .discValue(discValue)
