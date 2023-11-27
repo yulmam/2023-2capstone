@@ -1,24 +1,25 @@
 import numpy as np
 
-def turtleneck_fomula(earx, shoulderx, eyex):
+def turtleneck_fomula(TurtleneckValue):
     print("[거북목 진단결과]")
 
-    A = abs(shoulderx - earx)
-    B = abs(earx - eyex)
-
-    if B/6*5 < A:
+    if TurtleneckValue > 5:
         print("거북목 상태")
         return 3
-    elif B/6*2.5 < A:     
+    elif TurtleneckValue > 2.5:     
         print("거북목 의심상태")
         return 2
     else:
         print("정상 상태")
         return 1
 
-def disc_fomula(discCheck):
-    
-    return 1
+def disc_fomula(discValue):
+    if discValue > 83:
+        return 1
+    elif discValue > 80:
+        return 2
+    else:
+        return 3
 # def disc_fomula(Lshouldery, Rshouldery, Lhipy, Rhipy):
 #     print("[척추측만증 진단결과]")
 
@@ -57,7 +58,9 @@ def shoulder_and_face_angle(Neckx, Necky, Rshoulderx, Rshouldery, Nosex, Nosey):
     angle_radian = np.arccos(innerAB/AB)                    # cosΘ = AㅇB / |A||B|
     angle_PI = (angle_radian / np.pi * 180)
     print(f"shoulder and face angle: {angle_PI}")
-
+    if angle_PI > 90:
+        angle_PI = angle_PI - 90
+    
     return angle_PI
 
 def shoulderAngle(Lshoulderx, Lshouldery, Rshoulderx, Rshouldery):
