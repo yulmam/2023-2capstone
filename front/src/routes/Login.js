@@ -19,7 +19,7 @@ const Login = () => {
     console.log(uid, password);
     dispatch(loginAction({ uid, password }));
     navigate("/");
-  }, [uid, password, dispatch]);
+  }, [uid, password, dispatch, navigate]);
   return (
     <>
       <AppLayout>

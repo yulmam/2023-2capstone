@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import LoginForm from "./LoginForm";
 import UserProfile from "./UserProfile";
 import { createGlobalStyle } from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   HomeOutlined,
   AppstoreOutlined,
@@ -29,25 +29,50 @@ const Global = createGlobalStyle`
 `;
 
 const AppLayout = ({ children }) => {
+  const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+  const handleLinkClick = (e) => {
+    if (me === "") {
+      e.preventDefault();
+      alert("로그인이 필요합니다");
+    }
+    console.log("hi");
+  };
+  const logoutClick = (e) => {
+    dispatch();
+  };
   return (
     <Layout className="layout">
       <Header style={{ height: 100 }}>
         <nav>
           <Link to="/">홈 화면</Link>
-          <Link to="/signup">회원가입</Link>
           <Link to="/notice_board">게시판</Link>
-          <Link to="/MainService">몸상태 체크</Link>
-          <Link to="/history">내 몸상태</Link>
-          <Link to="/login" class="right">
-            로그인
+          <Link to="/MainService" onClick={handleLinkClick}>
+            몸상태 체크
           </Link>
-          <Link to="/signup" class="right">
-            회원가입
+          <Link to="/history" onClick={handleLinkClick}>
+            내 몸상태
           </Link>
+
+          {me === "" ? (
+            <div style={{ display: "inline" }}>
+              <Link to="/login" class="right">
+                로그인
+              </Link>
+              <Link to="/signup" class="right">
+                회원가입
+              </Link>
+            </div>
+          ) : (
+            <div style={{ display: "inline" }}>
+              <Link class="right" onClick={logoutClick}>
+                로그아웃
+              </Link>
+            </div>
+          )}
         </nav>
       </Header>
 
@@ -84,10 +109,12 @@ const AppLayout = ({ children }) => {
       <Footer
         style={{
           textAlign: "center",
-          marginTop: 100,
+          marginTop: 50,
           backgroundColor: "white",
         }}
-      ></Footer>
+      >
+        design by modakbul
+      </Footer>
     </Layout>
   );
 };

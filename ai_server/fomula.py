@@ -16,18 +16,21 @@ def turtleneck_fomula(earx, shoulderx, eyex):
         print("정상 상태")
         return 1
 
-def disc_fomula(Lshouldery, Rshouldery, Lhipy, Rhipy):
-    print("[척추측만증 진단결과]")
+def disc_fomula(discCheck):
+    
+    return 1
+# def disc_fomula(Lshouldery, Rshouldery, Lhipy, Rhipy):
+#     print("[척추측만증 진단결과]")
 
-    if (Lshouldery > Rshouldery) and (Lhipy < Rhipy):
-        print("척추측만증 매우 의심")
-        return 3
-    elif (abs(Lshouldery-Rshouldery) > abs(Lhipy-Rhipy)):
-        print("척추측만증 약간 의심")
-        return 2
-    else:
-        print("정상 상태")    
-        return 1
+#     if (Lshouldery > Rshouldery) and (Lhipy < Rhipy):
+#         print("척추측만증 매우 의심")
+#         return 3
+#     elif (abs(Lshouldery-Rshouldery) > abs(Lhipy-Rhipy)):
+#         print("척추측만증 약간 의심")
+#         return 2
+#     else:
+#         print("정상 상태")    
+#         return 1
 
 def ear_to_shoulder_cm(earx, shoulderx, eyex):
     
@@ -39,11 +42,11 @@ def ear_to_shoulder_cm(earx, shoulderx, eyex):
     result = 6 * A / B
     return result
 
-def shoulder_and_hip_angle(Lshoulderx, Lshouldery, Rshoulderx, Rshouldery, Lhipx, Lhipy, Rhipx, Rhipy):
-    x1 = Lshoulderx-Rshoulderx
-    y1 = Lshouldery-Rshouldery
-    x2 = Lhipx-Rhipx
-    y2 = Lhipy-Rhipy
+def shoulder_and_face_angle(Neckx, Necky, Rshoulderx, Rshouldery, Nosex, Nosey):
+    x1 = Rshoulderx-Neckx
+    y1 = Rshouldery-Necky
+    x2 = Nosex-Neckx
+    y2 = Nosey-Necky
 
     vector_1 = np.array([x1, y1])                           # A벡터
     vector_2 = np.array([x2, y2])                           # B벡터
@@ -53,7 +56,7 @@ def shoulder_and_hip_angle(Lshoulderx, Lshouldery, Rshoulderx, Rshouldery, Lhipx
 
     angle_radian = np.arccos(innerAB/AB)                    # cosΘ = AㅇB / |A||B|
     angle_PI = (angle_radian / np.pi * 180)
-    print(f"shoulder and hip angle: {angle_PI}")
+    print(f"shoulder and face angle: {angle_PI}")
 
     return angle_PI
 

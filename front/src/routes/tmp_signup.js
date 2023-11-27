@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
+
 import { Button, Checkbox, Form, Input } from "antd";
 import { Helmet } from "react-helmet";
 import useInput from "../hooks/useInput";
@@ -6,7 +7,6 @@ import AppLayout from "../components/AppLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../reducers/user";
 import { useNavigate } from "react-router-dom";
-import "./Signup.css";
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -45,7 +45,7 @@ const Signup = () => {
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
   const [nickName, onChangeNickname] = useInput("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("";)
   const [passwordCheck, setPasswordCheck] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   const { me } = useSelector((state) => state.user);
@@ -76,64 +76,54 @@ const Signup = () => {
     [dispatch, uid, email, nickName, password]
   );
 
-  const handleSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-      console.log("hi");
-      console.log(password);
-      console.log(passwordCheck);
-      if (password !== passwordCheck) {
-        setErrorMessage("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-      } else {
-        setErrorMessage("");
-        // 여기에 서버로 데이터를 전송하는 로직을 추가할 수 있습니다.
-      }
-    },
-    [password, passwordCheck]
-  );
+  const handleSubmit = useCallback((e) => {
+    e.preventDefault();
+
+    if (password !== passwordCheck) {
+      setErrorMessage("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+    } else {
+      setErrorMessage("");
+      // 여기에 서버로 데이터를 전송하는 로직을 추가할 수 있습니다.
+    }
+  }, []);
   return (
     <div>
       <AppLayout>
-        <div class="signup-container">
-          <h2>회원가입</h2>
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="아이디"
-              onChange={onChangeId}
-              required
-            />
-            <br></br>
-            <input
-              type="email"
-              placeholder="E-mail"
-              onChange={onChangeEmail}
-              required
-            />
-            <br />
-            <input
-              type="password"
-              id="password"
-              placeholder="비밀번호"
-              onChange={onChangePassword}
-              required
-            />
-            <br />
-            <input
-              type="password"
-              id="confirmPassword"
-              placeholder="비밀번호 확인"
-              onChange={onChangePasswordCheck}
-              required
-            />
-            <br />
-            <span id="errorMessage" class="error-message">
-              {errorMessage}
-            </span>
-            <br />
-            <button type="submit">가입하기</button>
-          </form>
-        </div>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="아이디"
+            onChange={onChangeId}
+            required
+          />
+          <br></br>
+          <input
+            type="email"
+            placeholder="E-mail"
+            onChange={onChangeEmail}
+            required
+          />
+          <br />
+          <input
+            type="password"
+            id="password"
+            placeholder="비밀번호"
+            onChange={onChangePassword}
+            required
+          />
+          <br />
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="비밀번호 확인"
+            onChange={onChangePasswordCheck}
+            required
+          />
+          <br />
+          <span id="errorMessage" class="error-message"></span>
+          <br />
+          <button type="submit">가입하기</button>
+        </form>
       </AppLayout>
     </div>
   );

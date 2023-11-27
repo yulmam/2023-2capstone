@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
 import { loadUserState } from "../reducers/diagnosis";
-
+import "./History.css";
 const History = () => {
   const chartRef = useRef(null);
   const dispatch = useDispatch();
@@ -24,30 +24,25 @@ const History = () => {
   }, [me, navigate]);
 
   useEffect(() => {
-    if (signUpDone) {
-      navigate("/");
-    }
-  }, [navigate, signUpDone]);
-  useEffect(() => {
     console.log("hi");
     dispatch(loadUserState());
-    console.log(tutleneckValue);
   }, [dispatch]);
 
   const [options, setOptions] = useState({
     xAxis: {
       type: "category",
-      data: [0, 1, 2, 3, 4, 5],
+      data: [1, 2, 3, 5, 10],
     },
     yAxis: {
       type: "value",
     },
     series: [
       {
-        data: [0, 1, 2, 3, 4, 5],
+        data: [1, 10, 100, 200, 300],
         type: "line",
       },
     ],
+    autoResize: true,
   });
   useEffect(() => {
     setOptions((prevState) => ({
@@ -63,28 +58,30 @@ const History = () => {
         },
       ],
     }));
-    console.log(options);
   }, [time, tutleneckValue]);
   useEffect(() => {
     console.log(options);
-    console.log(time);
+
     if (chartRef.current) {
       const chart = echarts.init(chartRef.current);
 
       chart.setOption(options);
     }
-  }, [options, chartRef]);
+  }, [chartRef, options]);
 
   return (
     <div>
       <AppLayout>
-        <div
-          ref={chartRef}
-          style={{
-            width: "100%",
-            height: "100%",
-          }}
-        />
+        <div class="History-container">
+          <h2>내 몸의 과거정보</h2>
+          <div
+            ref={chartRef}
+            style={{
+              width: "100%",
+              height: "300px", // Set the desired height here
+            }}
+          />
+        </div>
       </AppLayout>
     </div>
   );
