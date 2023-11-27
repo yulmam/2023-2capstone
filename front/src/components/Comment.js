@@ -10,7 +10,7 @@ const Comment = ({ comment }) => {
         bordered={false}
         style={{
           width: 400,
-          backgroundColor: "#2f54eb",
+          backgroundColor: "#ffa940",
           margin: 10,
         }}
       >

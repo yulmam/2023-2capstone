@@ -30,10 +30,6 @@ public class Diagnosis {
     private float discValue;
     @Column
     private int discCheck;
-    @Column
-    private float shoulderAngle;
-    @Column
-    private float hipAngle;
 
     @CreationTimestamp
     @Column(name = "ins_date")

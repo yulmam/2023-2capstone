@@ -8,6 +8,7 @@ import com.example.modak.diagnosis.service.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpServerErrorException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -26,11 +27,16 @@ public class DiagnosisController {
     RestService restService;
 
     @PostMapping("/submitForm")
-    public ResponseEntity<DiagnosisResultDto> diagnosis(HttpServletRequest request, @ModelAttribute DiagnosisRequestDto diagnosisRequestDto) throws IOException, IllegalArgumentException {
-
-        RestResponseDto restResponseDto = restService.rest(diagnosisRequestDto);
+    public DiagnosisResultDto diagnosis(HttpServletRequest request, @ModelAttribute DiagnosisRequestDto diagnosisRequestDto) throws IOException, IllegalArgumentException {
+        RestResponseDto restResponseDto;
+        try{
+            restResponseDto = restService.rest(diagnosisRequestDto);
+        } catch (HttpServerErrorException.InternalServerError e){
+            return null;
+        }
         String uid = jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(request));
         String nickName = diagnosisService.saveDiagnosticResult(uid, restResponseDto);
+        System.out.println("test2");
         DiagnosisResultDto diagnosisResultDto = DiagnosisResultDto.builder()
                 .nickName(nickName)
                 .front(restResponseDto.getFront())
@@ -40,8 +46,8 @@ public class DiagnosisController {
                 .discValue(restResponseDto.getDiscValue())
                 .discCheck(restResponseDto.getDiscCheck())
                 .build();
-
-        return ResponseEntity.ok(diagnosisResultDto);
+        System.out.println("test3");
+        return diagnosisResultDto;
     }
 
     @GetMapping("/history")

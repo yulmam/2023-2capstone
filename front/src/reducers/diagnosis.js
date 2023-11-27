@@ -16,7 +16,10 @@ export const initialState = {
   loadUserStateLoading: false,
   loadUserStateDone: false,
   loadUserStateError: null,
-  tutleneckValue: [],
+  turtleneckValue: 0,
+  turtleneckCheck: 0,
+  discCheck: 0,
+  discValue: 0,
   time: [],
   imageURL: "",
 };
@@ -36,7 +39,6 @@ export const submitForm = createAsyncThunk(
         },
       });
 
-      console.log(response);
       return fulfillWithValue(response.data);
     } catch (error) {
       throw rejectWithValue(error.response);
@@ -79,6 +81,10 @@ const diagnosisSlice = createSlice({
       .addCase(submitForm.fulfilled, (state, action) => {
         state.submitFormLoading = false;
         state.submitFormDone = true;
+        state.turtleneckValue = action.payload.turtleneckValue;
+        state.turtleneckCheck = action.payload.turtleneckCheck;
+        state.discCheck = action.payload.discCheck;
+        state.discValue = action.payload.discValue;
         state.front = action.payload.front;
         state.side = action.payload.side;
       })
@@ -92,9 +98,9 @@ const diagnosisSlice = createSlice({
         state.loadUserStateError = null;
       })
       .addCase(loadUserState.fulfilled, (state, action) => {
-        console.log(action.payload.turtleneckValue);
+        console.log(action.payload);
         state.imagePaths = action.payload;
-        state.tutleneckValue = action.payload.turtleneckValue;
+  
         state.time = action.payload.time;
         state.loadUserStateLoading = false;
         state.loadUserStateDone = true;

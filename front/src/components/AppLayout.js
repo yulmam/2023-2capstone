@@ -48,28 +48,31 @@ const AppLayout = ({ children }) => {
     <Layout className="layout">
       <Header style={{ height: 100 }}>
         <nav>
-          <Link to="/">홈 화면</Link>
-          <Link to="/notice_board">게시판</Link>
+          <Link to="/" style={{fontFamily : "Korker Brush"}}>Good Body</Link>
           <Link to="/MainService" onClick={handleLinkClick}>
             몸상태 체크
           </Link>
           <Link to="/history" onClick={handleLinkClick}>
             내 몸상태
           </Link>
+          
+          <Link to="/notice_board">게시판</Link>
 
           {me === "" ? (
             <div style={{ display: "inline" }}>
+
+            </div>
+          ) : (
+            <div style={{ display: "inline" }}>
+
+              <Link class="right" onClick={logoutClick}>
+                로그아웃
+              </Link>
               <Link to="/login" class="right">
                 로그인
               </Link>
               <Link to="/signup" class="right">
                 회원가입
-              </Link>
-            </div>
-          ) : (
-            <div style={{ display: "inline" }}>
-              <Link class="right" onClick={logoutClick}>
-                로그아웃
               </Link>
             </div>
           )}

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./Loading.css";
+import "./Report.css";
 import { Col, Row, Card, Space } from "antd";
 import { dispatchImageURL } from "../reducers/diagnosis";
 const { Meta } = Card;
@@ -10,7 +10,17 @@ const shoulderAngle = 20;
 const Report = () => {
   const [front_imageUrl, setFrontImageUrl] = useState(null);
   const [side_imageUrl, setSideImageUrl] = useState(null);
-  const { front, side } = useSelector((state) => state.diagnosis);
+  const {
+    front,
+    side,
+    discCheck,
+    turtleneckCheck,
+    turtleneckValue,
+    discValue,
+    k,
+  } = useSelector((state) => state.diagnosis);
+  const test = 3;
+  const value = 50;
   useEffect(() => {
     //front 사진
     const fornt_uint8Array = new Uint8Array(front);
@@ -31,25 +41,62 @@ const Report = () => {
 
   return (
     <div>
-      <Row>
-        <Col xs={2} sm={4} md={6} lg={8} xl={5}></Col>
-        <Col xs={20} sm={16} md={12} lg={8} xl={8}>
-          <div
+      {/* <div
             style={{ display: "flex", flexDirection: "row", marginTop: 200 }}
           >
             <img style={{ width: 500 }} src={front_imageUrl} />
             <img style={{ width: 500 }} src={side_imageUrl} />
-          </div>
+          </div> */}
+      <section>
+        <div class="image-container">
+          <img
+            src={front_imageUrl}
+            alt="이미지 1"
+          />
+          <p class="image-description">
+            <p>
+              당신의 허리는 {discValue}도 만큼 <br />
+              기울어져있습니다.
+              <br />
+              {discCheck >= 3 ? (
+                <div>
+                  <span>디스크가 매우 의심됩니다 </span>
+                  <br /> <span>병원가서 진찰을 권유 </span>
+                  <br />
+                  드립니다
+                </div>
+              ) : test >= 2 ? (
+                " 디스크가 의심됩니다 "
+              ) : (
+                "허리건강 상태가 좋습니다 "
+              )}
+            </p>
+          </p>
+        </div>
 
-          <Space direction="vertical" size="middle" style={{ display: "flex" }}>
-            <Card size="small">
-              <p>당신의 자세는 아주 {level}</p>
-              <p>당신의 어깨 각도는 {shoulderAngle}</p>
-            </Card>
-          </Space>
-        </Col>
-        <Col xs={2} sm={4} md={6} lg={8} xl={10}></Col>
-      </Row>
+        <div class="image-container">
+          <img
+            src={side_imageUrl}
+            alt="이미지 2"
+          />
+          <p class="image-description">
+            당신은 귀는 목에서
+            <br /> {turtleneckValue}cm 만큼 떨어져있습니다.
+            {turtleneckCheck >= 3 ? (
+              <div>
+                <span>디스크가 매우 의심됩니다 </span>
+                <br /> <span>병원가서 진찰을 권유 </span>
+                <br />
+                드립니다
+              </div>
+            ) : test >= 2 ? (
+              " 거북목이 의심됩니다 "
+            ) : (
+              " 목 상태가 좋습니다 "
+            )}
+          </p>
+        </div>
+      </section>
     </div>
   );
 };

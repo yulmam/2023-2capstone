@@ -71,32 +71,32 @@ const Signup = () => {
   );
   const onSubmit = useCallback(
     (e) => {
-      dispatch(signUp({ uid, email, password, nickName }));
-    },
-    [dispatch, uid, email, nickName, password]
-  );
-
-  const handleSubmit = useCallback(
-    (e) => {
       e.preventDefault();
-      console.log("hi");
-      console.log(password);
-      console.log(passwordCheck);
       if (password !== passwordCheck) {
         setErrorMessage("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
       } else {
-        setErrorMessage("");
-        // 여기에 서버로 데이터를 전송하는 로직을 추가할 수 있습니다.
+        dispatch(signUp({ uid, email, password, nickName }));
+        navigate("/");
       }
     },
-    [password, passwordCheck]
+    [password, passwordCheck, dispatch, uid, email, nickName, navigate]
   );
+
+  // const handleSubmit = useCallback(
+  //   (e) => {
+  //     e.preventDefault();
+  //     console.log("hi");
+  //     console.log(password);
+  //     console.log(passwordCheck);
+  //   },
+  //   [password, passwordCheck]
+  // );
   return (
     <div>
       <AppLayout>
         <div class="signup-container">
           <h2>회원가입</h2>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={onSubmit}>
             <input
               type="text"
               placeholder="아이디"
@@ -108,6 +108,14 @@ const Signup = () => {
               type="email"
               placeholder="E-mail"
               onChange={onChangeEmail}
+              required
+            />
+            <br />
+            <input
+              type="text"
+              id="nickName"
+              placeholder="별명"
+              onChange={onChangeNickname}
               required
             />
             <br />

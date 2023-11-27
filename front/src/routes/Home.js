@@ -12,12 +12,10 @@ const Home = () => {
       <AppLayout>
         <section>
           <div class="content">
-            <h2>우리 프로그램 대한 소개</h2>
+            <h2>Good Body</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              euismod ligula euismod, congue justo non, vulputate nisi. Integer
-              posuere libero vel risus elementum, id euismod sapien efficitur.
-              Donec volutpat nunc et justo luctus, vel laoreet tortor volutpat.
+              거북목과 척추 측만증을 검사하는 웹사이트입니다.
+              OpenCV라이브러리와 OpenPose라이브러리로 관절의 위치를 파악한 후에 
             </p>
           </div>
 
