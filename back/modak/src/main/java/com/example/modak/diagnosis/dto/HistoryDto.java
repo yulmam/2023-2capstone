@@ -15,7 +15,5 @@ import java.util.List;
 public class HistoryDto {
     List<Float> turtleneckValue;
     List<Float> discValue;
-    List<Float> shoulderAngle;
-    List<Float> hipAngle;
     List<LocalDateTime> time;
 }

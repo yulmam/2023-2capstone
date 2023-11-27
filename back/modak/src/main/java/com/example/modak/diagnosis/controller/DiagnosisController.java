@@ -29,15 +29,8 @@ public class DiagnosisController {
     public ResponseEntity<DiagnosisResultDto> diagnosis(HttpServletRequest request, @ModelAttribute DiagnosisRequestDto diagnosisRequestDto) throws IOException, IllegalArgumentException {
 
         RestResponseDto restResponseDto = restService.rest(diagnosisRequestDto);
-        System.out.println(restResponseDto.getShoulderAngle());
-        System.out.println(restResponseDto.getHipAngle());
-        System.out.println(restResponseDto.getTurtleneckCheck());
-        System.out.println(restResponseDto.getDiscCheck());
         String uid = jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(request));
-
         String nickName = diagnosisService.saveDiagnosticResult(uid, restResponseDto);
-        System.out.println(nickName);
-        System.out.println(uid);
         DiagnosisResultDto diagnosisResultDto = DiagnosisResultDto.builder()
                 .nickName(nickName)
                 .front(restResponseDto.getFront())

@@ -73,6 +73,10 @@ public class JwtTokenProvider {
         }
     }
 
+    public Long getExpiration(String token) {
+        Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+        return claims.getBody().getExpiration().getTime();
+    }
 
 
 }

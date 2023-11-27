@@ -35,8 +35,6 @@ public class DiagnosisService {
                 .turtleneckCheck(restResponseDto.getTurtleneckCheck())
                 .discValue(restResponseDto.getDiscValue())
                 .discCheck(restResponseDto.getDiscCheck())
-                .shoulderAngle(restResponseDto.getShoulderAngle())
-                .hipAngle(restResponseDto.getHipAngle())
                 .build();
 
         user.getDiagnosisList().add(diagnosis);
@@ -50,14 +48,10 @@ public class DiagnosisService {
         List<Diagnosis> diagnosisList = user.getDiagnosisList();
         List<Float> turtleneckValue = diagnosisList.stream().map(Diagnosis::getTurtleneckValue).toList();
         List<Float> discValue = diagnosisList.stream().map(Diagnosis::getDiscValue).toList();
-        List<Float> shoulderAngle = diagnosisList.stream().map(Diagnosis::getShoulderAngle).toList();
-        List<Float> hipAngle = diagnosisList.stream().map(Diagnosis::getHipAngle).toList();
         List<LocalDateTime> time = diagnosisList.stream().map(Diagnosis::getInsDate).toList();
         return HistoryDto.builder()
                 .turtleneckValue(turtleneckValue)
                 .discValue(discValue)
-                .shoulderAngle(shoulderAngle)
-                .hipAngle(hipAngle)
                 .time(time).build();
     }
 

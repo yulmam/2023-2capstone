@@ -17,6 +17,4 @@ public class RestResponseDto {
     int turtleneckCheck;
     float discValue;
     int discCheck;
-    float shoulderAngle;
-    float hipAngle;
 }

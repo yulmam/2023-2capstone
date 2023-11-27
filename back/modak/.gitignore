@@ -36,3 +36,4 @@ out/
 .vscode/
 
 build\resources\main\application.properties
+application-aws.properties
