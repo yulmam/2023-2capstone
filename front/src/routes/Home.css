@@ -12,8 +12,13 @@ body {
 }
 
 .content {
+  margin-top: 25px;
   flex: 1;
   padding: 20px;
+  max-width: 600px;
+  border-radius: 16px;
+  height: 380px;
+  margin-right: 50px;
 }
 
 .content h2 {
@@ -22,6 +27,7 @@ body {
 }
 
 .content p {
+  display: inline-block;
   font-size: 16px;
   line-height: 1.6;
 }

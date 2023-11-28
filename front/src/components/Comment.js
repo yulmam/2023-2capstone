@@ -9,9 +9,11 @@ const Comment = ({ comment }) => {
         title={comment.nickname}
         bordered={false}
         style={{
-          width: 400,
+          width: 800,
           backgroundColor: "#ffa940",
           margin: 10,
+          marginLeft: 30,
+          fontSize: "1rem",
         }}
       >
         {comment.comment}

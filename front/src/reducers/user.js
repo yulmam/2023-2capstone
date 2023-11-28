@@ -72,12 +72,18 @@ export const signUp = createAsyncThunk(
 );
 export const logoutAction = createAsyncThunk("user/logout", async (data) => {
   // const response = await axios.post("/user/logout");
+  localStorage.removeItem("access");
+
   return data;
 });
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    logoutActionUnSync(state, action) {
+      state.me = null;
+    },
+  },
   // 외부에서 action을 만든것은 extraReducers로 가져와서 사용한다 주로 createAsyncThunk로 action을 만들 때 사용한다
   extraReducers: (builder) =>
     builder
@@ -133,4 +139,5 @@ const userSlice = createSlice({
       })
       .addDefaultCase((state) => state),
 });
+export const { logoutActionUnSync } = userSlice.actions;
 export default userSlice;

@@ -13,6 +13,7 @@ import "./AppLayout.css";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Menu, Input, Row, Col, Breadcrumb, Layout, theme } from "antd";
+import { logoutAction } from "../reducers/user";
 const { Header, Content, Footer } = Layout;
 
 const Global = createGlobalStyle`
@@ -35,44 +36,43 @@ const AppLayout = ({ children }) => {
     token: { colorBgContainer },
   } = theme.useToken();
   const handleLinkClick = (e) => {
-    if (me === "") {
+    if (me === null) {
       e.preventDefault();
       alert("로그인이 필요합니다");
     }
-    console.log("hi");
   };
   const logoutClick = (e) => {
-    dispatch();
+    dispatch(logoutAction());
   };
   return (
     <Layout className="layout">
       <Header style={{ height: 100 }}>
         <nav>
-          <Link to="/" style={{fontFamily : "Korker Brush"}}>Good Body</Link>
+          <Link to="/" style={{ fontFamily: "Korker Brush" }}>
+            Good Body
+          </Link>
           <Link to="/MainService" onClick={handleLinkClick}>
             몸상태 체크
           </Link>
           <Link to="/history" onClick={handleLinkClick}>
             내 몸상태
           </Link>
-          
+
           <Link to="/notice_board">게시판</Link>
 
-          {me === "" ? (
+          {me === null ? (
             <div style={{ display: "inline" }}>
-
-            </div>
-          ) : (
-            <div style={{ display: "inline" }}>
-
-              <Link class="right" onClick={logoutClick}>
-                로그아웃
-              </Link>
               <Link to="/login" class="right">
                 로그인
               </Link>
               <Link to="/signup" class="right">
                 회원가입
+              </Link>
+            </div>
+          ) : (
+            <div style={{ display: "inline" }}>
+              <Link class="right" onClick={logoutClick}>
+                로그아웃
               </Link>
             </div>
           )}
@@ -97,6 +97,7 @@ const AppLayout = ({ children }) => {
             <Col xs={24} md={18}>
               {children}
             </Col>
+
             {/* <Col xs={24} md={6}>
               <a
                 href="https://github.com/seroak"

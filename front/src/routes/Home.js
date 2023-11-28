@@ -12,18 +12,22 @@ const Home = () => {
       <AppLayout>
         <section calss="home_section">
           <div class="content">
-            <h2>Good Body</h2>
+            <div>
+              <h2>Good Body</h2>
+            </div>
+
             <p>
-              거북목과 척추 측만증을 검사하는 웹사이트입니다. OpenCV라이브러리와
-              OpenPose라이브러리로 관절의 위치를 파악한 후에
+              거북목과 척추 측만증을 검사하는 웹사이트입니다. <br />
+              팀명 : 모닥불 팀원 : 이규열, 김한얼, 정지헌 <br />
+              개발환경 : 리엑트, 스프링, 플라스크
             </p>
           </div>
 
           <div class="image">
             <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWq71_eF8GnoqHq_0ybQ7Oqwviw6_khVZIYN9XhDpGqw&s"
+              src="\main_photo.png"
               alt="우리 기업 이미지"
-              style={{ width: 400 }}
+              style={{ width: 700, marginTop: 30 }}
             />
           </div>
         </section>

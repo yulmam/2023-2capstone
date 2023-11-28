@@ -29,8 +29,9 @@ export const initialState = {
 const dummyPost = [
   {
     id: 1,
-    title: "더미게시글 제목",
-    content: "더미데이터입니다",
+    title: "평일 오전 기흥역 신갈천에서 뛰실 분 구합니다",
+    content:
+      "평일 6시에 정자역에서 모일 예정입니다. 인원은 5명 생각하고 있습니다.",
     User: {
       id: 1,
       nickname: "이규열",
@@ -39,23 +40,41 @@ const dummyPost = [
       {
         id: 1,
         nickname: "김한얼",
-        comment: "더미데이터 뎃글입니다",
+        comment: "저 하고 싶습니다",
       },
     ],
   },
   {
     id: 2,
-    title: "더미게시글 제목",
-    content: "더미데이터입니다",
+    title: "주말 오후에 뚝섬 한강 공원에서 러닝 하실 분 구합니다",
+    content:
+      "오후2시에 뚝섬역에서 모여서 뛸 예정입니다 인원은 10명 생각하고 있습니다",
     User: {
       id: 1,
-      nickname: "이규열",
+      nickname: "정지헌",
     },
     Comments: [
       {
         id: 1,
-        nickname: "김한얼",
-        comment: "더미데이터 뎃글입니다",
+        nickname: "이혜정",
+        comment: "혹시 주말 중에 하루만 가능할까요?",
+      },
+    ],
+  },
+  {
+    id: 1,
+    title: "저와 같이 러닝하실 분 찾습니다",
+    content:
+      "월, 수, 금 아침 8시에 단국대 대운동장 모일 예정입니다. 인원은 최대 5명 생각하고 있습니다.",
+    User: {
+      id: 1,
+      nickname: "김성현",
+    },
+    Comments: [
+      {
+        id: 1,
+        nickname: "장승완",
+        comment: "끝나고 삼겹살 회식하나요?",
       },
     ],
   },

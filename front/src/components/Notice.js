@@ -24,29 +24,31 @@ const Notice = ({ post }) => {
       <Card
         hoverable
         style={{
-          width: 500,
+          width: 1000,
           backgroundColor: "#ffe7ba",
-          margin: 10,
+          margin: 5,
+          marginTop: 30,
         }}
         onClick={onToggleNotice}
       >
-        <Meta title={post.title} description={post.content} />
+        <Meta title={post.title} description={post.User.nickname} />
       </Card>
       {openNotice && (
         <Card
-          title="제목"
           bordered={false}
           style={{
-            width: 500,
+            width: 1000,
             backgroundColor: "#ffd591",
-            margin: 10,
+            margin: 5,
+            fontSize: "1rem",
+            fontWeight: "bold",
           }}
         >
-          <p>내용</p>
+          <p>{post.content}</p>
           <Button
             type="primary"
             style={{
-              marginLeft: 380,
+              marginLeft: 870,
               backgroundColor: "#ffc069",
               color: "#000000",
             }}
@@ -61,7 +63,7 @@ const Notice = ({ post }) => {
           title="댓글창"
           bordered={false}
           style={{
-            width: 500,
+            width: 1000,
             backgroundColor: "#ffc069",
             margin: 10,
           }}
@@ -70,11 +72,17 @@ const Notice = ({ post }) => {
             <Comment key={comment.id} comment={comment} />
           ))}
 
-          <TextArea rows={4} />
+          <TextArea
+            rows={4}
+            style={{
+              width: 800,
+              marginLeft: 30,
+            }}
+          />
           <Button
             type="primary"
             style={{
-              marginLeft: 380,
+              marginLeft: 850,
               backgroundColor: "#ffa940",
               color: "#000000",
             }}
