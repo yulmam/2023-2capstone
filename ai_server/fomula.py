@@ -14,9 +14,9 @@ def turtleneck_fomula(TurtleneckValue):
         return 1
 
 def disc_fomula(discValue):
-    if discValue > 83:
+    if discValue > 17:
         return 1
-    elif discValue > 80:
+    elif discValue > 10:
         return 2
     else:
         return 3
@@ -60,7 +60,8 @@ def shoulder_and_face_angle(Neckx, Necky, Rshoulderx, Rshouldery, Nosex, Nosey):
     print(f"shoulder and face angle: {angle_PI}")
     if angle_PI > 90:
         angle_PI = angle_PI - 90
-    
+    elif angle_PI < 90:
+        angle_PI = 90 - angle_PI
     return angle_PI
 
 def shoulderAngle(Lshoulderx, Lshouldery, Rshoulderx, Rshouldery):
