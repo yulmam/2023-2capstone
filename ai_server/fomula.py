@@ -15,11 +15,11 @@ def turtleneck_fomula(TurtleneckValue):
 
 def disc_fomula(discValue):
     if discValue > 17:
-        return 1
+        return 3
     elif discValue > 10:
         return 2
     else:
-        return 3
+        return 1
 # def disc_fomula(Lshouldery, Rshouldery, Lhipy, Rhipy):
 #     print("[척추측만증 진단결과]")
 
@@ -58,7 +58,7 @@ def shoulder_and_face_angle(Neckx, Necky, Rshoulderx, Rshouldery, Nosex, Nosey):
     angle_radian = np.arccos(innerAB/AB)                    # cosΘ = AㅇB / |A||B|
     angle_PI = (angle_radian / np.pi * 180)
     print(f"shoulder and face angle: {angle_PI}")
-    if angle_PI > 90:
+    if angle_PI >= 90:
         angle_PI = angle_PI - 90
     elif angle_PI < 90:
         angle_PI = 90 - angle_PI
