@@ -10,12 +10,12 @@ const Home = () => {
   return (
     <div>
       <AppLayout>
-        <section>
+        <section calss="home_section">
           <div class="content">
             <h2>Good Body</h2>
             <p>
-              거북목과 척추 측만증을 검사하는 웹사이트입니다.
-              OpenCV라이브러리와 OpenPose라이브러리로 관절의 위치를 파악한 후에 
+              거북목과 척추 측만증을 검사하는 웹사이트입니다. OpenCV라이브러리와
+              OpenPose라이브러리로 관절의 위치를 파악한 후에
             </p>
           </div>
 

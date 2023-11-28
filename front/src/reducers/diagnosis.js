@@ -21,6 +21,7 @@ export const initialState = {
   discCheck: 0,
   discValue: 0,
   time: [],
+  turtleneckList: [],
   imageURL: "",
 };
 //form데이터를 보내는 axios요청
@@ -99,9 +100,9 @@ const diagnosisSlice = createSlice({
       })
       .addCase(loadUserState.fulfilled, (state, action) => {
         console.log(action.payload);
-        state.imagePaths = action.payload;
-  
         state.time = action.payload.time;
+        state.turtleneckList = action.payload.turtleneckValue;
+        state.discList = action.payload.discValue;
         state.loadUserStateLoading = false;
         state.loadUserStateDone = true;
       })

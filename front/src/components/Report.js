@@ -17,7 +17,6 @@ const Report = () => {
     turtleneckCheck,
     turtleneckValue,
     discValue,
-    k,
   } = useSelector((state) => state.diagnosis);
   const test = 3;
   const value = 50;

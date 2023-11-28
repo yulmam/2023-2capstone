@@ -1,0 +1,32 @@
+section {
+  display: flex;
+  justify-content: space-around;
+  padding: 2em;
+
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.image-container {
+  margin: 50px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1em;
+  border-radius: 8px;
+  background-color: #fff;
+  max-width: 500px; /* 최대 너비 설정 */
+  width: 100%; /* 화면 크기에 따라 조절 */
+  margin: 50px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1em;
+}
+
+.image-description {
+  text-align: center;
+  color: #333;
+}

@@ -14,18 +14,14 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { submitForm } from "../reducers/diagnosis";
-
 import useInput from "../hooks/useInput";
+import "./PostForm.css";
 const customLabelStyle = {
   fontSize: "20px", // 원하는 폰트 크기로 변경
   fontWeight: "bold",
   marginTop: 60,
 };
-const containerStyle = {
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center", // 수평 가운데 정렬
-};
+const containerStyle = {};
 const onChange = (value) => {
   console.log("changed", value);
 };
@@ -144,6 +140,50 @@ const PostForm = () => {
 
   return (
     <>
+      <div class="align_center">
+        <section class="PostForm_section">
+          <h2>환상적인 선물을 담아내다</h2>
+
+          <p>
+            프리미엄 선물 상자는 특별한 순간을 기념하거나 소중한 사람에게 감사의
+            마음을 전하고자 하는 분들을 위한 완벽한 선택입니다. 고급 재료와
+            정교한 디자인으로 만들어진 이 선물 상자는 여러분의 센스와 감성을
+            돋보이게 합니다.
+          </p>
+
+          <h2>디자인 특징</h2>
+
+          <ol>
+            <li>
+              <span class="highlight">고품격 소재 사용</span>
+              <ul>
+                <li>
+                  내구성 있는 판지와 고급 종이를 사용하여 탁월한 품질을
+                  보장합니다.
+                </li>
+                <li>
+                  환경 친화적인 재료로 제작되어, 지속 가능한 소비를 장려합니다.
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <span class="highlight">다양한 사이즈와 스타일</span>
+              <ul>
+                <li>
+                  작은 규모의 선물부터 크고 특별한 선물까지 다양한 사이즈로
+                  제공됩니다.
+                </li>
+                <li>
+                  클래식한 박스부터 현대적이고 창의적인 디자인까지, 다양한
+                  스타일이 준비되어 있습니다.
+                </li>
+              </ul>
+            </li>
+          </ol>
+        </section>
+      </div>
+
       <Form
         labelCol={{
           span: 4,
@@ -162,16 +202,12 @@ const PostForm = () => {
             labelAlign="left"
             // label={<span style={customLabelStyle}>앞모습 사진:</span>}
             label="앞모습 사진"
-            style={{ marginLeft: 300, marginTop: 50 }}
           >
             <Upload
               listType="picture-card"
               fileList={frontList}
               onPreview={handlePreview}
               onChange={handleFrontChange}
-              style={{
-                marginLeft: 40,
-              }}
             >
               {frontList.length >= 1 ? null : uploadButton}
             </Upload>
@@ -190,45 +226,41 @@ const PostForm = () => {
               />
             </Modal>
           </Form.Item>
+
+          <Form.Item
+            valuePropName="FileList"
+            getValueFromEvent={normFrontFile}
+            labelAlign="left"
+            // label={<span style={customLabelStyle}>옆모습 사진:</span>}
+            label="옆모습 사진"
+          >
+            <Upload
+              listType="picture-card"
+              fileList={sideList}
+              onPreview={handlePreview}
+              onChange={handleSideChange}
+            >
+              {sideList.length >= 1 ? null : uploadButton}
+            </Upload>
+            <Modal
+              open={previewOpen}
+              title={previewTitle}
+              footer={null}
+              onCancel={handleCancel}
+            >
+              <img
+                alt="example"
+                style={{
+                  width: "100%",
+                }}
+                src={previewImage}
+              />
+            </Modal>
+          </Form.Item>
         </div>
 
-        <Form.Item
-          valuePropName="FileList"
-          getValueFromEvent={normFrontFile}
-          labelAlign="left"
-          // label={<span style={customLabelStyle}>옆모습 사진:</span>}
-          label="옆모습 사진"
-          style={{ marginLeft: 300 }}
-        >
-          <Upload
-            listType="picture-card"
-            fileList={sideList}
-            onPreview={handlePreview}
-            onChange={handleSideChange}
-            style={{
-              marginLeft: 300,
-            }}
-          >
-            {sideList.length >= 1 ? null : uploadButton}
-          </Upload>
-          <Modal
-            open={previewOpen}
-            title={previewTitle}
-            footer={null}
-            onCancel={handleCancel}
-          >
-            <img
-              alt="example"
-              style={{
-                width: "100%",
-              }}
-              src={previewImage}
-            />
-          </Modal>
-        </Form.Item>
-
-        <Form.Item style={{ marginLeft: 500 }}>
-          <Button type="primary" htmlType="submit">
+        <Form.Item>
+          <Button type="primary" htmlType="submit" style={{ marginLeft: 750 }}>
             제출
           </Button>
         </Form.Item>

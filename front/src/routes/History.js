@@ -10,9 +10,12 @@ import { loadUserState } from "../reducers/diagnosis";
 import "./History.css";
 const History = () => {
   const chartRef = useRef(null);
+  const discChartRef = useRef(null);
   const dispatch = useDispatch();
   const { signUpLoading, signUpDone } = useSelector((state) => state.user);
-  const { tutleneckValue, time } = useSelector((state) => state.diagnosis);
+  const { turtleneckList, discList, time } = useSelector(
+    (state) => state.diagnosis
+  );
   const { tutleneck, setTutlenect } = useState([]);
   const { timeArray, setTtimeArray } = useState([]);
   const { me } = useSelector((state) => state.user);
@@ -28,7 +31,7 @@ const History = () => {
     dispatch(loadUserState());
   }, [dispatch]);
 
-  const [options, setOptions] = useState({
+  const [turtleoptions, setTutleOptions] = useState({
     xAxis: {
       type: "category",
       data: [1, 2, 3, 5, 10],
@@ -44,8 +47,9 @@ const History = () => {
     ],
     autoResize: true,
   });
+
   useEffect(() => {
-    setOptions((prevState) => ({
+    setTutleOptions((prevState) => ({
       ...prevState,
       xAxis: {
         ...prevState.xAxis,
@@ -54,28 +58,84 @@ const History = () => {
       series: [
         {
           ...prevState.series,
-          data: tutleneckValue,
+          data: turtleneckList,
         },
       ],
     }));
-  }, [time, tutleneckValue]);
+  }, [time, turtleneckList]);
+  // 거북목 진단
   useEffect(() => {
-    console.log(options);
+    console.log(turtleoptions);
 
     if (chartRef.current) {
       const chart = echarts.init(chartRef.current);
 
-      chart.setOption(options);
+      chart.setOption(turtleoptions);
     }
-  }, [chartRef, options]);
+  }, [chartRef, turtleoptions]);
+
+  //디스크 진단
+
+  const [discoptions, setDiscOptions] = useState({
+    xAxis: {
+      type: "category",
+      data: [1, 2, 3, 5, 10],
+    },
+    yAxis: {
+      type: "value",
+    },
+    series: [
+      {
+        data: [1, 10, 100, 200, 300],
+        type: "line",
+      },
+    ],
+    autoResize: true,
+  });
+
+  useEffect(() => {
+    setDiscOptions((prevState) => ({
+      ...prevState,
+      xAxis: {
+        ...prevState.xAxis,
+        data: time,
+      },
+      series: [
+        {
+          ...prevState.series,
+          data: discList,
+        },
+      ],
+    }));
+  }, [time, discList]);
+  // 거북목 진단
+  useEffect(() => {
+    console.log(discoptions);
+
+    if (discChartRef.current) {
+      const chart = echarts.init(discChartRef.current);
+
+      chart.setOption(discoptions);
+    }
+  }, [discChartRef, discoptions]);
 
   return (
     <div>
       <AppLayout>
         <div class="History-container">
-          <h2>내 몸의 과거정보</h2>
+          <h2>내 몸의 거북목 거리</h2>
           <div
             ref={chartRef}
+            style={{
+              width: "100%",
+              height: "300px", // Set the desired height here
+            }}
+          />
+        </div>
+        <div class="History-container">
+          <h2>내 몸의 디스크 각도</h2>
+          <div
+            ref={discChartRef}
             style={{
               width: "100%",
               height: "300px", // Set the desired height here
