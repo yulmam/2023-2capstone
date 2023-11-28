@@ -49,10 +49,7 @@ const Report = () => {
           </div> */}
       <section>
         <div class="image-container">
-          <img
-            src={front_imageUrl}
-            alt="이미지 1"
-          />
+          <img src={front_imageUrl} alt="이미지 1" />
           <p class="image-description">
             <p>
               당신의 허리는 {discValue}도 만큼 <br />
@@ -75,10 +72,7 @@ const Report = () => {
         </div>
 
         <div class="image-container">
-          <img
-            src={side_imageUrl}
-            alt="이미지 2"
-          />
+          <img src={side_imageUrl} alt="이미지 2" />
           <p class="image-description">
             당신은 귀는 목에서
             <br /> {turtleneckValue}cm 만큼 떨어져있습니다.
